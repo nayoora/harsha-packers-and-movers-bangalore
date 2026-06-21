@@ -414,6 +414,11 @@ form.sent .form-success { display: block; }
 .route-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 22px; transition: all .22s; position: relative; overflow: hidden; }
 .route-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold-dark)); transform: scaleX(0); transform-origin: left; transition: transform .3s ease; }
 .route-card:hover::before { transform: scaleX(1); }
+.route-review { background: var(--bg-navy-soft); border-left: 4px solid var(--gold); border-radius: 12px; padding: 22px 24px; margin: 28px 0; }
+.route-review__stars { color: var(--star); letter-spacing: 2px; margin-bottom: 8px; }
+.route-review blockquote { margin: 0 0 12px; font-size: 1.06rem; line-height: 1.7; color: var(--ink); font-style: italic; }
+.route-review__by { display: flex; align-items: center; gap: 8px; font-size: .9rem; color: var(--muted); }
+.route-review__by svg { width: 18px; height: 18px; }
 .route-card:hover { box-shadow: var(--shadow-md); border-color: var(--gold); transform: translateY(-3px); }
 .route-card__path { display: flex; align-items: center; gap: 8px; font-family: var(--ff-head); font-weight: 600; color: var(--navy); font-size: 1.05rem; margin-bottom: 6px; }
 .route-card__path svg { width: 18px; height: 18px; color: var(--gold-dark); }
