@@ -7,23 +7,30 @@
   /* ---------- Mobile nav ---------- */
   var toggle = document.querySelector('.nav-toggle');
   var body = document.body;
+  function collapseDrops() {
+    document.querySelectorAll('.nav__item--has-drop.open').forEach(function (o) { o.classList.remove('open'); });
+  }
+  function closeMenu() {
+    body.classList.remove('nav-open');
+    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+    collapseDrops();
+  }
   if (toggle) {
     toggle.addEventListener('click', function () {
-      body.classList.toggle('nav-open');
-      toggle.setAttribute('aria-expanded', body.classList.contains('nav-open'));
+      var open = body.classList.toggle('nav-open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (!open) collapseDrops();
     });
   }
-  var backdrop = document.querySelector('.nav-backdrop');
-  if (backdrop) backdrop.addEventListener('click', function () { body.classList.remove('nav-open'); });
 
   var navClose = document.querySelector('.nav-close');
-  if (navClose) navClose.addEventListener('click', function () { body.classList.remove('nav-open'); });
+  if (navClose) navClose.addEventListener('click', closeMenu);
 
   /* Close menu when a real link (not a dropdown toggle) is tapped */
   document.querySelectorAll('.nav a').forEach(function (a) {
     a.addEventListener('click', function () {
       if (a.parentElement.classList.contains('nav__item--has-drop') && window.innerWidth <= 992) return;
-      body.classList.remove('nav-open');
+      closeMenu();
     });
   });
 
@@ -32,12 +39,17 @@
     if (window.innerWidth > 992) body.classList.remove('nav-open');
   });
 
-  /* Mobile dropdown expanders */
+  /* Mobile dropdown expanders (accordion: only one open at a time keeps the menu compact) */
   document.querySelectorAll('.nav__item--has-drop > .nav__link').forEach(function (link) {
     link.addEventListener('click', function (e) {
       if (window.innerWidth <= 992) {
         e.preventDefault();
-        link.parentElement.classList.toggle('open');
+        var item = link.parentElement;
+        var willOpen = !item.classList.contains('open');
+        document.querySelectorAll('.nav__item--has-drop.open').forEach(function (o) {
+          if (o !== item) o.classList.remove('open');
+        });
+        item.classList.toggle('open', willOpen);
       }
     });
   });
