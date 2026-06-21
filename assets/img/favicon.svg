@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Harsha Packers and Movers">
+  <rect width="64" height="64" rx="13" fill="#0a2540"/>
+  <g transform="translate(7,13)">
+    <rect x="0" y="4" width="31" height="24" rx="3" fill="#ee7322"/>
+    <path d="M31 10 h9.5 l9.5 9 v9 h-19 z" fill="#ee7322"/>
+    <path d="M16 24 V8.5 M9 15 L16 7 L23 15" stroke="#ffffff" stroke-width="4.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="13" cy="31" r="5.6" fill="#ffffff"/>
+    <circle cx="42" cy="31" r="5.6" fill="#ffffff"/>
+  </g>
+</svg>

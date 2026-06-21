@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 72" role="img" aria-label="Harsha Packers and Movers - We Move with Care">
+  <g transform="translate(0,12)">
+    <rect x="1" y="9" width="34" height="25" rx="3.5" fill="#ee7322"/>
+    <path d="M35 16 h9 l9 9 v9 h-18 z" fill="#ee7322"/>
+    <path d="M38.5 19 h5.5 l5.5 5.5 H38.5 z" fill="#0a2540"/>
+    <path d="M18 29 V15 M11 21 L18 13 L25 21" stroke="#ffffff" stroke-width="3.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="14" cy="37" r="5.6" fill="#0a2540"/>
+    <circle cx="45" cy="37" r="5.6" fill="#0a2540"/>
+    <circle cx="14" cy="37" r="2" fill="#ffffff"/>
+    <circle cx="45" cy="37" r="2" fill="#ffffff"/>
+  </g>
+  <text x="72" y="34" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="28" fill="#0a2540" letter-spacing="0.5">HARSHA</text>
+  <text x="73" y="51" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="12" fill="#ee7322" letter-spacing="2.6">PACKERS AND MOVERS</text>
+  <text x="73" y="65" font-family="Arial, Helvetica, sans-serif" font-style="italic" font-weight="400" font-size="10.5" fill="#6b7587" letter-spacing="0.4">We Move with Care.</text>
+</svg>
