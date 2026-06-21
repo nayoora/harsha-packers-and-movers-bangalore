@@ -454,6 +454,10 @@ form.sent .form-success { display: block; }
 .info-table th, .info-table td { padding: 13px 18px; text-align: left; border-bottom: 1px solid var(--line); font-size: .95rem; }
 .info-table th { background: var(--bg-navy-soft); font-family: var(--ff-head); color: var(--navy); font-weight: 600; }
 .info-table tr:last-child td { border-bottom: none; }
+@media (max-width: 560px) {
+  .info-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .info-table th, .info-table td { padding: 10px 12px; font-size: .86rem; }
+}
 
 /* ---- Footer ---- */
 .footer { background: #061a30; color: #97a8c0; padding-top: 60px; font-size: .92rem; }
