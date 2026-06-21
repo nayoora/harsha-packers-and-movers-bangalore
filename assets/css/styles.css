@@ -321,7 +321,7 @@ form.sent .form-success { display: block; }
 .card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: transparent; }
 .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold-dark)); transform: scaleX(0); transform-origin: left; transition: transform .3s ease; }
 .card:hover::before { transform: scaleX(1); }
-.card__ico { width: 56px; height: 56px; border-radius: 14px; background: var(--gold-soft); display: grid; place-items: center; color: var(--gold-dark); margin-bottom: 18px; transition: all .25s; }
+.card__ico { width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, var(--gold-soft), #ffe1c4); display: grid; place-items: center; color: var(--gold-dark); margin-bottom: 18px; transition: all .25s; }
 .card__ico svg { width: 28px; height: 28px; }
 .card:hover .card__ico { background: var(--navy); color: var(--gold); }
 .card h3 { margin-bottom: 9px; font-size: 1.18rem; }
@@ -374,7 +374,9 @@ form.sent .form-success { display: block; }
 .linkgrid a:hover { border-color: var(--gold); background: var(--gold-soft); color: var(--navy); transform: translateX(3px); }
 .linkgrid a svg { width: 17px; height: 17px; color: var(--gold-dark); flex-shrink: 0; }
 .routegrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
-.route-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 22px; transition: all .22s; }
+.route-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 22px; transition: all .22s; position: relative; overflow: hidden; }
+.route-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold-dark)); transform: scaleX(0); transform-origin: left; transition: transform .3s ease; }
+.route-card:hover::before { transform: scaleX(1); }
 .route-card:hover { box-shadow: var(--shadow-md); border-color: var(--gold); transform: translateY(-3px); }
 .route-card__path { display: flex; align-items: center; gap: 8px; font-family: var(--ff-head); font-weight: 600; color: var(--navy); font-size: 1.05rem; margin-bottom: 6px; }
 .route-card__path svg { width: 18px; height: 18px; color: var(--gold-dark); }
