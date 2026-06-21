@@ -628,7 +628,7 @@ form.sent .form-success { display: block; }
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
-<script>window.HARSHA={whatsapp:"919035291929",web3:"REPLACE_WITH_WEB3FORMS_ACCESS_KEY"};</script>
+<script>window.HARSHA={whatsapp:"919035291929",web3:"REPLACE_WITH_WEB3FORMS_ACCESS_KEY",adsId:"",adsLabel:""};</script>
 <div class="topbar">
   <div class="container topbar__inner">
     <div class="topbar__left">
@@ -1414,6 +1414,7 @@ form.sent .form-success { display: block; }
 
       form.classList.add('sent');
       if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { method: 'whatsapp' });
+      if (typeof window.gtag === 'function' && window.HARSHA && window.HARSHA.adsId) window.gtag('event', 'conversion', { send_to: window.HARSHA.adsId + (window.HARSHA.adsLabel ? '/' + window.HARSHA.adsLabel : '') });
       try { form.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (err2) {}
     });
   });
@@ -1469,6 +1470,7 @@ form.sent .form-success { display: block; }
     if (!a || typeof window.gtag !== 'function') return;
     var isCall = a.getAttribute('href').indexOf('tel:') === 0;
     window.gtag('event', isCall ? 'click_to_call' : 'click_whatsapp', { event_category: 'engagement', transport_type: 'beacon' });
+    if (window.HARSHA && window.HARSHA.adsId) window.gtag('event', 'conversion', { send_to: window.HARSHA.adsId + (window.HARSHA.adsLabel ? '/' + window.HARSHA.adsLabel : '') });
   });
 
   /* ---------- Animated count-up for stats ---------- */

@@ -184,6 +184,7 @@
 
       form.classList.add('sent');
       if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { method: 'whatsapp' });
+      if (typeof window.gtag === 'function' && window.HARSHA && window.HARSHA.adsId) window.gtag('event', 'conversion', { send_to: window.HARSHA.adsId + (window.HARSHA.adsLabel ? '/' + window.HARSHA.adsLabel : '') });
       try { form.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (err2) {}
     });
   });
@@ -239,6 +240,7 @@
     if (!a || typeof window.gtag !== 'function') return;
     var isCall = a.getAttribute('href').indexOf('tel:') === 0;
     window.gtag('event', isCall ? 'click_to_call' : 'click_whatsapp', { event_category: 'engagement', transport_type: 'beacon' });
+    if (window.HARSHA && window.HARSHA.adsId) window.gtag('event', 'conversion', { send_to: window.HARSHA.adsId + (window.HARSHA.adsLabel ? '/' + window.HARSHA.adsLabel : '') });
   });
 
   /* ---------- Animated count-up for stats ---------- */
