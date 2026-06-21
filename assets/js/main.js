@@ -147,6 +147,11 @@
       return encodeURIComponent(t);
     }
 
+    var formStarted = false;
+    form.addEventListener('focusin', function () {
+      if (formStarted) return; formStarted = true;
+      if (typeof window.gtag === 'function') window.gtag('event', 'form_start', { event_category: 'engagement', form_id: form.id || 'quote' });
+    });
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var pu = form.querySelector('[name="page_url"]');
@@ -236,10 +241,12 @@
 
   /* ---------- Conversion tracking: call & WhatsApp clicks ---------- */
   document.addEventListener('click', function (e) {
-    var a = e.target.closest ? e.target.closest('a[href^="tel:"], a[href*="wa.me"], a[href*="api.whatsapp"]') : null;
+    var a = e.target.closest ? e.target.closest('a[href^="tel:"], a[href^="mailto:"], a[href*="wa.me"], a[href*="api.whatsapp"]') : null;
     if (!a || typeof window.gtag !== 'function') return;
-    var isCall = a.getAttribute('href').indexOf('tel:') === 0;
-    window.gtag('event', isCall ? 'click_to_call' : 'click_whatsapp', { event_category: 'engagement', transport_type: 'beacon' });
+    var href = a.getAttribute('href');
+    if (href.indexOf('mailto:') === 0) { window.gtag('event', 'email_click', { event_category: 'engagement' }); return; }
+    var isCall = href.indexOf('tel:') === 0;
+    window.gtag('event', isCall ? 'click_to_call' : 'click_whatsapp', { event_category: 'engagement' });
     if (window.HARSHA && window.HARSHA.adsId) window.gtag('event', 'conversion', { send_to: window.HARSHA.adsId + (window.HARSHA.adsLabel ? '/' + window.HARSHA.adsLabel : '') });
   });
 
