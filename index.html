@@ -133,7 +133,7 @@ p { color: var(--body); }
 .grid { display: grid; gap: 24px; }
 .eyebrow {
   display: inline-block; font-family: var(--ff-head); font-weight: 600; font-size: .8rem;
-  letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold-dark);
+  letter-spacing: 1.5px; text-transform: uppercase; color: #a8480c;
   background: var(--gold-soft); padding: 6px 14px; border-radius: 100px; margin-bottom: 16px;
 }
 .section--navy .eyebrow { background: rgba(238, 115, 34, .15); color: var(--gold); }
@@ -528,8 +528,9 @@ form.sent .form-success { display: block; }
 .float-cta__wa { background: var(--whatsapp); }
 .float-cta__call { background: var(--gold); color: var(--navy); }
 .float-cta a svg { width: 28px; height: 28px; }
-.float-cta__call { animation: pulse 2s infinite; }
-@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(238,115,34,.5); } 70% { box-shadow: 0 0 0 14px rgba(238,115,34,0); } 100% { box-shadow: 0 0 0 0 rgba(238,115,34,0); } }
+.float-cta__call { animation: none; }
+.float-cta__call::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--gold); animation: pulse 2s infinite; pointer-events: none; }
+@keyframes pulse { 0% { transform: scale(1); opacity: .6; } 70% { transform: scale(1.55); opacity: 0; } 100% { transform: scale(1.55); opacity: 0; } }
 
 /* Mobile sticky bottom bar */
 .mobile-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 95; display: none; grid-template-columns: 1fr 1fr; background: #fff; box-shadow: 0 -4px 18px rgba(10,37,64,.14); }
@@ -633,8 +634,8 @@ form.sent .form-success { display: block; }
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"MovingCompany","@id":"https://harshapackersandmoversbangalore.com/#business","name":"Harsha Packers and Movers Bangalore","image":"https://harshapackersandmoversbangalore.com/assets/img/og-cover.jpg","url":"https://harshapackersandmoversbangalore.com/","telephone":"+919035291929","email":"harshapackersmovers@gmail.com","priceRange":"₹₹","foundingDate":"2005","address":{"@type":"PostalAddress","streetAddress":"No 61, Ground Floor, 1st Cross, BGS Layout, Jambusavari Dinne, Near BWSSB Water Tank","addressLocality":"Bengaluru","addressRegion":"Karnataka","postalCode":"560076","addressCountry":"IN"},"geo":{"@type":"GeoCoordinates","latitude":"12.8916","longitude":"77.5712"},"hasMap":"https://www.google.com/maps/dir/?api=1&destination=Harsha+Packers+and+Movers+Bangalore,+Jambusavari+Dinne,+Bengaluru,+Karnataka+560076","areaServed":[{"@type":"Place","name":"Bengaluru, Karnataka"},{"@type":"Place","name":"Hebbal, Bengaluru"},{"@type":"Place","name":"Jayanagar, Bengaluru"},{"@type":"Place","name":"HSR Layout, Bengaluru"},{"@type":"Place","name":"Whitefield, Bengaluru"},{"@type":"Place","name":"Indiranagar, Bengaluru"},{"@type":"Place","name":"JP Nagar, Bengaluru"},{"@type":"Place","name":"Koramangala, Bengaluru"},{"@type":"Place","name":"Vijayanagar, Bengaluru"},{"@type":"Place","name":"Banashankari, Bengaluru"},{"@type":"Place","name":"Marathahalli, Bengaluru"},{"@type":"Place","name":"Electronic City, Bengaluru"},{"@type":"Place","name":"Sarjapur Road, Bengaluru"},{"@type":"Place","name":"Bellandur, Bengaluru"},{"@type":"Place","name":"Yelahanka, Bengaluru"}],"openingHoursSpecification":{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"00:00","closes":"23:59"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","reviewCount":"122","bestRating":"5"},"review":[{"@type":"Review","datePublished":"2025-06-16","reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"author":{"@type":"Person","name":"Ashwini Krishnamurthy"},"reviewBody":"Service was good and we are very happy with the work. Furniture, TV and fridge — everything was handled with full care."},{"@type":"Review","datePublished":"2025-03-19","reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"author":{"@type":"Person","name":"Sur Dhara"},"reviewBody":"Excellent work. I am fully satisfied — 10 out of 10. Such packers are very few in India. I appreciate their hard work and honesty."},{"@type":"Review","datePublished":"2025-01-16","reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"author":{"@type":"Person","name":"Ganesh S"},"reviewBody":"Excellent service. Very professional and polite individuals. Highly recommend."},{"@type":"Review","datePublished":"2024-12-23","reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"author":{"@type":"Person","name":"Chandrakant Chandarkar"},"reviewBody":"Excellent service. Hardworking and sincere team with on-time delivery. Highly recommended organisation."},{"@type":"Review","datePublished":"2024-11-29","reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"author":{"@type":"Person","name":"Vishnu"},"reviewBody":"Used Harsha Packers and Movers to shift my household items from Bangalore to Kerala. Smooth, careful and professional service."}],"identifier":{"@type":"PropertyValue","propertyID":"Udyam Registration Number","value":"UDYAM-KR-03-0196744"},"sameAs":["https://www.facebook.com/harshapackers","https://twitter.com/HarshaPackers","https://www.instagram.com/harshapackersmoversbangalore/","https://www.linkedin.com/company/harsha-packers-and-movers-bangalore","https://www.youtube.com/@HarshaPackers"]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://harshapackersandmoversbangalore.com/#website","url":"https://harshapackersandmoversbangalore.com/","name":"Harsha Packers and Movers Bangalore","inLanguage":"en-IN","publisher":{"@id":"https://harshapackersandmoversbangalore.com/#business"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much do packers and movers charge in Bangalore?","acceptedAnswer":{"@type":"Answer","text":"Local shifting within Bangalore typically starts from around ₹3,000–₹8,000 for a 1 BHK and ₹6,000–₹15,000 for a 2–3 BHK, depending on the volume of goods, floor level, distance and packing required. For an exact, no-obligation price, request a free pre-move survey and we will give you a fixed, transparent quote."}},{"@type":"Question","name":"Do you provide packing materials and labour?","acceptedAnswer":{"@type":"Answer","text":"Yes. Our charges include professional packing materials such as bubble wrap, corrugated sheets, cartons and stretch film, along with a trained in-house crew for packing, loading, unloading and basic furniture assembly."}},{"@type":"Question","name":"Is my shipment insured during the move?","acceptedAnswer":{"@type":"Answer","text":"We offer optional transit insurance for both local and intercity moves. We strongly recommend it for high-value households and long-distance relocations. Our team will explain the coverage and help you arrange it."}},{"@type":"Question","name":"Do you offer same-day shifting in Bangalore?","acceptedAnswer":{"@type":"Answer","text":"Yes, for most local moves within Bangalore we can arrange same-day or next-day shifting subject to crew and vehicle availability. Call us on +91 90352 91929 to check the earliest available slot."}},{"@type":"Question","name":"Which areas of Bangalore do you cover?","acceptedAnswer":{"@type":"Answer","text":"We cover all of Bangalore including Whitefield, Marathahalli, HSR Layout, Koramangala, Electronic City, Indiranagar, JP Nagar, Jayanagar, Hebbal, Yelahanka and every other locality, plus intercity moves from Bangalore to anywhere in India."}},{"@type":"Question","name":"How do I get a quote from Harsha Packers and Movers?","acceptedAnswer":{"@type":"Answer","text":"You can call or WhatsApp us on +91 90352 91929, or fill in the quote form on this page. We will arrange a free survey and share a fixed, itemised quotation with no hidden charges."}},{"@type":"Question","name":"Which is the best packers and movers in Bangalore?","acceptedAnswer":{"@type":"Answer","text":"Harsha Packers and Movers is among the most trusted packers and movers in Bangalore — government-registered (Udyam) and serving the city since 2005, with a 4.8-star rating from 122+ Google reviews. We are known for safe packing, on-time delivery, transparent fixed pricing and trained in-house crews for home, office and vehicle shifting."}},{"@type":"Question","name":"Are Harsha Packers and Movers genuine and reliable?","acceptedAnswer":{"@type":"Answer","text":"Yes. Harsha Packers and Movers is a Government of India registered company (Udyam Reg. No. UDYAM-KR-03-0196744) operating in Bangalore since 2005, with a 4.8-star rating from 122+ verified Google reviews. We provide written quotations, proper bills and optional transit insurance, so every move is safe and transparent."}},{"@type":"Question","name":"How far in advance should I book packers and movers in Bangalore?","acceptedAnswer":{"@type":"Answer","text":"We recommend booking 3–5 days ahead for local shifting within Bangalore and 5–7 days for intercity moves, especially on weekends and month-ends when demand is high. For urgent moves we also arrange same-day or next-day shifting subject to availability — call +91 90352 91929 to check."}},{"@type":"Question","name":"Do you provide a GST bill or invoice?","acceptedAnswer":{"@type":"Answer","text":"Yes. We provide a proper bill for every move and can issue a GST invoice on request, which is helpful for company-paid relocations and reimbursement claims. Please mention this to our team at the time of booking."}},{"@type":"Question","name":"Do you handle office and commercial relocation in Bangalore?","acceptedAnswer":{"@type":"Answer","text":"Yes, we handle office and commercial relocation across Bangalore — including IT setups, workstations, servers, files and furniture — with careful packing, labelling and minimal downtime. Office moves can be scheduled over weekends or after working hours to avoid disruption."}},{"@type":"Question","name":"What is the cheapest way to shift a house in Bangalore?","acceptedAnswer":{"@type":"Answer","text":"The most affordable way to shift in Bangalore is to choose a shared or part-load move, declutter before packing, stay flexible on dates (avoid weekends and month-ends) and book a few days in advance. After a free survey we suggest the most cost-effective option for your home size and budget."}}]}</script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2NXJP5ZWY7"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-2NXJP5ZWY7');gtag('config','G-P04Z2RWST1');</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-2NXJP5ZWY7');gtag('config','G-P04Z2RWST1');
+(function(){var d=0;function g(){if(d)return;d=1;var s=document.createElement('script');s.async=1;s.src='https://www.googletagmanager.com/gtag/js?id=G-2NXJP5ZWY7';document.head.appendChild(s);}['scroll','mousemove','touchstart','click','keydown'].forEach(function(e){addEventListener(e,g,{once:true,passive:true});});setTimeout(g,3500);})();</script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -686,7 +687,7 @@ form.sent .form-success { display: block; }
       <div class="nav__cta"><a class="btn btn--primary" href="#quote"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg> Get Free Quote</a></div>
     </nav>
     <div class="header__cta">
-      <a class="header__call" href="tel:+919035291929">
+      <a class="header__call" href="tel:+919035291929" aria-label="Call +91 90352 91929">
         <span class="header__call-ico"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
         <span class="header__call-txt"><small>Call us 24/7</small><b>+91 90352 91929</b></span>
       </a>
@@ -808,7 +809,7 @@ form.sent .form-success { display: block; }
       <div class="form-row">
         <div class="field">
           <label>Shifting Date <span class="req">*</span></label>
-          <input type="date" name="move_date" required>
+          <input type="date" name="move_date" aria-label="Shifting date" required>
           <span class="field__err">Required</span>
         </div>
         <div class="field">
@@ -835,7 +836,7 @@ form.sent .form-success { display: block; }
       <div class="form-row">
         <div class="field">
           <label>No. of Carton Boxes <span class="req">*</span></label>
-          <input type="number" name="boxes" min="0" step="1" value="0" required>
+          <input type="number" name="boxes" min="0" step="1" value="0" aria-label="Number of carton boxes" required>
           <small class="field-help">Approx box size: 41 × 38 × 58 cm</small>
         </div>
         <div class="field">
@@ -872,61 +873,61 @@ form.sent .form-success { display: block; }
       <div class="card__ico"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 21v-7h6v7"/></svg></div>
       <h3><a href="/local-shifting-in-bangalore/">Local Home Shifting in Bangalore</a></h3>
       <p>Moving within Bangalore should be quick and stress-free.</p>
-      <a class="card__link" href="/local-shifting-in-bangalore/">Learn more <svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="card__link" href="/local-shifting-in-bangalore/" aria-label="Learn more about Local Home Shifting">Learn more <svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
     <div class="card reveal">
       <div class="card__ico"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8l9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg></div>
       <h3><a href="/household-shifting-in-bangalore/">Household Shifting in Bangalore</a></h3>
       <p>From a single room to a full villa, our household shifting service covers complete packing, dismantling, loading, transport, unloading and reassembly.</p>
-      <a class="card__link" href="/household-shifting-in-bangalore/">Learn more <svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="card__link" href="/household-shifting-in-bangalore/" aria-label="Learn more about Household Shifting">Learn more <svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
     <div class="card reveal">
       <div class="card__ico"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="1"/><path d="M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01M10 22v-4h4v4"/></svg></div>
       <h3><a href="/office-shifting-in-bangalore/">Office Relocation in Bangalore</a></h3>
       <p>We relocate offices with minimal disruption to your business.</p>
-      <a class="card__link" href="/office-shifting-in-bangalore/">Learn more <svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="card__link" href="/office-shifting-in-bangalore/" aria-label="Learn more about Office Relocation">Learn more <svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
     <div class="card reveal">
       <div class="card__ico"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 17.5h-5l-2-5 3-2h4l2 3"/><path d="M12 6h3"/></svg></div>
       <h3><a href="/bike-transport-in-bangalore/">Bike Transport in Bangalore</a></h3>
       <p>Ship your two-wheeler safely anywhere in India.</p>
-      <a class="card__link" href="/bike-transport-in-bangalore/">Learn more <svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="card__link" href="/bike-transport-in-bangalore/" aria-label="Learn more about Bike Transport">Learn more <svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
     <div class="card reveal">
       <div class="card__ico"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l1.5-4.5A2 2 0 0 1 8.4 7h7.2a2 2 0 0 1 1.9 1.5L19 13"/><path d="M3 13h18v5H3z"/><circle cx="7" cy="18" r="1.5"/><circle cx="17" cy="18" r="1.5"/></svg></div>
       <h3><a href="/car-transport-in-bangalore/">Car Transport in Bangalore</a></h3>
       <p>Move your car across the city or across India on professional car carriers.</p>
-      <a class="card__link" href="/car-transport-in-bangalore/">Learn more <svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="card__link" href="/car-transport-in-bangalore/" aria-label="Learn more about Car Transport">Learn more <svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
     <div class="card reveal">
       <div class="card__ico"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 21V8l10-5 10 5v13"/><path d="M6 21v-7h12v7M6 17h12"/></svg></div>
       <h3><a href="/storage-warehousing-in-bangalore/">Storage &amp; Warehousing in Bangalore</a></h3>
       <p>Need to store your goods between moves? Our clean, secure warehouses offer short and long-term storage with 24/7 security, CCTV monitoring, proper racking and complete inventory management for both household and commercial goods.</p>
-      <a class="card__link" href="/storage-warehousing-in-bangalore/">Learn more <svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="card__link" href="/storage-warehousing-in-bangalore/" aria-label="Learn more about Storage &amp; Warehousing">Learn more <svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
     <div class="card reveal">
       <div class="card__ico"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7"/><circle cx="5.5" cy="18.5" r="2"/><circle cx="18.5" cy="18.5" r="2"/></svg></div>
       <h3><a href="/goods-transport-services-in-bangalore/">Goods Transport in Bangalore</a></h3>
       <p>From a few cartons to full truckloads, we move goods reliably across Bangalore and India.</p>
-      <a class="card__link" href="/goods-transport-services-in-bangalore/">Learn more <svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="card__link" href="/goods-transport-services-in-bangalore/" aria-label="Learn more about Goods Transport">Learn more <svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
     <div class="card reveal">
       <div class="card__ico"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><circle cx="18" cy="5" r="3"/><path d="M9 19h6a3 3 0 0 0 3-3V8M6 16V8a3 3 0 0 1 3-3h6"/></svg></div>
       <h3><a href="/logistic-services-in-bangalore/">Logistics Services in Bangalore</a></h3>
       <p>We provide end-to-end logistics support for businesses, including freight movement, distribution and last-mile delivery.</p>
-      <a class="card__link" href="/logistic-services-in-bangalore/">Learn more <svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="card__link" href="/logistic-services-in-bangalore/" aria-label="Learn more about Logistics Services">Learn more <svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
     <div class="card reveal">
       <div class="card__ico"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div>
       <h3><a href="/domestic-shifting/">Domestic Shifting in Bangalore</a></h3>
       <p>Relocating to another city? We handle intercity moves from Bangalore to anywhere in India with dedicated vehicles, careful packing and insured transport.</p>
-      <a class="card__link" href="/domestic-shifting/">Learn more <svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="card__link" href="/domestic-shifting/" aria-label="Learn more about Domestic Shifting">Learn more <svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
     <div class="card reveal">
       <div class="card__ico"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1M9 11h6M9 15h4"/></svg></div>
       <h3><a href="/pre-move-survey-in-bangalore/">Pre-Move Survey in Bangalore</a></h3>
       <p>An accurate quote starts with a proper survey.</p>
-      <a class="card__link" href="/pre-move-survey-in-bangalore/">Learn more <svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="card__link" href="/pre-move-survey-in-bangalore/" aria-label="Learn more about Pre-Move Survey">Learn more <svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div></div>
   </div>
 </section>
