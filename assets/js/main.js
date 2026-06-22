@@ -235,6 +235,29 @@
     });
   }
 
+  /* ---------- WhatsApp chat popup ---------- */
+  var waToggle = document.querySelector('[data-wa-toggle]');
+  var waPop = document.querySelector('[data-wa-pop]');
+  if (waToggle && waPop) {
+    var setWaPop = function (open) {
+      waPop.hidden = !open;
+      waToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+    waToggle.addEventListener('click', function (e) { e.preventDefault(); setWaPop(waPop.hidden); });
+    var waCloseBtn = waPop.querySelector('[data-wa-close]');
+    if (waCloseBtn) waCloseBtn.addEventListener('click', function () { setWaPop(false); });
+    var waCta = waPop.querySelector('.wa-pop__cta');
+    if (waCta) waCta.addEventListener('click', function () { setWaPop(false); });
+    document.addEventListener('click', function (e) {
+      if (waPop.hidden) return;
+      if (waPop.contains(e.target) || waToggle.contains(e.target)) return;
+      setWaPop(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !waPop.hidden) setWaPop(false);
+    });
+  }
+
   /* ---------- Year in footer ---------- */
   var yr = document.querySelector('[data-year]');
   if (yr) yr.textContent = new Date().getFullYear();
@@ -243,6 +266,7 @@
   document.addEventListener('click', function (e) {
     var a = e.target.closest ? e.target.closest('a[href^="tel:"], a[href^="mailto:"], a[href*="wa.me"], a[href*="api.whatsapp"]') : null;
     if (!a || typeof window.gtag !== 'function') return;
+    if (a.hasAttribute('data-wa-toggle')) return; // opens chat popup, not a real WhatsApp click
     var href = a.getAttribute('href');
     if (href.indexOf('mailto:') === 0) { window.gtag('event', 'email_click', { event_category: 'engagement' }); return; }
     var isCall = href.indexOf('tel:') === 0;

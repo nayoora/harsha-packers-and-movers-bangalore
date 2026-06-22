@@ -183,7 +183,7 @@ body.nav-open .header { z-index: 300; }
 .brand__logo { display: grid; place-items: center; flex-shrink: 0; }
 .brand-mark { width: 50px; height: 38px; }
 .brand__name { font-family: var(--ff-head); font-weight: 700; font-size: 1.12rem; color: var(--navy); line-height: 1.12; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.brand__name span { display: block; font-size: .72rem; font-weight: 500; color: var(--gold-dark); letter-spacing: .5px; }
+.brand__name span { display: block; font-size: .72rem; font-weight: 500; color: #a8480c; letter-spacing: .5px; }
 
 .nav { display: flex; align-items: center; gap: 4px; }
 .nav-close { display: none; }
@@ -295,7 +295,7 @@ body.nav-open .nav-toggle span::after { top: 0; transform: rotate(-45deg); }
 .quote-card__head { text-align: center; margin-bottom: 20px; }
 .quote-card__head h3 { color: var(--navy); font-size: 1.4rem; }
 .quote-card__head p { font-size: .92rem; color: var(--muted); }
-.quote-card__tag { display: inline-block; background: var(--success); color: #fff; font-size: .76rem; font-weight: 600; padding: 4px 12px; border-radius: 100px; margin-bottom: 12px; font-family: var(--ff-head); }
+.quote-card__tag { display: inline-block; background: #15803d; color: #fff; font-size: .76rem; font-weight: 600; padding: 4px 12px; border-radius: 100px; margin-bottom: 12px; font-family: var(--ff-head); }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .field { margin-bottom: 12px; }
 .field label { display: block; font-size: .85rem; font-weight: 600; color: var(--ink); margin-bottom: 6px; font-family: var(--ff-head); }
@@ -460,6 +460,21 @@ form.sent .form-success { display: block; }
 .hero--home p { max-width: 660px; }
 .hero--home .rating-chip { margin-bottom: 20px; }
 .hero--home .hero__trust { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 20px 30px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.14); }
+.hero--home .page-hero__inner { display: grid; grid-template-columns: 1fr; }
+.hero-trust-card { display: none; }
+@media (min-width: 993px) {
+  .hero--home .page-hero__inner { grid-template-columns: 1.15fr .85fr; gap: 48px; align-items: center; }
+  .hero--home .rating-chip { display: none; }
+  .hero-trust-card { display: block; background: #fff; color: var(--ink); border-radius: 18px; padding: 26px 28px; box-shadow: 0 24px 60px rgba(0,0,0,.30); }
+}
+.htc__rating { display: flex; flex-direction: column; align-items: center; text-align: center; padding-bottom: 16px; margin-bottom: 14px; border-bottom: 1px solid var(--line); }
+.htc__rating svg { width: 26px; height: 26px; margin-bottom: 4px; }
+.htc__num { font-family: var(--ff-head); font-size: 2.6rem; font-weight: 800; color: var(--navy); line-height: 1; }
+.htc__stars { color: var(--star); font-size: 1.15rem; letter-spacing: 3px; margin: 2px 0; }
+.htc__count { font-size: .82rem; color: var(--muted); }
+.htc__list { display: grid; gap: 11px; margin: 0 0 18px; }
+.htc__list li { display: flex; align-items: center; gap: 10px; font-size: .93rem; font-weight: 500; color: var(--ink); }
+.htc__list svg { width: 18px; height: 18px; color: var(--success); flex-shrink: 0; }
 .quote-section { background: var(--bg-alt); }
 .quote-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 4vw, 48px); align-items: start; }
 .quote-grid > * { min-width: 0; }
@@ -504,11 +519,12 @@ form.sent .form-success { display: block; }
 .footer__top { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.2fr; gap: 36px; padding-bottom: 44px; border-bottom: 1px solid rgba(255,255,255,.08); }
 .footer__brand .brand { color: #fff; }
 .footer__brand .brand__name { color: #fff; }
+.footer__brand .brand__name span { color: #f0a868; }
 .footer__brand p { margin: 16px 0; font-size: .9rem; }
 .footer__contact { display: grid; gap: 12px; }
 .footer__contact li { display: flex; gap: 11px; align-items: flex-start; }
 .footer__contact svg { width: 18px; height: 18px; color: var(--gold); flex-shrink: 0; margin-top: 3px; }
-.footer h4 { color: #fff; font-family: var(--ff-head); font-size: 1.05rem; margin-bottom: 18px; }
+.footer h3 { color: #fff; font-family: var(--ff-head); font-size: 1.05rem; margin-bottom: 18px; }
 .footer__links { display: grid; gap: 10px; }
 .footer__social { display: flex; gap: 12px; margin-top: 18px; }
 .footer__social a { width: 38px; height: 38px; border-radius: 9px; background: rgba(255,255,255,.08); display: grid; place-items: center; transition: all .2s; }
@@ -516,8 +532,13 @@ form.sent .form-success { display: block; }
 .footer__social svg { width: 18px; height: 18px; }
 .footer__bottom { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 0; flex-wrap: wrap; font-size: .85rem; }
 .footer__areas { padding: 22px 0; border-top: 1px solid rgba(255,255,255,.08); }
-.footer__areas h4 { font-size: .95rem; margin-bottom: 12px; }
+.footer__areas h3 { font-size: .95rem; margin-bottom: 12px; }
 .footer__areas-list { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: .85rem; }
+.footer__pay { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 18px 0; border-top: 1px solid rgba(255,255,255,.08); }
+.footer__pay-label { display: inline-flex; align-items: center; gap: 7px; font-family: var(--ff-head); font-weight: 600; color: #fff; font-size: .9rem; margin-right: 4px; }
+.footer__pay-label svg { width: 16px; height: 16px; color: var(--gold); }
+.pay-chip { display: inline-flex; align-items: center; gap: 7px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); border-radius: 8px; padding: 7px 13px; font-size: .85rem; font-weight: 500; color: #cdd9ea; }
+.pay-chip svg { width: 17px; height: 17px; color: var(--gold); }
 @media (max-width: 880px) { .footer__top { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 540px) { .footer__top { grid-template-columns: 1fr; gap: 28px; } }
 
@@ -532,6 +553,27 @@ form.sent .form-success { display: block; }
 .float-cta__call::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--gold); animation: pulse 2s infinite; pointer-events: none; }
 @keyframes pulse { 0% { transform: scale(1); opacity: .6; } 70% { transform: scale(1.55); opacity: 0; } 100% { transform: scale(1.55); opacity: 0; } }
 
+/* WhatsApp chat popup */
+.float-cta__wa { position: relative; }
+.float-cta__badge { position: absolute; top: -3px; right: -3px; min-width: 19px; height: 19px; padding: 0 5px; border-radius: 100px; background: #ff3b30; color: #fff; font-size: .68rem; font-weight: 700; font-family: var(--ff-head); display: grid; place-items: center; box-shadow: 0 0 0 2px #fff; line-height: 1; }
+.wa-pop { position: fixed; right: 18px; bottom: 156px; z-index: 96; width: 320px; max-width: calc(100vw - 32px); background: #fff; border-radius: 16px; box-shadow: var(--shadow-lg); overflow: hidden; transform-origin: bottom right; animation: waPopIn .22s ease; }
+.wa-pop[hidden] { display: none; }
+.wa-pop__head { display: flex; align-items: center; gap: 12px; background: #075e54; color: #fff; padding: 13px 15px; }
+.wa-pop__avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--whatsapp); display: grid; place-items: center; flex-shrink: 0; }
+.wa-pop__avatar svg { width: 23px; height: 23px; color: #fff; }
+.wa-pop__id { flex: 1; min-width: 0; line-height: 1.3; }
+.wa-pop__id b { display: block; font-family: var(--ff-head); font-size: .96rem; }
+.wa-pop__id small { display: inline-flex; align-items: center; gap: 5px; font-size: .75rem; opacity: .9; }
+.wa-pop__id small svg { width: 12px; height: 12px; }
+.wa-pop__close { background: rgba(255,255,255,.16); border: none; color: #fff; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; display: grid; place-items: center; flex-shrink: 0; }
+.wa-pop__close svg { width: 15px; height: 15px; }
+.wa-pop__body { background: #ece5dd; padding: 18px 16px 14px; }
+.wa-pop__msg { background: #fff; border-radius: 2px 12px 12px 12px; padding: 11px 14px; font-size: .9rem; line-height: 1.5; color: var(--ink); box-shadow: 0 1px 1px rgba(0,0,0,.12); max-width: 92%; }
+.wa-pop__cta { display: flex; align-items: center; justify-content: center; gap: 9px; background: var(--whatsapp); color: #fff; font-family: var(--ff-head); font-weight: 600; font-size: 1rem; padding: 15px; }
+.wa-pop__cta svg { width: 21px; height: 21px; }
+@keyframes waPopIn { from { opacity: 0; transform: scale(.86) translateY(12px); } to { opacity: 1; transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) { .wa-pop { animation: none; } }
+
 /* Mobile sticky bottom bar */
 .mobile-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 95; display: none; grid-template-columns: 1fr 1fr; background: #fff; box-shadow: 0 -4px 18px rgba(10,37,64,.14); }
 .mobile-bar a { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px; font-family: var(--ff-head); font-weight: 600; font-size: .98rem; }
@@ -542,6 +584,7 @@ form.sent .form-success { display: block; }
   .mobile-bar { display: grid; }
   .float-cta { bottom: 74px; right: 14px; }
   .float-cta__call { display: none; }
+  .wa-pop { right: 14px; bottom: 140px; }
   body { padding-bottom: 54px; }
 }
 
@@ -629,6 +672,10 @@ form.sent .form-success { display: block; }
 .calc__result { margin-top: 20px; padding: 24px; border-radius: var(--radius); background: var(--bg-navy-soft); text-align: center; }
 .calc__amount { font-family: var(--ff-head); font-weight: 800; font-size: clamp(1.8rem, 5vw, 2.4rem); color: var(--navy); line-height: 1.1; }
 @media (max-width: 600px) { .calc__row { grid-template-columns: 1fr; } }
+.estimator-wrap { max-width: 720px; margin: 0 auto; }
+.estimator-note { margin-top: 18px; font-size: .92rem; color: var(--muted); }
+.estimator-note a { color: #a8480c; font-weight: 600; }
+.estimator-note a:hover { text-decoration: underline; }
 
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"MovingCompany","@id":"https://harshapackersandmoversbangalore.com/#business","name":"Harsha Packers and Movers Bangalore","image":"https://harshapackersandmoversbangalore.com/assets/img/og-cover.jpg","url":"https://harshapackersandmoversbangalore.com/","telephone":"+919035291929","email":"harshapackersmovers@gmail.com","priceRange":"₹₹","foundingDate":"2005","address":{"@type":"PostalAddress","streetAddress":"No 61, Ground Floor, 1st Cross, BGS Layout, Jambusavari Dinne, Near BWSSB Water Tank","addressLocality":"Bengaluru","addressRegion":"Karnataka","postalCode":"560076","addressCountry":"IN"},"geo":{"@type":"GeoCoordinates","latitude":"12.8916","longitude":"77.5712"},"hasMap":"https://www.google.com/maps/dir/?api=1&destination=Harsha+Packers+and+Movers+Bangalore,+Jambusavari+Dinne,+Bengaluru,+Karnataka+560076","areaServed":[{"@type":"Place","name":"Bengaluru, Karnataka"},{"@type":"Place","name":"Hebbal, Bengaluru"},{"@type":"Place","name":"Jayanagar, Bengaluru"},{"@type":"Place","name":"HSR Layout, Bengaluru"},{"@type":"Place","name":"Whitefield, Bengaluru"},{"@type":"Place","name":"Indiranagar, Bengaluru"},{"@type":"Place","name":"JP Nagar, Bengaluru"},{"@type":"Place","name":"Koramangala, Bengaluru"},{"@type":"Place","name":"Vijayanagar, Bengaluru"},{"@type":"Place","name":"Banashankari, Bengaluru"},{"@type":"Place","name":"Marathahalli, Bengaluru"},{"@type":"Place","name":"Electronic City, Bengaluru"},{"@type":"Place","name":"Sarjapur Road, Bengaluru"},{"@type":"Place","name":"Bellandur, Bengaluru"},{"@type":"Place","name":"Yelahanka, Bengaluru"}],"openingHoursSpecification":{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"00:00","closes":"23:59"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","reviewCount":"122","bestRating":"5"},"review":[{"@type":"Review","datePublished":"2025-06-16","reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"author":{"@type":"Person","name":"Ashwini Krishnamurthy"},"reviewBody":"Service was good and we are very happy with the work. Furniture, TV and fridge — everything was handled with full care."},{"@type":"Review","datePublished":"2025-03-19","reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"author":{"@type":"Person","name":"Sur Dhara"},"reviewBody":"Excellent work. I am fully satisfied — 10 out of 10. Such packers are very few in India. I appreciate their hard work and honesty."},{"@type":"Review","datePublished":"2025-01-16","reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"author":{"@type":"Person","name":"Ganesh S"},"reviewBody":"Excellent service. Very professional and polite individuals. Highly recommend."},{"@type":"Review","datePublished":"2024-12-23","reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"author":{"@type":"Person","name":"Chandrakant Chandarkar"},"reviewBody":"Excellent service. Hardworking and sincere team with on-time delivery. Highly recommended organisation."},{"@type":"Review","datePublished":"2024-11-29","reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"author":{"@type":"Person","name":"Vishnu"},"reviewBody":"Used Harsha Packers and Movers to shift my household items from Bangalore to Kerala. Smooth, careful and professional service."}],"identifier":{"@type":"PropertyValue","propertyID":"Udyam Registration Number","value":"UDYAM-KR-03-0196744"},"sameAs":["https://www.facebook.com/harshapackers","https://twitter.com/HarshaPackers","https://www.instagram.com/harshapackersmoversbangalore/","https://www.linkedin.com/company/harsha-packers-and-movers-bangalore","https://www.youtube.com/@HarshaPackers"]}</script>
@@ -699,6 +746,7 @@ form.sent .form-success { display: block; }
 <main id="main">
 <section class="page-hero hero--home">
   <div class="container page-hero__inner">
+    <div class="hero--home__main">
     <span class="rating-chip"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.5 12.2c0-.7-.06-1.4-.18-2.06H12v3.9h5.9a5.05 5.05 0 0 1-2.19 3.31v2.75h3.54c2.07-1.9 3.26-4.71 3.26-7.9z"/><path fill="#34A853" d="M12 23c2.95 0 5.43-.98 7.24-2.65l-3.54-2.75c-.98.66-2.24 1.05-3.7 1.05-2.85 0-5.26-1.92-6.12-4.5H2.23v2.84A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.88 14.15a6.6 6.6 0 0 1 0-4.3V7.01H2.23a11 11 0 0 0 0 9.98z"/><path fill="#EA4335" d="M12 5.38c1.61 0 3.05.55 4.18 1.64l3.13-3.13A11 11 0 0 0 12 1 11 11 0 0 0 2.23 7.01l3.65 2.84C6.74 7.3 9.15 5.38 12 5.38z"/></svg><span class="stars">★★★★★</span><b>4.8/5</b><small>122 Google reviews</small></span>
     <h1>Packers and Movers in Bangalore <span class="accent">You Can Trust</span></h1>
     <p>Harsha Packers and Movers is the trusted name in <strong style="color:#fff">movers and packers in Bangalore</strong> — safe home shifting, office &amp; IT relocation, logistics, bike &amp; car transport, and moving from Bangalore to all over India. Government registered, serving since 2005.</p>
@@ -711,6 +759,18 @@ form.sent .form-success { display: block; }
       <div class="hero__trust-item"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M8.5 14 7 22l5-3 5 3-1.5-8"/></svg><span><b>20+ Years</b><small>Since 2005</small></span></div>
       <div class="hero__trust-item"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg><span><b>24/7 Support</b><small>All 7 days</small></span></div>
     </div>
+    </div>
+    <aside class="hero-trust-card">
+      <div class="htc__rating"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.5 12.2c0-.7-.06-1.4-.18-2.06H12v3.9h5.9a5.05 5.05 0 0 1-2.19 3.31v2.75h3.54c2.07-1.9 3.26-4.71 3.26-7.9z"/><path fill="#34A853" d="M12 23c2.95 0 5.43-.98 7.24-2.65l-3.54-2.75c-.98.66-2.24 1.05-3.7 1.05-2.85 0-5.26-1.92-6.12-4.5H2.23v2.84A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.88 14.15a6.6 6.6 0 0 1 0-4.3V7.01H2.23a11 11 0 0 0 0 9.98z"/><path fill="#EA4335" d="M12 5.38c1.61 0 3.05.55 4.18 1.64l3.13-3.13A11 11 0 0 0 12 1 11 11 0 0 0 2.23 7.01l3.65 2.84C6.74 7.3 9.15 5.38 12 5.38z"/></svg><span class="htc__num">4.8</span><span class="htc__stars">★★★★★</span><span class="htc__count">122 verified Google reviews</span></div>
+      <ul class="htc__list">
+        <li><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7"/><circle cx="5.5" cy="18.5" r="2"/><circle cx="18.5" cy="18.5" r="2"/></svg> 5,000+ successful moves</li>
+        <li><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5z"/><path d="m9 12 2 2 4-4"/></svg> Govt. registered (Udyam)</li>
+        <li><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M8.5 14 7 22l5-3 5 3-1.5-8"/></svg> Trusted since 2005 · 20+ years</li>
+        <li><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg> Transit insurance available</li>
+        <li><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg> Open 24/7 · Bangalore to all India</li>
+      </ul>
+      <a class="btn btn--primary btn--block btn--lg" href="#quote"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg> Get Your Free Quote</a>
+    </aside>
   </div>
 </section>
 
@@ -955,6 +1015,54 @@ form.sent .form-success { display: block; }
     </div>
     <div class="steps">
       <div class="step reveal"><div class="step__num">1</div><h3>Request a Quote</h3><p>Call, WhatsApp or fill the form. We arrange a free survey.</p></div><div class="step reveal"><div class="step__num">2</div><h3>Free Survey & Fixed Price</h3><p>We assess your goods and give a transparent, written quote.</p></div><div class="step reveal"><div class="step__num">3</div><h3>Professional Packing</h3><p>Trained crew packs everything with quality materials.</p></div><div class="step reveal"><div class="step__num">4</div><h3>Safe Move & Delivery</h3><p>On-time transport, unloading and reassembly at your new place.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-head text-center">
+      <span class="eyebrow">Instant Estimate</span>
+      <h2>Packers and Movers Cost Calculator</h2>
+      <p>Get a quick ballpark price for your Bangalore move in seconds — then request a free survey for an exact, fixed quote.</p>
+    </div>
+    <div class="estimator-wrap reveal">
+      <div class="calc" id="cost-calc">
+        <div class="calc__row">
+          <div class="field">
+            <label>Property Type</label>
+            <select data-calc="bhk" aria-label="Property type"><option value="2500-6000">1 RK</option><option value="3500-8000">1 BHK</option><option value="6000-12000">2 BHK</option><option value="8000-16000">3 BHK</option><option value="13000-26000">4 BHK / Villa</option><option value="10000-40000">Office / Commercial</option></select>
+          </div>
+          <div class="field">
+            <label>Move Type</label>
+            <select data-calc="type" aria-label="Move type"><option value="local">Within Bangalore (Local)</option><option value="intercity">Bangalore to another city</option></select>
+          </div>
+        </div>
+        <div class="calc__row">
+          <div class="field" data-calc-city hidden>
+            <label>Destination City</label>
+            <select data-calc="city" aria-label="Destination city"><option value="1.6">Chennai</option><option value="1.6">Coimbatore</option><option value="1.7">Thrissur</option><option value="1.7">Palakkad</option><option value="2.0">Hyderabad</option><option value="1.9">Cochin / Kochi</option><option value="2.1">Pune</option><option value="2.2">Mumbai</option><option value="2.4">Ahmedabad</option><option value="2.4">Berhampur</option><option value="2.8">Delhi</option><option value="2.8">Kolkata</option><option value="2.0">Other city</option></select>
+          </div>
+          <div class="field">
+            <label>Lift available at both ends?</label>
+            <div class="seg">
+              <label class="seg__opt"><input type="radio" name="calc_lift" value="yes" checked><span>Yes</span></label>
+              <label class="seg__opt"><input type="radio" name="calc_lift" value="no"><span>No</span></label>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn--primary btn--block btn--lg" data-calc-go style="margin-top:6px"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12M6 8h12M9 3c4 0 6 2 6 5s-2 5-6 5H6l7 8"/></svg> Calculate Estimate</button>
+        <div class="calc__result" hidden>
+          <div style="font-size:.85rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px">Estimated Moving Cost</div>
+          <div class="calc__amount">—</div>
+          <p style="font-size:.88rem;color:var(--muted);margin:8px 0 16px">Ballpark only. Final price depends on exact items, distance, packing and access. Get a free survey for a fixed quote.</p>
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+            <a class="btn btn--whatsapp" data-calc-wa target="_blank" rel="noopener"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M17.47 14.38c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.49 0 1.47 1.07 2.89 1.22 3.09.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.19 1.87.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35zM12.04 21.5h-.01a9.46 9.46 0 0 1-4.83-1.32l-.35-.21-3.59.94.96-3.5-.23-.36a9.45 9.45 0 0 1-1.45-5.04c0-5.22 4.25-9.47 9.48-9.47 2.53 0 4.91.99 6.7 2.78a9.42 9.42 0 0 1 2.77 6.7c0 5.22-4.25 9.48-9.46 9.48zm8.06-17.54A11.39 11.39 0 0 0 12.04.62C5.76.62.65 5.73.65 12.01c0 2.01.53 3.97 1.53 5.7L.56 23.38l5.8-1.52a11.36 11.36 0 0 0 5.68 1.45h.01c6.28 0 11.39-5.11 11.39-11.39 0-3.04-1.18-5.9-3.34-8.06z"/></svg> Get Exact Quote</a>
+            <a class="btn btn--outline" href="tel:+919035291929"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg> +91 90352 91929</a>
+          </div>
+        </div>
+      </div>
+      <p class="estimator-note text-center"><a href="/packers-and-movers-cost-calculator-bangalore/">Open full cost calculator <svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a> · or see our <a href="/packers-and-movers-charges-in-bangalore/">detailed rate card</a></p>
     </div>
   </div>
 </section>
@@ -1224,15 +1332,15 @@ form.sent .form-success { display: block; }
         <div class="footer__social"><a href="https://www.facebook.com/harshapackers" aria-label="Facebook" target="_blank" rel="noopener"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg></a><a href="https://www.instagram.com/harshapackersmoversbangalore/" aria-label="Instagram" target="_blank" rel="noopener"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a><a href="https://www.linkedin.com/company/harsha-packers-and-movers-bangalore" aria-label="LinkedIn" target="_blank" rel="noopener"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM8.34 18.34V9.99H5.56v8.35zM6.95 8.76a1.61 1.61 0 1 0 0-3.22 1.61 1.61 0 0 0 0 3.22zM18.44 18.34v-4.58c0-2.45-1.31-3.59-3.06-3.59-1.41 0-2.04.78-2.39 1.32v-1.13h-2.78v8.35h2.78v-4.66c0-1.23.85-1.62 1.45-1.62.59 0 1.22.45 1.22 1.65v4.63z"/></svg></a><a href="https://www.youtube.com/@HarshaPackers" aria-label="YouTube" target="_blank" rel="noopener"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.4-.43-5.02a2.6 2.6 0 0 0-1.83-1.84C19.13 4.7 12 4.7 12 4.7s-7.13 0-8.74.44a2.6 2.6 0 0 0-1.83 1.84C1 8.6 1 12 1 12s0 3.4.43 5.02c.24.9.94 1.6 1.83 1.84 1.61.44 8.74.44 8.74.44s7.13 0 8.74-.44a2.6 2.6 0 0 0 1.83-1.84C23 15.4 23 12 23 12zM9.75 15.27V8.73L15.5 12z"/></svg></a><a href="https://twitter.com/HarshaPackers" aria-label="Twitter" target="_blank" rel="noopener"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.1 8.1L23 22h-6.6l-5.2-6.8L5.3 22H2.2l7.6-8.7L1.7 2h6.8l4.7 6.2zm-1.2 18h1.7L7.2 3.8H5.4z"/></svg></a><a href="https://wa.me/919035291929" aria-label="WhatsApp" target="_blank" rel="noopener"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M17.47 14.38c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.49 0 1.47 1.07 2.89 1.22 3.09.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.19 1.87.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35zM12.04 21.5h-.01a9.46 9.46 0 0 1-4.83-1.32l-.35-.21-3.59.94.96-3.5-.23-.36a9.45 9.45 0 0 1-1.45-5.04c0-5.22 4.25-9.47 9.48-9.47 2.53 0 4.91.99 6.7 2.78a9.42 9.42 0 0 1 2.77 6.7c0 5.22-4.25 9.48-9.46 9.48zm8.06-17.54A11.39 11.39 0 0 0 12.04.62C5.76.62.65 5.73.65 12.01c0 2.01.53 3.97 1.53 5.7L.56 23.38l5.8-1.52a11.36 11.36 0 0 0 5.68 1.45h.01c6.28 0 11.39-5.11 11.39-11.39 0-3.04-1.18-5.9-3.34-8.06z"/></svg></a></div>
       </div>
       <div>
-        <h4>Our Services</h4>
+        <h3>Our Services</h3>
         <nav class="footer__links"><a href="/local-shifting-in-bangalore/">Local Home Shifting</a><a href="/household-shifting-in-bangalore/">Household Shifting</a><a href="/office-shifting-in-bangalore/">Office Relocation</a><a href="/bike-transport-in-bangalore/">Bike Transport</a><a href="/car-transport-in-bangalore/">Car Transport</a><a href="/storage-warehousing-in-bangalore/">Storage &amp; Warehousing</a><a href="/goods-transport-services-in-bangalore/">Goods Transport</a><a href="/storage-warehousing-in-bangalore/">Storage &amp; Warehousing</a></nav>
       </div>
       <div>
-        <h4>Intercity Routes</h4>
+        <h3>Intercity Routes</h3>
         <nav class="footer__links"><a href="/packers-and-movers-bangalore-to-chennai/">Bangalore to Chennai</a><a href="/packers-and-movers-bangalore-to-hyderabad/">Bangalore to Hyderabad</a><a href="/bangalore-to-pune-packers-and-movers/">Bangalore to Pune</a><a href="/packers-and-movers-bangalore-to-mumbai/">Bangalore to Mumbai</a><a href="/packers-and-movers-bangalore-to-delhi/">Bangalore to Delhi</a><a href="/packers-and-movers-from-hyderabad-to-bangalore/">Hyderabad to Bangalore</a><a href="/packers-and-movers-chennai-to-bangalore/">Chennai to Bangalore</a><a href="/packers-and-movers-mumbai-to-bangalore/">Mumbai to Bangalore</a><a href="/packers-and-movers-bangalore-to-other-cities/">Bangalore to All India</a></nav>
       </div>
       <div>
-        <h4>Company</h4>
+        <h3>Company</h3>
         <nav class="footer__links">
           <a href="/about-us/">About Us</a>
           <a href="/services/">All Services</a>
@@ -1245,8 +1353,15 @@ form.sent .form-success { display: block; }
       </div>
     </div>
     <div class="footer__areas">
-      <h4>Packers and Movers in Bangalore — Areas We Serve</h4>
+      <h3>Packers and Movers in Bangalore — Areas We Serve</h3>
       <div class="footer__areas-list"><a href="/packers-and-movers-in-whitefield-bangalore/">Whitefield</a><a href="/packers-and-movers-in-marathahalli-bangalore/">Marathahalli</a><a href="/packers-and-movers-in-hsr-layout-bangalore/">HSR Layout</a><a href="/packers-and-movers-in-kormangala-bangalore/">Koramangala</a><a href="/packers-and-movers-in-electronic-city-bangalore/">Electronic City</a><a href="/packers-and-movers-in-indiranagar-bangalore/">Indiranagar</a><a href="/packers-and-movers-in-btm-layout-bangalore/">BTM Layout</a><a href="/packers-and-movers-in-jp-nagar-bangalore/">JP Nagar</a><a href="/packers-and-movers-in-jayanagar-bangalore/">Jayanagar</a><a href="/packers-and-movers-in-bellandur-bangalore/">Bellandur</a><a href="/packers-and-movers-in-sarjapura-road-bangalore/">Sarjapura Road</a><a href="/packers-and-movers-in-bannerghatta-road-bangalore/">Bannerghatta Road</a><a href="/packers-and-movers-in-hebbal-bangalore/">Hebbal</a><a href="/packers-and-movers-in-yelahanka-bangalore/">Yelahanka</a><a href="/packers-and-movers-in-rt-nagar-bangalore/">RT Nagar</a><a href="/packers-and-movers-in-sahakarnagar-bangalore/">Sahakar Nagar</a><a href="/packers-and-movers-in-sanjaynagar-bangalore/">Sanjay Nagar</a><a href="/packers-and-movers-in-banaswadi-bangalore/">Banaswadi</a><a href="/packers-and-movers-in-kammanahalli-bangalore/">Kammanahalli</a><a href="/packers-and-movers-in-ramamurthy-nagar-bangalore/">Ramamurthy Nagar</a><a href="/packers-and-movers-in-kr-puram-bangalore/">KR Puram</a><a href="/packers-and-movers-in-mahadevapura-bangalore/">Mahadevapura</a><a href="/packers-and-movers-in-hoodi-bangalore/">Hoodi</a><a href="/packers-and-movers-in-kadugodi-bangalore/">Kadugodi</a><a href="/packers-and-movers-in-varthur-bangalore/">Varthur</a><a href="/packers-and-movers-in-kundanahalli-bangalore/">Kundalahalli</a><a href="/packers-and-movers-in-aecs-layout-bangalore/">AECS Layout</a><a href="/packers-and-movers-in-kaggadasapura-bangalore/">Kaggadasapura</a><a href="/packers-and-movers-in-cvramannagar-bangalore/">CV Raman Nagar</a><a href="/packers-and-movers-doddanekundi-bangalore/">Doddanekundi</a><a href="/packers-and-movers-in-domlur-bangalore/">Domlur</a><a href="/packers-and-movers-in-old-airport-road-bangalore/">Old Airport Road</a><a href="/packers-and-movers-in-old-madras-road-bangalore/">Old Madras Road</a><a href="/packers-and-movers-in-murugeshpalya-bangalore/">Murugeshpalya</a><a href="/packers-and-movers-in-ulsoor-bangalore/">Ulsoor</a><a href="/packers-and-movers-in-mg-road-bangalore/">MG Road</a><a href="/packers-and-movers-in-richmond-town-bangalore/">Richmond Town</a><a href="/packers-and-movers-in-shantinagar-bangalore/">Shanti Nagar</a><a href="/packers-and-movers-in-cox-town-bangalore/">Cox Town</a><a href="/packers-and-movers-in-benson-town-bangalore/">Benson Town</a><a href="/packers-and-movers-in-malleshwaram-bangalore/">Malleshwaram</a><a href="/packers-and-movers-in-rajajinagar-bangalore/">Rajajinagar</a><a href="/packers-and-movers-in-vijayanagar-bangalore/">Vijayanagar</a><a href="/packers-and-movers-in-mahalakshmipuram-bangalore/">Mahalakshmipuram</a><a href="/packers-and-movers-in-peenya-bangalore/">Peenya</a><a href="/packers-and-movers-in-sadashivanagar-bangalore/">Sadashivanagar</a><a href="/packers-and-movers-in-basavangudi-bangalore/">Basavanagudi</a><a href="/packers-and-movers-in-bsk-bangalore/">Banashankari (BSK)</a><a href="/packers-and-movers-in-padmanabhanagar-bangalore/">Padmanabhanagar</a><a href="/packers-and-movers-in-kumaraswamy-layout-bangalore/">Kumaraswamy Layout</a><a href="/packers-and-movers-in-uttarahalli-bangalore/">Uttarahalli</a><a href="/packers-and-movers-in-rajarajeshwari-nagar-bangalore/">Rajarajeshwari Nagar</a><a href="/packers-and-movers-in-kengeri-bangalore/">Kengeri</a><a href="/packers-and-movers-in-thalaghattapura-bangalore/">Thalaghattapura</a><a href="/packers-and-movers-in-konanakunte-bangalore/">Konanakunte</a><a href="/packers-and-movers-in-anjanapura-bangalore/">Anjanapura</a><a href="/packers-and-movers-in-gottigere-bangalore/">Gottigere</a><a href="/packers-and-movers-in-hulimavu-bangalore/">Hulimavu</a><a href="/packers-and-movers-in-arekere-bangalore/">Arekere</a><a href="/packers-and-movers-in-bilekahalli-bangalore/">Bilekahalli</a><a href="/packers-and-movers-in-sarakki-bangalore/">Sarakki</a><a href="/packers-and-movers-in-madiwala-bangalore/">Madiwala</a><a href="/packers-and-movers-in-hosur-road-bangalore/">Hosur Road</a><a href="/packers-and-movers-in-kanankapura-road/">Kanakapura Road</a><a href="/packers-and-movers-in-devanahalli-bangalore/">Devanahalli</a></div>
+    </div>
+    <div class="footer__pay">
+      <span class="footer__pay-label"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> Easy &amp; secure payments</span>
+      <span class="pay-chip"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12M6 8h12M9 3c4 0 6 2 6 5s-2 5-6 5H6l7 8"/></svg> UPI</span>
+      <span class="pay-chip"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="1"/><path d="M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01M10 22v-4h4v4"/></svg> Bank Transfer</span>
+      <span class="pay-chip"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg> Card</span>
+      <span class="pay-chip"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1h2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M16 12.5h.01"/></svg> Cash</span>
     </div>
     <div class="footer__bottom">
       <span>&copy; <span data-year>2026</span> Harsha Packers and Movers Bangalore. All rights reserved. · Govt. of India Registered · Udyam UDYAM-KR-03-0196744</span>
@@ -1255,8 +1370,22 @@ form.sent .form-success { display: block; }
   </div>
 </footer>
 <div class="float-cta">
-  <a class="float-cta__wa" href="https://wa.me/919035291929?text=Hi%20Harsha%20Packers%2C%20I%20need%20a%20moving%20quote." target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M17.47 14.38c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.49 0 1.47 1.07 2.89 1.22 3.09.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.19 1.87.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35zM12.04 21.5h-.01a9.46 9.46 0 0 1-4.83-1.32l-.35-.21-3.59.94.96-3.5-.23-.36a9.45 9.45 0 0 1-1.45-5.04c0-5.22 4.25-9.47 9.48-9.47 2.53 0 4.91.99 6.7 2.78a9.42 9.42 0 0 1 2.77 6.7c0 5.22-4.25 9.48-9.46 9.48zm8.06-17.54A11.39 11.39 0 0 0 12.04.62C5.76.62.65 5.73.65 12.01c0 2.01.53 3.97 1.53 5.7L.56 23.38l5.8-1.52a11.36 11.36 0 0 0 5.68 1.45h.01c6.28 0 11.39-5.11 11.39-11.39 0-3.04-1.18-5.9-3.34-8.06z"/></svg></a>
+  <a class="float-cta__wa" href="https://wa.me/919035291929?text=Hi%20Harsha%20Packers%2C%20I%20need%20a%20moving%20quote." data-wa-toggle aria-label="Chat on WhatsApp" aria-expanded="false" target="_blank" rel="noopener"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M17.47 14.38c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.49 0 1.47 1.07 2.89 1.22 3.09.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.19 1.87.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35zM12.04 21.5h-.01a9.46 9.46 0 0 1-4.83-1.32l-.35-.21-3.59.94.96-3.5-.23-.36a9.45 9.45 0 0 1-1.45-5.04c0-5.22 4.25-9.47 9.48-9.47 2.53 0 4.91.99 6.7 2.78a9.42 9.42 0 0 1 2.77 6.7c0 5.22-4.25 9.48-9.46 9.48zm8.06-17.54A11.39 11.39 0 0 0 12.04.62C5.76.62.65 5.73.65 12.01c0 2.01.53 3.97 1.53 5.7L.56 23.38l5.8-1.52a11.36 11.36 0 0 0 5.68 1.45h.01c6.28 0 11.39-5.11 11.39-11.39 0-3.04-1.18-5.9-3.34-8.06z"/></svg><span class="float-cta__badge">1</span></a>
   <a class="float-cta__call" href="tel:+919035291929" aria-label="Call"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
+</div>
+<div class="wa-pop" data-wa-pop hidden role="dialog" aria-label="WhatsApp chat">
+  <div class="wa-pop__head">
+    <span class="wa-pop__avatar"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M17.47 14.38c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.49 0 1.47 1.07 2.89 1.22 3.09.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.19 1.87.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35zM12.04 21.5h-.01a9.46 9.46 0 0 1-4.83-1.32l-.35-.21-3.59.94.96-3.5-.23-.36a9.45 9.45 0 0 1-1.45-5.04c0-5.22 4.25-9.47 9.48-9.47 2.53 0 4.91.99 6.7 2.78a9.42 9.42 0 0 1 2.77 6.7c0 5.22-4.25 9.48-9.46 9.48zm8.06-17.54A11.39 11.39 0 0 0 12.04.62C5.76.62.65 5.73.65 12.01c0 2.01.53 3.97 1.53 5.7L.56 23.38l5.8-1.52a11.36 11.36 0 0 0 5.68 1.45h.01c6.28 0 11.39-5.11 11.39-11.39 0-3.04-1.18-5.9-3.34-8.06z"/></svg></span>
+    <div class="wa-pop__id">
+      <b>Harsha Packers &amp; Movers</b>
+      <small><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> Typically replies in minutes</small>
+    </div>
+    <button class="wa-pop__close" type="button" data-wa-close aria-label="Close chat"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+  </div>
+  <div class="wa-pop__body">
+    <div class="wa-pop__msg">Hi there! 👋<br>Need a free moving quote or have a question about your shift? Chat with us on WhatsApp — we're here 24/7.</div>
+  </div>
+  <a class="wa-pop__cta" href="https://wa.me/919035291929?text=Hi%20Harsha%20Packers%2C%20I%20need%20a%20moving%20quote." target="_blank" rel="noopener"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M17.47 14.38c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.49 0 1.47 1.07 2.89 1.22 3.09.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.19 1.87.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35zM12.04 21.5h-.01a9.46 9.46 0 0 1-4.83-1.32l-.35-.21-3.59.94.96-3.5-.23-.36a9.45 9.45 0 0 1-1.45-5.04c0-5.22 4.25-9.47 9.48-9.47 2.53 0 4.91.99 6.7 2.78a9.42 9.42 0 0 1 2.77 6.7c0 5.22-4.25 9.48-9.46 9.48zm8.06-17.54A11.39 11.39 0 0 0 12.04.62C5.76.62.65 5.73.65 12.01c0 2.01.53 3.97 1.53 5.7L.56 23.38l5.8-1.52a11.36 11.36 0 0 0 5.68 1.45h.01c6.28 0 11.39-5.11 11.39-11.39 0-3.04-1.18-5.9-3.34-8.06z"/></svg> Start Chat</a>
 </div>
 <div class="mobile-bar">
   <a class="mobile-bar__call" href="tel:+919035291929"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Call Now</a>
@@ -1500,6 +1629,29 @@ form.sent .form-success { display: block; }
     });
   }
 
+  /* ---------- WhatsApp chat popup ---------- */
+  var waToggle = document.querySelector('[data-wa-toggle]');
+  var waPop = document.querySelector('[data-wa-pop]');
+  if (waToggle && waPop) {
+    var setWaPop = function (open) {
+      waPop.hidden = !open;
+      waToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+    waToggle.addEventListener('click', function (e) { e.preventDefault(); setWaPop(waPop.hidden); });
+    var waCloseBtn = waPop.querySelector('[data-wa-close]');
+    if (waCloseBtn) waCloseBtn.addEventListener('click', function () { setWaPop(false); });
+    var waCta = waPop.querySelector('.wa-pop__cta');
+    if (waCta) waCta.addEventListener('click', function () { setWaPop(false); });
+    document.addEventListener('click', function (e) {
+      if (waPop.hidden) return;
+      if (waPop.contains(e.target) || waToggle.contains(e.target)) return;
+      setWaPop(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !waPop.hidden) setWaPop(false);
+    });
+  }
+
   /* ---------- Year in footer ---------- */
   var yr = document.querySelector('[data-year]');
   if (yr) yr.textContent = new Date().getFullYear();
@@ -1508,6 +1660,7 @@ form.sent .form-success { display: block; }
   document.addEventListener('click', function (e) {
     var a = e.target.closest ? e.target.closest('a[href^="tel:"], a[href^="mailto:"], a[href*="wa.me"], a[href*="api.whatsapp"]') : null;
     if (!a || typeof window.gtag !== 'function') return;
+    if (a.hasAttribute('data-wa-toggle')) return; // opens chat popup, not a real WhatsApp click
     var href = a.getAttribute('href');
     if (href.indexOf('mailto:') === 0) { window.gtag('event', 'email_click', { event_category: 'engagement' }); return; }
     var isCall = href.indexOf('tel:') === 0;
