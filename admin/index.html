@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Harsha Packers — Document Maker</title>
+<style>
+  :root{--navy:#0a2540;--orange:#ee7322;--line:#d9e1ec;--ink:#1a2b42;--muted:#5b6b80;--bg:#eef2f7}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink)}
+  /* ---- App shell ---- */
+  .topbar{position:sticky;top:0;z-index:30;background:var(--navy);color:#fff;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 14px}
+  .topbar b{font-size:1.05rem;margin-right:8px}
+  .tab{background:rgba(255,255,255,.12);color:#fff;border:none;padding:9px 14px;border-radius:8px;font-size:.92rem;cursor:pointer}
+  .tab.active{background:var(--orange);font-weight:600}
+  .topbar .spacer{flex:1}
+  .btn{background:var(--orange);color:#fff;border:none;padding:10px 16px;border-radius:8px;font-weight:600;cursor:pointer;font-size:.92rem}
+  .btn--ghost{background:rgba(255,255,255,.15)}
+  .wrap{display:grid;grid-template-columns:380px 1fr;gap:0;align-items:start}
+  @media(max-width:900px){.wrap{grid-template-columns:1fr}}
+  /* ---- Form ---- */
+  .form{padding:16px;background:#fff;border-right:1px solid var(--line);min-height:100vh}
+  @media(max-width:900px){.form{border-right:none;border-bottom:1px solid var(--line);min-height:auto}}
+  .form h3{margin:18px 0 8px;font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;color:var(--orange)}
+  .form h3:first-child{margin-top:0}
+  .fld{margin-bottom:10px}
+  .fld label{display:block;font-size:.8rem;color:var(--muted);margin-bottom:3px}
+  .fld input,.fld select,.fld textarea{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:7px;font-size:.9rem;font-family:inherit}
+  .fld textarea{resize:vertical;min-height:54px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .hint{font-size:.74rem;color:var(--muted);margin-top:3px}
+  /* ---- Preview ---- */
+  .preview{padding:22px;overflow:auto}
+  .a4{width:794px;max-width:100%;background:#fff;margin:0 auto 24px;box-shadow:0 6px 30px rgba(10,37,64,.16);padding:40px 44px;font-size:13.5px;line-height:1.5;color:#1a2b42}
+  .doc-head{display:flex;align-items:center;gap:16px;border-bottom:3px solid var(--orange);padding-bottom:14px;margin-bottom:6px}
+  .doc-head__logo{width:96px;flex:0 0 96px;text-align:center}
+  .doc-head__logo img{max-width:96px;max-height:80px}
+  .doc-head__co{flex:1}
+  .doc-head__co .nm{font-size:1.55rem;font-weight:800;color:var(--navy);line-height:1.05;letter-spacing:.3px}
+  .doc-head__co .nm b{color:var(--orange)}
+  .doc-head__co .tg{color:var(--orange);font-size:.82rem;font-style:italic;margin:2px 0 6px}
+  .doc-head__co .ln{font-size:.78rem;color:#33455c;line-height:1.45}
+  .doc-title{text-align:center;font-size:1.5rem;font-weight:800;color:var(--orange);letter-spacing:1px;margin:14px 0 10px}
+  .meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+  .meta div{font-size:.92rem}
+  .meta .lbl{color:var(--muted)}
+  table.t{width:100%;border-collapse:collapse;margin:10px 0}
+  table.t th,table.t td{border:1px solid #c4cfdd;padding:8px 10px;text-align:left;font-size:.86rem;vertical-align:top}
+  table.t th{background:var(--navy);color:#fff;font-weight:600}
+  .amt-words{margin:10px 0;font-weight:600}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:14px}
+  .box{border:1px solid #c4cfdd;border-radius:6px;padding:10px 12px}
+  .box h4{margin:0 0 6px;font-size:.82rem;color:var(--navy)}
+  .box p{margin:2px 0;font-size:.82rem}
+  .sign{margin-top:6px;text-align:right}
+  .sign .stamp{max-height:90px;display:inline-block;margin-bottom:4px}
+  .sign .sig{max-height:54px;display:block;margin-left:auto}
+  .thanks{text-align:center;color:var(--orange);font-weight:700;letter-spacing:1px;margin-top:18px;border-top:1px solid var(--line);padding-top:10px}
+  .chk{display:inline-block;width:14px;height:14px;border:1.5px solid #1a2b42;text-align:center;line-height:13px;font-size:11px;margin-right:5px;vertical-align:middle}
+  .small{font-size:.76rem;color:#33455c}
+  .tnc{margin-top:6px}
+  .tnc h4{color:var(--navy);margin:0 0 6px}
+  .tnc li{font-size:.72rem;margin-bottom:4px;line-height:1.4}
+  .pagebreak{page-break-before:always}
+  .qr{width:120px;height:120px}
+  .reg{font-size:.74rem;color:var(--navy);font-weight:600;margin-top:3px}
+  /* ---- Gate + modal ---- */
+  .gate{position:fixed;inset:0;background:var(--navy);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:#fff}
+  .gate input{padding:11px 14px;border-radius:8px;border:none;font-size:1rem;width:220px;text-align:center}
+  .modal{position:fixed;inset:0;background:rgba(10,37,64,.5);z-index:90;display:none;align-items:center;justify-content:center}
+  .modal.open{display:flex}
+  .modal__card{background:#fff;border-radius:12px;padding:22px;width:340px;max-width:92vw}
+  .modal__card h3{margin:0 0 12px;color:var(--navy)}
+  @media print{
+    .topbar,.form,.no-print{display:none!important}
+    body,.preview,.wrap{background:#fff;display:block;padding:0;margin:0}
+    .a4{box-shadow:none;margin:0;width:auto;padding:0}
+    @page{size:A4;margin:12mm}
+  }
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <div style="font-size:1.3rem;font-weight:700">Harsha Packers — Document Maker</div>
+  <div>Enter password</div>
+  <input id="gpw" type="password" autofocus>
+  <button class="btn" onclick="checkPw()">Open</button>
+  <div id="gerr" style="color:#ffb4a0;font-size:.85rem;height:16px"></div>
+</div>
+
+<div class="topbar no-print">
+  <b>Document Maker</b>
+  <button class="tab active" data-doc="invoice" onclick="setDoc('invoice')">Invoice</button>
+  <button class="tab" data-doc="lr" onclick="setDoc('lr')">LR</button>
+  <button class="tab" data-doc="quote" onclick="setDoc('quote')">Quotation</button>
+  <button class="tab" data-doc="receipt" onclick="setDoc('receipt')">Money Receipt</button>
+  <span class="spacer"></span>
+  <button class="btn btn--ghost" onclick="openSettings()">Settings</button>
+  <button class="btn" onclick="window.print()">Print / Save PDF</button>
+</div>
+
+<div class="wrap">
+  <div class="form no-print" id="form">
+    <h3>Document</h3>
+    <div class="fld"><label>Document No.</label><input id="f_no"><div class="hint">Auto-fills next number. Edit if needed.</div></div>
+    <div class="fld"><label>Date</label><input id="f_date" type="date"></div>
+
+    <h3>Customer (Consignor)</h3>
+    <div class="fld"><label>Name</label><input id="f_cname" placeholder="Customer full name"></div>
+    <div class="fld"><label>Phone</label><input id="f_cphone" placeholder="10-digit mobile"></div>
+    <div class="fld"><label>Address</label><textarea id="f_caddr" placeholder="Customer address (for LR)"></textarea></div>
+
+    <h3>Consignee (for LR — optional)</h3>
+    <div class="fld"><label>Name</label><input id="f_coname" placeholder="Leave blank = same as customer"></div>
+    <div class="fld"><label>Phone</label><input id="f_cophone"></div>
+    <div class="fld"><label>Address</label><textarea id="f_coaddr"></textarea></div>
+
+    <h3>Move details</h3>
+    <div class="row2">
+      <div class="fld"><label>From</label><input id="f_from" placeholder="Bangalore"></div>
+      <div class="fld"><label>To</label><input id="f_to" placeholder="Kolar"></div>
+    </div>
+    <div class="fld"><label>Service / Particulars</label><input id="f_service" value="Packing and Moving Services"></div>
+    <div class="fld"><label>Vehicle / Unit</label><input id="f_vehicle" placeholder="e.g. 17 Feet Vehicle"></div>
+    <div class="row2">
+      <div class="fld"><label>No. of Packages</label><input id="f_pkgs" placeholder="As per list"></div>
+      <div class="fld"><label>Weight</label><input id="f_weight" placeholder="Fixed"></div>
+    </div>
+    <div class="fld"><label>Description (said to contain)</label><textarea id="f_desc" placeholder="Old household items, Not for sale"></textarea></div>
+    <div class="fld"><label>Value of Goods</label><input id="f_value" placeholder="As per list / Not for sale"></div>
+
+    <h3>Amount</h3>
+    <div class="fld"><label>Base Amount (₹)</label><input id="f_amount" type="number" placeholder="25000" oninput="render()"></div>
+    <div class="row2">
+      <div class="fld"><label>Insurance taken?</label><select id="f_ins"><option value="no">No (At owner's risk)</option><option value="yes">Yes (insured)</option></select></div>
+      <div class="fld"><label>Insurance / Risk Charge (₹)</label><input id="f_inscharge" type="number" placeholder="0"></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Advance Paid (₹)</label><input id="f_advance" type="number" placeholder="0"></div>
+      <div class="fld"><label>Payment Status</label><select id="f_status"><option>Paid</option><option>Partially Paid</option><option>To Pay</option></select></div>
+    </div>
+    <div class="fld"><label>Mode of Payment</label><select id="f_mode"><option>Cash</option><option>UPI</option><option>Bank Transfer</option><option>Online</option><option>Cheque</option></select></div>
+
+    <h3>Terms &amp; Conditions</h3>
+    <div class="fld"><label>T&amp;C set (printed on page 2)</label>
+      <select id="f_tnc"><option value="">None</option><option value="local">Local Shifting</option><option value="outstation">Outstation Shifting</option><option value="storage">Storage</option></select>
+    </div>
+    <div style="margin-top:14px"><button class="btn" style="width:100%" onclick="render();window.print()">Print / Save as PDF</button></div>
+  </div>
+
+  <div class="preview"><div class="a4" id="doc"></div></div>
+</div>
+
+<div class="modal" id="settings">
+  <div class="modal__card">
+    <h3>Settings</h3>
+    <div class="fld"><label>Logo image (replaces default)</label><input type="file" accept="image/*" onchange="upload(event,'logo')"></div>
+    <div class="fld"><label>Company stamp (PNG)</label><input type="file" accept="image/*" onchange="upload(event,'stamp')"></div>
+    <div class="fld"><label>Signature (PNG)</label><input type="file" accept="image/*" onchange="upload(event,'sign')"></div>
+    <div class="fld"><label>Custom UPI QR (optional)</label><input type="file" accept="image/*" onchange="upload(event,'qr')"></div>
+    <div class="fld"><label>Next document number</label><input id="s_counter" type="number"></div>
+    <div class="fld"><label>Financial year</label><input id="s_fy"></div>
+    <div class="fld"><label>Change password</label><input id="s_pw" placeholder="new password"></div>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button class="btn" style="flex:1" onclick="saveSettings()">Save</button>
+      <button class="btn btn--ghost" style="flex:1;color:#0a2540" onclick="closeSettings()">Close</button>
+    </div>
+    <div style="font-size:.72rem;color:#5b6b80;margin-top:10px">Logo/stamp/signature are saved only in this browser. For full security, also enable "Password Protect Directories" for /admin in your Hostinger panel.</div>
+  </div>
+</div>
+
+<script>
+/* ================= Company data (fixed) ================= */
+var CO = {
+  name:'Harsha Packers and Movers',
+  nameFull:'Harsha Packers and Movers Bangalore',
+  tagline:'We Move with Care.',
+  addr:'#61, Ground Floor, 1st Cross, BGS Layout, JP Nagar 8th Phase, Bangalore - 560076',
+  phone:'9035291929',
+  email:'harshapackersmovers@gmail.com',
+  web:'harshapackersandmoversbangalore.com',
+  udyam:'UDYAM-KR-03-0196744',
+  bank:{name:'Canara Bank',ac:'120026616125',holder:'Harsha Packers and Movers',ifsc:'CNRB0010484',type:'Current Account'},
+  upi:'9035291929@ptyes'
+};
+var TNC = {
+  local:{title:'Terms & Conditions — Local Shifting within Bangalore',points:[
+    'Please keep your cash, jewellery, and other valuables in your custody/locker before our team enters your home.',
+    'If you cancel the work, the advance is non-refundable.',
+    'We take back all our packing material as soon as the work is done. We do not arrange & unpack small items. If you wish to keep our carton boxes & plastic crates for unpacking, a refundable security deposit will be charged: Rs.100 per carton box, Rs.500 per plastic crate. Pickup charges: Rs.500. Deposit refundable only if boxes are returned within 3 months. If you drop the boxes at our office address, the full deposit will be refunded.',
+    'No electrical work, plumbing work, or dismantling/fitting of items (except cots) will be done.',
+    'Rope work charges: Rs.2,000 extra.',
+    'Vehicle must be unloaded immediately on arrival. If delayed, halting charges of Rs.2,500 for 12 hours will apply.',
+    'If cancelling work after packing, 50% of the quotation amount will be charged.',
+    'Month-end charges apply from 25th to 5th of every month.',
+    'Any consignment given in part load/full load may be detained, diverted, re-routed, or re-booked without the consignor\u2019s permission. Delivery will be done at the given address.',
+    'Two-wheeler shifting (bike/scooter) is not included in local shifting. If required, extra charges of Rs.1,000 will apply.',
+    'Any complaints/damages/issues must be reported within 10 hours of work completion. Later complaints will not be registered.',
+    'We take utmost care of your items during shifting. If insurance is not taken, the customer is fully responsible for any damages. Insurance is done only on behalf of the customer (3% extra). We are not involved in any insurance claim \u2013 claims are strictly between the customer and the insurance company. Glass items are not covered under insurance.'
+  ]},
+  outstation:{title:'Terms & Conditions — Outstation Shifting',points:[
+    'Full payment to be made at loading station (Bangalore). Cheques are not accepted. If payment is via credit card, 2%-3% payment gateway charges apply.',
+    'Quotation includes packing, loading, transportation, unloading.',
+    'Please keep your cash, jewellery, and valuables in your custody/locker before our team enters your home.',
+    'If you cancel the work, the advance is non-refundable.',
+    'No unloading/unpacking at union places. Union settlements are the customer\u2019s responsibility.',
+    'Closed container charges extra \u2013 contact us for details.',
+    'Any dispute with tax authorities will be the customer\u2019s responsibility.',
+    'Vehicle must be unloaded immediately on arrival. If delayed, halting charges of Rs.2,500 for 12 hours will apply.',
+    'If cancelling work after vehicle arrival or packing, 50% of the quotation amount will be charged.',
+    'All disputes subject to Bangalore jurisdiction only.',
+    'We take back all our packing material as soon as the work is done. We do not arrange small items at the new place. If you want to keep boxes, Rs.100 per box charges apply.',
+    'Any consignment given in part load/full load may be detained, diverted, re-routed, or re-booked without consignor\u2019s permission. Delivery will be done at the given address.',
+    'Any complaints/damages/issues must be reported within 10 hours of work completion. Later complaints will not be registered.',
+    'Pots are not allowed in sharing vehicles.',
+    'If insurance is not taken, the customer is fully responsible for any damages. Insurance is done only on behalf of the customer (3% extra). We are not involved in any insurance claim \u2013 claims are strictly between the customer and the insurance company. Glass items are not covered under insurance.'
+  ]},
+  storage:{title:'Terms & Conditions — Storage',points:[
+    'Storage charges must be paid on or before the 10th of each month. Late payment charges: Rs.15 per day.',
+    'Customers must inform the company of any change in contact details by email or post.',
+    '15 days\u2019 notice is required for termination of storage agreement.',
+    'If charges remain unpaid for 90 days, goods will be considered abandoned and subject to auction. One warning letter will be issued before the auction. Auction proceeds will cover dues; balance (if any) will be subject to collections.',
+    'Prohibited storage items include: jewellery, antiques, precious stones, metals, cash, securities, coins, stamps, or similar valuables; animals, birds, fish, or pets; hazardous, illegal, stolen, perishable, explosive, biohazardous items, firearms, weapons, or drugs.',
+    'The company reserves the right to terminate the agreement without notice.',
+    'The value of stored goods must be declared by the customer.',
+    'Storage goods must be insured by the customer; otherwise, goods remain at owner\u2019s risk. Insurance is done only on behalf of the customer. We are not responsible for any insurance claim under any circumstances.',
+    'Storage charges will increase by 10% after 12 months.',
+    'All disputes subject to Bangalore court only.'
+  ]}
+};
+
+/* ================= Storage / settings ================= */
+function L(k,d){try{var v=localStorage.getItem(k);return v===null?d:v;}catch(e){return d;}}
+function S(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+var IMG={logo:L('hpmb_logo',''),stamp:L('hpmb_stamp',''),sign:L('hpmb_sign',''),qr:L('hpmb_qr','')};
+
+/* ================= Helpers ================= */
+function val(id){var e=document.getElementById(id);return e?e.value.trim():'';}
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function rs(n){n=Math.round(Number(n)||0);return n.toLocaleString('en-IN');}
+function fmtDate(iso){if(!iso)return '';var p=iso.split('-');return p.length===3?p[2]+'-'+p[1]+'-'+p[0]:iso;}
+function num2words(num){
+  num=Math.round(Number(num)||0);
+  if(num===0)return 'Zero';
+  var a=['','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen'];
+  var b=['','','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];
+  function two(n){return n<20?a[n]:b[Math.floor(n/10)]+(n%10?' '+a[n%10]:'');}
+  function three(n){return (Math.floor(n/100)?a[Math.floor(n/100)]+' Hundred'+(n%100?' ':''):'')+(n%100?two(n%100):'');}
+  var out='';
+  var crore=Math.floor(num/10000000);num%=10000000;
+  var lakh=Math.floor(num/100000);num%=100000;
+  var thou=Math.floor(num/1000);num%=1000;
+  var hund=num;
+  if(crore)out+=three(crore)+' Crore ';
+  if(lakh)out+=two(lakh)+' Lakh ';
+  if(thou)out+=two(thou)+' Thousand ';
+  if(hund)out+=three(hund);
+  return out.trim();
+}
+function totals(){
+  var base=Number(val('f_amount'))||0;
+  var ins=Number(val('f_inscharge'))||0;
+  var total=base+ins;
+  var adv=Number(val('f_advance'))||0;
+  var bal=total-adv;
+  return {base:base,ins:ins,total:total,adv:adv,bal:bal};
+}
+
+/* ================= Letterhead ================= */
+var LOGO_SVG='<svg viewBox="0 0 120 96" width="92" height="74" aria-hidden="true">'+
+  '<path d="M20 30 Q52 12 86 22" stroke="#ee7322" stroke-width="6" fill="none" stroke-linecap="round"/>'+
+  '<path d="M86 22 l-9 -3 m9 3 l-3 9" stroke="#ee7322" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'+
+  '<rect x="14" y="34" width="52" height="34" rx="4" fill="#ee7322"/>'+
+  '<path d="M66 44 h20 l16 14 v10 H66 z" fill="#ee7322"/>'+
+  '<path d="M70 48 h13 l11 10 H70 z" fill="#fff"/>'+
+  '<circle cx="36" cy="74" r="10" fill="#0a2540"/><circle cx="36" cy="74" r="4" fill="#fff"/>'+
+  '<circle cx="88" cy="74" r="10" fill="#0a2540"/><circle cx="88" cy="74" r="4" fill="#fff"/></svg>';
+function letterhead(){
+  var logo = IMG.logo ? '<img src="'+IMG.logo+'" alt="logo">' : LOGO_SVG;
+  return '<div class="doc-head"><div class="doc-head__logo">'+logo+'</div>'+
+    '<div class="doc-head__co"><div class="nm">HARSHA <b>PACKERS &amp; MOVERS</b></div>'+
+    '<div class="tg">'+CO.tagline+'</div>'+
+    '<div class="ln">'+esc(CO.addr)+'</div>'+
+    '<div class="ln">Phone: '+CO.phone+' &nbsp;|&nbsp; '+CO.email+' &nbsp;|&nbsp; '+CO.web+'</div>'+
+    '<div class="reg">Govt. of India Registered &middot; Udyam: '+CO.udyam+'</div></div></div>';
+}
+function bankBox(){
+  return '<div class="box"><h4>Bank Details</h4>'+
+    '<p><b>Bank:</b> '+CO.bank.name+'</p>'+
+    '<p><b>A/c Name:</b> '+CO.bank.holder+'</p>'+
+    '<p><b>A/c No:</b> '+CO.bank.ac+'</p>'+
+    '<p><b>IFSC:</b> '+CO.bank.ifsc+'</p>'+
+    '<p><b>UPI:</b> '+CO.upi+'</p></div>';
+}
+function signBox(){
+  var stamp = IMG.stamp ? '<img class="stamp" src="'+IMG.stamp+'">' : '';
+  var sig = IMG.sign ? '<img class="sig" src="'+IMG.sign+'">' : '';
+  return '<div class="box" style="border:none;text-align:right">'+stamp+sig+
+    '<p style="margin-top:6px"><b>For '+CO.nameFull+'</b></p><p class="small">Authorised Signatory</p></div>';
+}
+function tncPage(){
+  var key=val('f_tnc');if(!key||!TNC[key])return '';
+  var t=TNC[key];
+  var li=t.points.map(function(p,i){return '<li>'+esc(p)+'</li>';}).join('');
+  return '<div class="tnc pagebreak">'+letterhead()+'<h4>'+esc(t.title)+'</h4><ol>'+li+'</ol></div>';
+}
+
+/* ================= Document renderers ================= */
+function meta(label,no){
+  return '<div class="meta"><div><span class="lbl">'+label+' No:</span> <b>'+esc(no||'')+'</b></div>'+
+    '<div><span class="lbl">Date:</span> <b>'+fmtDate(val('f_date'))+'</b></div></div>';
+}
+function renderInvoice(){
+  var t=totals();
+  var insLine = t.ins? '<tr><td>Insurance / Risk Charge</td><td>From-To as below</td><td></td><td></td><td>Rs. '+rs(t.ins)+'</td></tr>':'';
+  return letterhead()+'<div class="doc-title">INVOICE</div>'+
+    '<div class="meta"><div><span class="lbl">Bill To:</span> <b>'+esc(val('f_cname'))+'</b><br><span class="small">'+esc(val('f_cphone'))+'</span></div>'+
+    '<div style="text-align:right"><div><span class="lbl">Invoice No:</span> <b>'+esc(val('f_no'))+'</b></div><div><span class="lbl">Date:</span> <b>'+fmtDate(val('f_date'))+'</b></div><div class="small">GST: N/A</div></div></div>'+
+    '<table class="t"><tr><th>Particulars</th><th>From</th><th>To</th><th>Vehicle / Pkgs</th><th style="text-align:right">Amount</th></tr>'+
+    '<tr><td>'+esc(val('f_service'))+'</td><td>'+esc(val('f_from'))+'</td><td>'+esc(val('f_to'))+'</td><td>'+esc(val('f_vehicle')||val('f_pkgs'))+'</td><td style="text-align:right">Rs. '+rs(t.base)+'</td></tr>'+
+    insLine+
+    '<tr><td colspan="4" style="text-align:right"><b>Total Amount</b></td><td style="text-align:right"><b>Rs. '+rs(t.total)+'</b></td></tr>'+
+    (t.adv?'<tr><td colspan="4" style="text-align:right">Advance Paid</td><td style="text-align:right">Rs. '+rs(t.adv)+'</td></tr><tr><td colspan="4" style="text-align:right"><b>Balance</b></td><td style="text-align:right"><b>Rs. '+rs(t.bal)+'</b></td></tr>':'')+
+    '</table>'+
+    '<div class="amt-words">Amount in words: Rupees '+num2words(t.total)+' Only</div>'+
+    '<div class="small"><b>Payment Status:</b> '+esc(val('f_status'))+' &nbsp; | &nbsp; <b>Mode:</b> '+esc(val('f_mode'))+'</div>'+
+    '<div class="small" style="margin-top:8px">We ensure proper packing, loading and unloading of all items with utmost care. However, any damages arising from factors beyond our control will not be eligible for claims unless insurance coverage has been opted for.</div>'+
+    '<div class="twocol">'+bankBox()+signBox()+'</div>'+
+    '<div class="thanks">THANK YOU FOR DOING BUSINESS WITH US</div>'+tncPage();
+}
+function renderReceipt(){
+  var t=totals();
+  return letterhead()+'<div class="doc-title">MONEY RECEIPT</div>'+
+    meta('Receipt',val('f_no'))+
+    '<p><b>Received with thanks from:</b> '+esc(val('f_cname'))+' &nbsp; <span class="small">GSTIN: N/A</span></p>'+
+    '<table class="t"><tr><th>Description</th><th>Information</th></tr>'+
+    '<tr><td>Service Type</td><td>'+esc(val('f_service'))+'</td></tr>'+
+    '<tr><td>From</td><td>'+esc(val('f_from'))+'</td></tr>'+
+    '<tr><td>To</td><td>'+esc(val('f_to'))+'</td></tr>'+
+    '<tr><td>Mode of Payment</td><td>'+esc(val('f_mode'))+'</td></tr>'+
+    '<tr><td>Payment Status</td><td>'+esc(val('f_status'))+'</td></tr></table>'+
+    '<div class="amt-words">Amount Received: Rs. '+rs(t.adv||t.total)+'/- (Rupees '+num2words(t.adv||t.total)+' Only)</div>'+
+    '<div class="twocol">'+bankBox()+signBox()+'</div>'+
+    '<div class="thanks">THANK YOU FOR DOING BUSINESS WITH US</div>'+tncPage();
+}
+function renderQuotation(){
+  var t=totals();
+  var qrSrc = IMG.qr ? IMG.qr : 'https://api.qrserver.com/v1/create-qr-code/?size=140x140&data='+encodeURIComponent('upi://pay?pa='+CO.upi+'&pn='+CO.name+'&cu=INR');
+  return letterhead()+'<div class="doc-title">QUOTATION</div>'+
+    '<div class="meta"><div><span class="lbl">To:</span> <b>'+esc(val('f_cname'))+'</b></div><div><span class="lbl">Date:</span> <b>'+fmtDate(val('f_date'))+'</b> &nbsp; <span class="lbl">Quote No:</span> <b>'+esc(val('f_no'))+'</b></div></div>'+
+    '<table class="t"><tr><th>Particulars</th><th>Unit</th><th style="text-align:right">Amount</th></tr>'+
+    '<tr><td>From: '+esc(val('f_from'))+'<br>To: '+esc(val('f_to'))+'</td><td>'+esc(val('f_vehicle'))+'</td><td style="text-align:right">Rs. '+rs(t.base)+'</td></tr>'+
+    (t.ins?'<tr><td>Insurance / Risk Charge</td><td></td><td style="text-align:right">Rs. '+rs(t.ins)+'</td></tr>':'')+
+    '<tr><td colspan="2" style="text-align:right"><b>Total</b></td><td style="text-align:right"><b>Rs. '+rs(t.total)+'</b></td></tr></table>'+
+    '<div class="amt-words">Rupees '+num2words(t.total)+' Only</div>'+
+    (t.adv?'<p class="small">Please send an advance of Rs. '+rs(t.adv)+'/- for confirmation.</p>':'')+
+    '<div class="twocol"><div>'+bankBox()+'<p class="small" style="margin-top:6px">UPI ID: '+CO.upi+'</p></div>'+
+    '<div style="text-align:center"><img class="qr" src="'+qrSrc+'" alt="UPI QR"><p class="small">Scan to pay</p>'+signBox()+'</div></div>'+
+    '<div class="thanks">THANK YOU FOR DOING BUSINESS WITH US</div>'+tncPage();
+}
+function renderLR(){
+  var t=totals();
+  var coname=val('f_coname')||val('f_cname');
+  var cophone=val('f_cophone')||val('f_cphone');
+  var coaddr=val('f_coaddr')||val('f_caddr');
+  var insured=val('f_ins')==='yes';
+  return letterhead()+'<div class="doc-title">LORRY RECEIPT</div>'+
+    '<div class="meta"><div><span class="lbl">Consignor Copy</span></div><div><span class="lbl">L.R. No:</span> <b>'+esc(val('f_no'))+'</b> &nbsp; <span class="lbl">Date:</span> <b>'+fmtDate(val('f_date'))+'</b></div></div>'+
+    '<div class="twocol" style="margin-top:4px">'+
+    '<div class="box"><h4>Consignor</h4><p><b>'+esc(val('f_cname'))+'</b></p><p>'+esc(val('f_caddr'))+'</p><p>Ph: '+esc(val('f_cphone'))+'</p></div>'+
+    '<div class="box"><h4>Consignee</h4><p><b>'+esc(coname)+'</b></p><p>'+esc(coaddr)+'</p><p>Ph: '+esc(cophone)+'</p></div></div>'+
+    '<div class="twocol" style="margin-top:10px"><div class="box"><p><span class="chk">'+(insured?'':'\u2713')+'</span><b>At Owner\u2019s Risk</b></p><p><span class="chk">'+(insured?'\u2713':'')+'</span><b>Insurance</b></p><p class="small">The customer has stated that he has '+(insured?'':'not ')+'insured the consignment.</p>'+
+    '<p class="small" style="margin-top:6px"><b>Schedule of Demurrage:</b> Demurrage chargeable after 15 days from today @ Rs. 500/- per day per Qtl. on weight charged.</p></div>'+
+    '<table class="t" style="margin:0"><tr><th>Charges</th><th style="text-align:right">Rs.</th></tr>'+
+    '<tr><td>Freight / Charges</td><td style="text-align:right">'+rs(t.base)+'</td></tr>'+
+    '<tr><td>Insurance / Risk</td><td style="text-align:right">'+(t.ins?rs(t.ins):'N/A')+'</td></tr>'+
+    '<tr><td><b>Total</b></td><td style="text-align:right"><b>'+rs(t.total)+'</b></td></tr>'+
+    '<tr><td>Paid</td><td style="text-align:right">'+(t.adv?rs(t.adv):(val('f_status')==='Paid'?rs(t.total):'\u2014'))+'</td></tr>'+
+    '<tr><td>To Pay</td><td style="text-align:right">'+(val('f_status')==='Paid'?'\u2014':rs(t.bal))+'</td></tr></table></div>'+
+    '<div class="twocol" style="margin-top:10px"><div class="box"><h4>From</h4><p>'+esc(val('f_from'))+'</p></div><div class="box"><h4>To</h4><p>'+esc(val('f_to'))+'</p></div></div>'+
+    '<table class="t"><tr><th>No. of Packages</th><th>Description (Said to Contain)</th><th>Weight</th><th>Value of Goods</th></tr>'+
+    '<tr><td>'+esc(val('f_pkgs'))+'</td><td>'+esc(val('f_desc'))+'</td><td>'+esc(val('f_weight'))+'</td><td>'+esc(val('f_value'))+'</td></tr></table>'+
+    '<div class="twocol"><div class="small">Read terms &amp; conditions overleaf.<br><br>____________________<br>Customer\u2019s Signature</div>'+signBox()+'</div>'+tncPage();
+}
+var RENDER={invoice:renderInvoice,lr:renderLR,quote:renderQuotation,receipt:renderReceipt};
+var activeDoc='invoice';
+function render(){document.getElementById('doc').innerHTML=RENDER[activeDoc]();}
+function setDoc(d){activeDoc=d;var t=document.querySelectorAll('.tab');for(var i=0;i<t.length;i++){t[i].classList.toggle('active',t[i].getAttribute('data-doc')===d);}render();}
+
+/* ================= Number / settings ================= */
+function nextNumber(){
+  var fy=L('hpmb_fy','2026-27');var c=parseInt(L('hpmb_counter','101'),10)||101;
+  return 'HPMB/'+fy+'/'+c;
+}
+function openSettings(){
+  document.getElementById('s_counter').value=L('hpmb_counter','101');
+  document.getElementById('s_fy').value=L('hpmb_fy','2026-27');
+  document.getElementById('s_pw').value='';
+  document.getElementById('settings').classList.add('open');
+}
+function closeSettings(){document.getElementById('settings').classList.remove('open');}
+function saveSettings(){
+  S('hpmb_counter',document.getElementById('s_counter').value||'101');
+  S('hpmb_fy',document.getElementById('s_fy').value||'2026-27');
+  var np=document.getElementById('s_pw').value.trim();if(np)S('hpmb_pw',np);
+  document.getElementById('f_no').value=nextNumber();
+  closeSettings();render();
+}
+function upload(ev,key){
+  var f=ev.target.files[0];if(!f)return;var r=new FileReader();
+  r.onload=function(){IMG[key]=r.result;S('hpmb_'+key,r.result);render();};
+  r.readAsDataURL(f);
+}
+
+/* ================= Gate ================= */
+function checkPw(){
+  var pw=document.getElementById('gpw').value;
+  if(pw===L('hpmb_pw','harsha2026')){document.getElementById('gate').style.display='none';init();}
+  else{document.getElementById('gerr').textContent='Wrong password';}
+}
+document.getElementById('gpw').addEventListener('keydown',function(e){if(e.key==='Enter')checkPw();});
+
+/* ================= Init ================= */
+function init(){
+  var d=new Date();var iso=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  document.getElementById('f_date').value=iso;
+  document.getElementById('f_no').value=nextNumber();
+  // live render on any input
+  document.getElementById('form').addEventListener('input',render);
+  document.getElementById('form').addEventListener('change',render);
+  render();
+}
+</script>
+</body>
+</html>
