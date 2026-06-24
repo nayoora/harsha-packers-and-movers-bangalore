@@ -779,6 +779,65 @@ form.sent .form-success { display: block; }
 .exit-pop__or { text-align: center; margin-top: 14px; color: var(--muted); font-size: .92rem; }
 .exit-pop__or a { color: var(--gold); font-weight: 700; }
 
+/* ===================== PREMIUM DESIGN POLISH ===================== */
+
+/* Hero depth: richer layered glows + subtle grid texture (brand poster look) */
+.page-hero::before {
+  background-image:
+    radial-gradient(circle at 88% 6%, rgba(238,115,34,.22), transparent 42%),
+    radial-gradient(circle at 4% 96%, rgba(56,130,210,.16), transparent 46%);
+}
+.page-hero::after {
+  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size: 46px 46px, 46px 46px;
+  -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,.9), transparent 82%);
+          mask-image: linear-gradient(180deg, rgba(0,0,0,.9), transparent 82%);
+}
+.page-hero__inner { position: relative; z-index: 1; }
+.page-hero h1, .hero--home h1 { font-weight: 800; letter-spacing: -1px; }
+
+/* Dark CTA + callback bands: matching grid texture for a cohesive premium feel */
+.cta-band::after, .cb-band::after {
+  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+  background-size: 42px 42px, 42px 42px;
+  -webkit-mask-image: radial-gradient(circle at 50% 35%, #000, transparent 78%);
+          mask-image: radial-gradient(circle at 50% 35%, #000, transparent 78%);
+}
+.cta-band > *, .cb-band > * { position: relative; z-index: 1; }
+
+/* Trust bar: crisp gold top accent */
+.trustbar::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--gold), var(--gold-dark)); z-index: 1; }
+
+/* Service / feature cards: gentle resting elevation so they feel tangible */
+.card { box-shadow: var(--shadow-sm); }
+
+/* Centered section headings: subtle gold accent bar under the title */
+.section-head.text-center h2::after {
+  content: ''; display: block; width: 64px; height: 4px; margin: 16px auto 0;
+  border-radius: 100px; background: linear-gradient(90deg, var(--gold), var(--gold-dark));
+}
+
+/* Reviews: premium quotation watermark + hover lift */
+.review { position: relative; overflow: hidden; transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+.review::before {
+  content: '\201D'; position: absolute; top: 4px; right: 20px; font-family: Georgia, 'Times New Roman', serif;
+  font-size: 108px; line-height: 1; color: var(--gold); opacity: .09; pointer-events: none;
+}
+.review:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: transparent; }
+
+/* Gallery: soft navy overlay on hover to add depth */
+.gallery figure::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,37,64,.5), transparent 55%); opacity: 0; transition: opacity .3s ease; pointer-events: none; }
+.gallery figure:hover::after { opacity: 1; }
+
+/* Comparison: highlight the winning column edge */
+.compare__col--us { box-shadow: inset 3px 0 0 rgba(31,170,89,.35), inset -3px 0 0 rgba(31,170,89,.35); }
+
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"MovingCompany","@id":"https://harshapackersandmoversbangalore.com/#business","name":"Harsha Packers and Movers Bangalore","image":"https://harshapackersandmoversbangalore.com/assets/img/og-cover.jpg","logo":"https://harshapackersandmoversbangalore.com/assets/img/logo.svg","url":"https://harshapackersandmoversbangalore.com/","telephone":"+919035291929","email":"harshapackersmovers@gmail.com","priceRange":"₹₹","currenciesAccepted":"INR","paymentAccepted":"Cash, UPI, Bank Transfer, Credit Card","availableLanguage":["English","Hindi","Kannada"],"slogan":"Bangalore's Trusted Packers & Movers Since 2005","foundingDate":"2005","address":{"@type":"PostalAddress","streetAddress":"No 61, Ground Floor, 1st Cross, BGS Layout, Jambusavari Dinne, Near BWSSB Water Tank","addressLocality":"Bengaluru","addressRegion":"Karnataka","postalCode":"560076","addressCountry":"IN"},"geo":{"@type":"GeoCoordinates","latitude":"12.8916","longitude":"77.5712"},"hasMap":"https://www.google.com/maps/dir/?api=1&destination=Harsha+Packers+and+Movers+Bangalore,+Jambusavari+Dinne,+Bengaluru,+Karnataka+560076","areaServed":[{"@type":"Place","name":"Bengaluru, Karnataka"},{"@type":"Place","name":"Hebbal, Bengaluru"},{"@type":"Place","name":"Jayanagar, Bengaluru"},{"@type":"Place","name":"HSR Layout, Bengaluru"},{"@type":"Place","name":"Whitefield, Bengaluru"},{"@type":"Place","name":"Indiranagar, Bengaluru"},{"@type":"Place","name":"JP Nagar, Bengaluru"},{"@type":"Place","name":"Koramangala, Bengaluru"},{"@type":"Place","name":"Vijayanagar, Bengaluru"},{"@type":"Place","name":"Banashankari, Bengaluru"},{"@type":"Place","name":"Marathahalli, Bengaluru"},{"@type":"Place","name":"Electronic City, Bengaluru"},{"@type":"Place","name":"Sarjapur Road, Bengaluru"},{"@type":"Place","name":"Bellandur, Bengaluru"},{"@type":"Place","name":"Yelahanka, Bengaluru"}],"openingHoursSpecification":{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"00:00","closes":"23:59"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","reviewCount":"122","bestRating":"5"},"review":[{"@type":"Review","datePublished":"2025-06-16","reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"author":{"@type":"Person","name":"Ashwini Krishnamurthy"},"reviewBody":"Service was good and we are very happy with the work. Furniture, TV and fridge — everything was handled with full care."},{"@type":"Review","datePublished":"2025-03-19","reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"author":{"@type":"Person","name":"Sur Dhara"},"reviewBody":"Excellent work. I am fully satisfied — 10 out of 10. Such packers are very few in India. I appreciate their hard work and honesty."},{"@type":"Review","datePublished":"2025-01-16","reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"author":{"@type":"Person","name":"Ganesh S"},"reviewBody":"Excellent service. Very professional and polite individuals. Highly recommend."},{"@type":"Review","datePublished":"2024-12-23","reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"author":{"@type":"Person","name":"Chandrakant Chandarkar"},"reviewBody":"Excellent service. Hardworking and sincere team with on-time delivery. Highly recommended organisation."},{"@type":"Review","datePublished":"2024-11-29","reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"author":{"@type":"Person","name":"Vishnu"},"reviewBody":"Used Harsha Packers and Movers to shift my household items from Bangalore to Kerala. Smooth, careful and professional service."}],"identifier":{"@type":"PropertyValue","propertyID":"Udyam Registration Number","value":"UDYAM-KR-03-0196744"},"sameAs":["https://www.facebook.com/harshapackers","https://twitter.com/HarshaPackers","https://www.instagram.com/harshapackersmoversbangalore/","https://www.linkedin.com/company/harsha-packers-and-movers-bangalore","https://www.youtube.com/@HarshaPackers"],"knowsAbout":["Packers and Movers in Bangalore","Movers and Packers in Bangalore","House Shifting","Household Goods Relocation","Office Relocation","Bike Transport","Car Transport","Intercity Relocation","Storage and Warehousing","Goods Transport","Packing and Unpacking"],"hasOfferCatalog":{"@type":"OfferCatalog","name":"Packers and Movers Services in Bangalore","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Local Shifting in Bangalore","url":"https://harshapackersandmoversbangalore.com/local-shifting-in-bangalore/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Household Shifting in Bangalore","url":"https://harshapackersandmoversbangalore.com/household-shifting-in-bangalore/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Office Shifting in Bangalore","url":"https://harshapackersandmoversbangalore.com/office-shifting-in-bangalore/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Bike Transport in Bangalore","url":"https://harshapackersandmoversbangalore.com/bike-transport-in-bangalore/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Car Transport in Bangalore","url":"https://harshapackersandmoversbangalore.com/car-transport-in-bangalore/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Storage & Warehousing in Bangalore","url":"https://harshapackersandmoversbangalore.com/storage-warehousing-in-bangalore/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Goods Transport in Bangalore","url":"https://harshapackersandmoversbangalore.com/goods-transport-services-in-bangalore/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Logistics Services in Bangalore","url":"https://harshapackersandmoversbangalore.com/logistic-services-in-bangalore/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Domestic Shifting from Bangalore","url":"https://harshapackersandmoversbangalore.com/domestic-shifting/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Pre-Move Survey in Bangalore","url":"https://harshapackersandmoversbangalore.com/pre-move-survey-in-bangalore/"}}]}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://harshapackersandmoversbangalore.com/#website","url":"https://harshapackersandmoversbangalore.com/","name":"Harsha Packers and Movers Bangalore","inLanguage":"en-IN","publisher":{"@id":"https://harshapackersandmoversbangalore.com/#business"}}</script>
