@@ -98,9 +98,9 @@
       return ok;
     }
 
-    function validate() {
+    function validateScope(scope) {
       var ok = true;
-      form.querySelectorAll('[required]').forEach(function (f) {
+      scope.querySelectorAll('[required]').forEach(function (f) {
         var bad;
         if (f.type === 'radio') {
           bad = !radioChecked(f.name);
@@ -115,6 +115,7 @@
       });
       return ok;
     }
+    function validate() { return validateScope(form); }
 
     form.querySelectorAll('input:not([type=radio]), textarea, select').forEach(function (f) {
       f.addEventListener('blur', function () { if (f.hasAttribute('required')) setError(f, !(f.value || '').trim()); });
@@ -158,7 +159,7 @@
       if (pu && !pu.value) pu.value = window.location.href;
       if (!validate()) {
         var firstErr = form.querySelector('.field--error input, .field--error textarea, .field--error select');
-        if (firstErr) firstErr.focus();
+        if (firstErr) { if (form._wizShowFor) form._wizShowFor(firstErr); try { firstErr.focus(); } catch (e0) {} }
         return;
       }
       var fd = new FormData(form);
@@ -192,6 +193,45 @@
       if (typeof window.gtag === 'function' && window.HARSHA && window.HARSHA.adsId) window.gtag('event', 'conversion', { send_to: window.HARSHA.adsId + (window.HARSHA.adsLabel ? '/' + window.HARSHA.adsLabel : '') });
       try { form.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (err2) {}
     });
+
+    /* ---- Multi-step wizard (progressive enhancement; degrades to one form without JS) ---- */
+    if (form.hasAttribute('data-wizard')) {
+      var steps = [].slice.call(form.querySelectorAll('.qstep'));
+      if (steps.length > 1) {
+        var fill = form.querySelector('[data-wiz-fill]');
+        var curEl = form.querySelector('[data-wiz-cur]');
+        var totEl = form.querySelector('[data-wiz-total]');
+        var lblEl = form.querySelector('[data-wiz-label]');
+        var backBtn = form.querySelector('[data-wiz-back]');
+        var nextBtn = form.querySelector('[data-wiz-next]');
+        var subBtn = form.querySelector('[data-wiz-submit]');
+        var idx = 0;
+        form.classList.add('is-wizard');
+        if (totEl) totEl.textContent = steps.length;
+        var showStep = function (i, focus) {
+          idx = Math.max(0, Math.min(i, steps.length - 1));
+          var last = idx === steps.length - 1;
+          steps.forEach(function (s, n) { s.classList.toggle('is-active', n === idx); });
+          if (fill) fill.style.width = Math.round((idx + 1) / steps.length * 100) + '%';
+          if (curEl) curEl.textContent = idx + 1;
+          if (lblEl) lblEl.textContent = steps[idx].getAttribute('data-label') || '';
+          if (backBtn) backBtn.style.display = idx === 0 ? 'none' : 'inline-flex';
+          if (nextBtn) nextBtn.style.display = last ? 'none' : 'inline-flex';
+          if (subBtn) subBtn.style.display = last ? 'inline-flex' : 'none';
+          if (focus) { var fi = steps[idx].querySelector('input:not([type=hidden]), select, textarea'); if (fi) { try { fi.focus({ preventScroll: true }); } catch (e) {} } }
+        };
+        form._wizShowFor = function (el) { var s = el.closest ? el.closest('.qstep') : null; var n = steps.indexOf(s); if (n >= 0) showStep(n, true); };
+        if (nextBtn) nextBtn.addEventListener('click', function () {
+          if (validateScope(steps[idx])) showStep(idx + 1, true);
+          else { var fe = steps[idx].querySelector('.field--error input, .field--error textarea, .field--error select'); if (fe) fe.focus(); }
+        });
+        if (backBtn) backBtn.addEventListener('click', function () { showStep(idx - 1, true); });
+        form.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' && e.target && e.target.tagName !== 'TEXTAREA' && idx < steps.length - 1) { e.preventDefault(); if (nextBtn) nextBtn.click(); }
+        });
+        showStep(0, false);
+      }
+    }
   });
 
   /* ---------- Header shadow on scroll ---------- */
@@ -256,6 +296,82 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && !waPop.hidden) setWaPop(false);
     });
+  }
+
+  /* ---------- Callback micro-form (name + phone only) ---------- */
+  document.querySelectorAll('form[data-callback-form]').forEach(function (form) {
+    var endpoint = form.getAttribute('action') || '/submit.php';
+    function setErr(field, on) { var w = field.closest('.field'); if (w) w.classList.toggle('field--error', on); }
+    function valid() {
+      var ok = true;
+      form.querySelectorAll('[required]').forEach(function (f) {
+        var v = (f.value || '').trim(); var bad = !v;
+        if (f.type === 'tel') bad = !/^[+]?[0-9\s-]{10,15}$/.test(v);
+        setErr(f, bad); if (bad) ok = false;
+      });
+      return ok;
+    }
+    form.querySelectorAll('input').forEach(function (f) { f.addEventListener('blur', function () { if (f.hasAttribute('required')) setErr(f, !(f.value || '').trim()); }); });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var pu = form.querySelector('[name="page_url"]'); if (pu && !pu.value) pu.value = window.location.href;
+      if (!valid()) { var fe = form.querySelector('.field--error input'); if (fe) fe.focus(); return; }
+      var fd = new FormData(form); var d = {}; fd.forEach(function (v, k) { d[k] = v; });
+      var msg = '*Callback Request - Harsha Packers*\n\nName: ' + (d.name || '') + '\nNumber: ' + (d.phone || '') + '\nPlease call me back for a moving quote.';
+      if (d.page_url) msg += '\n' + d.page_url;
+      var waUrl = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(msg);
+      var fb = form.querySelector('[data-wa-fallback]'); if (fb) fb.href = waUrl;
+      var web3 = (window.HARSHA && window.HARSHA.web3) || '';
+      if (web3 && web3.indexOf('REPLACE') === -1) {
+        fd.append('access_key', web3);
+        fd.append('subject', 'Callback Request: ' + (d.name || '') + ' (' + (d.phone || '') + ')');
+        fd.append('from_name', 'Harsha Packers Website');
+        try { fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd }).catch(function () {}); } catch (er) {}
+      } else {
+        try { fetch(endpoint, { method: 'POST', body: fd, headers: { 'X-Requested-With': 'fetch' } }).catch(function () {}); } catch (er) {}
+      }
+      form.classList.add('sent');
+      if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { method: 'callback' });
+      if (typeof window.gtag === 'function' && window.HARSHA && window.HARSHA.adsId) window.gtag('event', 'conversion', { send_to: window.HARSHA.adsId + (window.HARSHA.adsLabel ? '/' + window.HARSHA.adsLabel : '') });
+    });
+  });
+
+  /* ---------- Sticky desktop quote bar ---------- */
+  var deskBar = document.querySelector('[data-desk-bar]');
+  if (deskBar) {
+    var deskOn = false;
+    var updateDesk = function () {
+      var doc = document.documentElement;
+      var nearBottom = (window.innerHeight + window.scrollY) >= (doc.scrollHeight - 260);
+      var on = window.scrollY > 700 && !nearBottom && window.innerWidth > 992;
+      if (on === deskOn) return;
+      deskOn = on;
+      deskBar.classList.toggle('is-on', on);
+      document.body.classList.toggle('deskbar-on', on);
+    };
+    window.addEventListener('scroll', updateDesk, { passive: true });
+    window.addEventListener('resize', updateDesk);
+    updateDesk();
+  }
+
+  /* ---------- Exit-intent (desktop, once per session) ---------- */
+  var exitPop = document.querySelector('[data-exit-pop]');
+  if (exitPop && window.innerWidth > 992) {
+    var exitShown = false;
+    try { exitShown = sessionStorage.getItem('hpExit') === '1'; } catch (e) {}
+    var closeExit = function () { exitPop.hidden = true; document.body.classList.remove('exit-open'); };
+    var openExit = function () {
+      if (exitShown) return;
+      exitShown = true;
+      try { sessionStorage.setItem('hpExit', '1'); } catch (e) {}
+      exitPop.hidden = false;
+      document.body.classList.add('exit-open');
+      if (typeof window.gtag === 'function') window.gtag('event', 'exit_intent_shown', { event_category: 'engagement' });
+    };
+    document.addEventListener('mouseout', function (e) { if (!e.relatedTarget && e.clientY <= 0) openExit(); });
+    exitPop.addEventListener('click', function (e) { if (e.target === exitPop) closeExit(); });
+    var ec = exitPop.querySelector('[data-exit-close]'); if (ec) ec.addEventListener('click', closeExit);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !exitPop.hidden) closeExit(); });
   }
 
   /* ---------- Year in footer ---------- */
