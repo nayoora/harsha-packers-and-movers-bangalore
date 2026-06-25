@@ -902,3 +902,43 @@ a[href^="tel:"], a[href^="mailto:"] {
 }
 /* Block image dragging + iOS long-press "save image" */
 img { -webkit-user-drag: none; user-drag: none; -webkit-touch-callout: none; }
+
+/* ===================== PREMIUM POLISH v3 ===================== */
+
+/* Animated underline on desktop nav links (uses ::before so it never clashes with the dropdown caret ::after) */
+@media (min-width: 993px) {
+  .nav__link { position: relative; }
+  .nav__link::before {
+    content: ''; position: absolute; left: 14px; right: 14px; bottom: 5px; height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-dark)); border-radius: 2px;
+    transform: scaleX(0); transform-origin: left; transition: transform .26s ease;
+  }
+  .nav__link:hover::before, .nav__item--has-drop:hover > .nav__link::before { transform: scaleX(1); }
+}
+
+/* Process steps: solid gradient number badges (was a thin dashed ring) */
+.step__num { background: linear-gradient(145deg, #ff9a4d, var(--gold)); border: none; color: #fff; box-shadow: 0 12px 26px rgba(238,115,34,.42); }
+
+/* Bottom CTA band: real photo behind the navy overlay (matches the hero) */
+.cta-band {
+  background-color: var(--navy);
+  background-image: linear-gradient(120deg, rgba(9,28,52,.93) 0%, rgba(18,50,86,.84) 100%), url('/assets/img/truck.webp');
+  background-size: cover; background-position: center; background-repeat: no-repeat;
+}
+
+/* Primary buttons: subtle light sweep on hover (premium micro-interaction) */
+.btn--primary { position: relative; overflow: hidden; }
+.btn--primary::after {
+  content: ''; position: absolute; top: 0; left: -120%; width: 55%; height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,.38), transparent);
+  transform: skewX(-20deg); transition: left .6s ease; pointer-events: none;
+}
+.btn--primary:hover::after { left: 150%; }
+
+/* Staggered scroll-reveal for card grids (gentle cascade as a row appears) */
+.cards .reveal:nth-child(2), .cards--svc .reveal:nth-child(2), .routegrid .reveal:nth-child(2) { transition-delay: .07s; }
+.cards .reveal:nth-child(3), .cards--svc .reveal:nth-child(3), .routegrid .reveal:nth-child(3) { transition-delay: .14s; }
+.cards .reveal:nth-child(4), .cards--svc .reveal:nth-child(4), .routegrid .reveal:nth-child(4) { transition-delay: .21s; }
+.cards .reveal:nth-child(5), .cards--svc .reveal:nth-child(5) { transition-delay: .28s; }
+.cards .reveal:nth-child(6), .cards--svc .reveal:nth-child(6) { transition-delay: .35s; }
+@media (prefers-reduced-motion: reduce) { .reveal { transition-delay: 0s !important; } }
