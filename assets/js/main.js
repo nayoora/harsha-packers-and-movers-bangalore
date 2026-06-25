@@ -164,6 +164,10 @@
       fd.forEach(function (v, k) { if (k !== 'vehicle') data[k] = v; });
       var vehicles = fd.getAll('vehicle');
 
+      // Spam trap: these hidden fields are invisible to humans. If filled, it's a bot -> stop silently.
+      var bc = form.querySelector('[name="botcheck"]');
+      if ((data.company || '').trim() || (bc && bc.checked)) { return; }
+
       var waUrl = 'https://wa.me/' + WHATSAPP + '?text=' + buildWhatsAppText(data, vehicles);
 
       // set the success-screen fallback link to the same prefilled message
@@ -276,6 +280,27 @@
   /* ---------- Year in footer ---------- */
   var yr = document.querySelector('[data-year]');
   if (yr) yr.textContent = new Date().getFullYear();
+
+  /* ---------- Content protection (deterrent only; cannot stop a determined copier or affect Google) ---------- */
+  (function () {
+    function inForm(el) { return el && el.closest && el.closest('input, textarea, select, [contenteditable="true"]'); }
+    function copyable(el) { return el && el.closest && el.closest('.allow-copy, .topbar, .header__call, .footer__contact, a[href^="tel:"], a[href^="mailto:"]'); }
+    // Right-click off (kept on in form fields so paste still works)
+    document.addEventListener('contextmenu', function (e) { if (!inForm(e.target)) e.preventDefault(); });
+    // Block image dragging
+    document.addEventListener('dragstart', function (e) { if (e.target && e.target.tagName === 'IMG') e.preventDefault(); });
+    // Block copy/cut of page content (allowed in form fields + on phone/email/address)
+    ['copy', 'cut'].forEach(function (ev) {
+      document.addEventListener(ev, function (e) { if (!inForm(e.target) && !copyable(e.target)) e.preventDefault(); });
+    });
+    // Deter view-source / devtools / save shortcuts
+    document.addEventListener('keydown', function (e) {
+      var k = (e.key || '').toLowerCase();
+      if (e.key === 'F12') { e.preventDefault(); return; }
+      if ((e.ctrlKey || e.metaKey) && !e.shiftKey && (k === 'u' || k === 's') && !inForm(e.target)) e.preventDefault();
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (k === 'i' || k === 'j' || k === 'c')) e.preventDefault();
+    });
+  })();
 
   /* ---------- Conversion tracking: call & WhatsApp clicks ---------- */
   document.addEventListener('click', function (e) {

@@ -891,3 +891,14 @@ form.sent .form-success { display: block; }
 .quote-card--wa { border-top: 4px solid var(--whatsapp); }
 .quote-card--wa .quote-card__tag { background: var(--whatsapp); color: #04331a; }
 .quote-card--wa .quote-card__tag svg { width: 15px; height: 15px; }
+
+/* ===================== CONTENT PROTECTION (deterrent) ===================== */
+/* Discourage text selection of page content, but keep the form + contact details fully usable */
+body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+input, textarea, select, [contenteditable="true"],
+.allow-copy, .topbar, .header__call, .footer__contact,
+a[href^="tel:"], a[href^="mailto:"] {
+  -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text;
+}
+/* Block image dragging + iOS long-press "save image" */
+img { -webkit-user-drag: none; user-drag: none; -webkit-touch-callout: none; }

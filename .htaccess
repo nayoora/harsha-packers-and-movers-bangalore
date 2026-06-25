@@ -14,8 +14,12 @@ Options -Indexes
 # Custom error page
 ErrorDocument 404 /404.html
 
-# Protect captured leads and source data from public access
-<FilesMatch "\.(csv|json|md)$">
+# Protect captured leads, source, config and backup files from public access
+<FilesMatch "\.(csv|json|md|bak|log|sql|sh|yml|yaml|ini|env|map)$">
+  Require all denied
+</FilesMatch>
+# Block hidden/dotfiles (e.g. .git, .htaccess) except the well-known folder
+<FilesMatch "^\.(?!well-known)">
   Require all denied
 </FilesMatch>
 
@@ -49,7 +53,27 @@ ErrorDocument 404 /404.html
   Header set X-Content-Type-Options "nosniff"
   Header set X-Frame-Options "SAMEORIGIN"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
-  Header always set Strict-Transport-Security "max-age=31536000"
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  Header set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=(), interest-cohort=()"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.web3forms.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://stats.g.doubleclick.net; frame-src https://www.google.com https://maps.google.com https://www.youtube.com https://www.youtube-nocookie.com; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; frame-ancestors 'self'"
+  Header unset X-Powered-By
+</IfModule>
+
+# Image hotlink protection: only this site, search engines & social link-previews may embed images.
+# Other websites get a 403, so they can't steal your photos. Empty referer (direct loads) is allowed.
+<IfModule mod_rewrite.c>
+  RewriteCond %{HTTP_REFERER} !^$
+  RewriteCond %{HTTP_REFERER} !^https?://(www\.)?harshapackersandmoversbangalore\.com [NC]
+  RewriteCond %{HTTP_REFERER} !google\. [NC]
+  RewriteCond %{HTTP_REFERER} !bing\. [NC]
+  RewriteCond %{HTTP_REFERER} !duckduckgo\. [NC]
+  RewriteCond %{HTTP_REFERER} !facebook\. [NC]
+  RewriteCond %{HTTP_REFERER} !instagram\. [NC]
+  RewriteCond %{HTTP_REFERER} !linkedin\. [NC]
+  RewriteCond %{HTTP_REFERER} !(twitter|x)\. [NC]
+  RewriteCond %{HTTP_REFERER} !whatsapp\. [NC]
+  RewriteCond %{HTTP_REFERER} !t\.co [NC]
+  RewriteRule \.(jpe?g|png|webp|gif)$ - [F,NC,L]
 </IfModule>
 
 # Correct MIME types

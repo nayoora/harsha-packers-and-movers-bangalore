@@ -1,0 +1,41 @@
+<!doctype html><html><head><meta charset="utf-8"></head><body><div id="out">P</div>
+<script>
+var R=[];function log(s){R.push(s);document.getElementById('out').textContent='##'+'MM##'+R.join(' || ')+'##'+'EE##';}
+function fire(el,type){return !el.dispatchEvent(new (type==='contextmenu'?MouseEvent:Event)(type,{bubbles:true,cancelable:true}));}
+// iframe 1: protection + real submit
+var f=document.createElement('iframe');f.style.width='1280px';f.style.height='1500px';f.src='/';document.body.appendChild(f);
+f.addEventListener('load',function(){setTimeout(function(){
+  try{
+    var win=f.contentWindow,d=f.contentDocument;
+    var body=d.body, inp=d.querySelector('form[data-quote-form] input[name="moving_from"]');
+    var ctxBody=fire(body,'contextmenu'), ctxInp=fire(inp,'contextmenu');
+    var copyBody=fire(body,'copy'), copyInp=fire(inp,'copy');
+    var img=d.querySelector('img'); var imgDragNone=img?(win.getComputedStyle(img).webkitUserDrag==='none'||true):false;
+    var bodyNoSelect=win.getComputedStyle(body).userSelect==='none'||win.getComputedStyle(body).webkitUserSelect==='none';
+    var inpSelect=win.getComputedStyle(inp).userSelect==='text'||win.getComputedStyle(inp).webkitUserSelect==='text';
+    // real submit
+    var opened=[],fetched=[];win.open=function(u){opened.push(''+u);return null;};win.fetch=function(u){fetched.push(''+u);return Promise.resolve({ok:true,json:function(){return Promise.resolve({});}});};
+    var form=d.querySelector('form[data-quote-form]');var sv=function(n,v){var e=form.querySelector('[name="'+n+'"]');if(e)e.value=v;};
+    sv('moving_from','HSR');sv('moving_to','Pune');sv('floor_from','2');sv('floor_to','1');sv('bhk','2 BHK');sv('move_date','2026-08-01');sv('big_items','Bed, Sofa');sv('boxes','8');
+    var lf=form.querySelector('input[name="lift_from"][value="Yes"]');if(lf)lf.checked=true;var lt=form.querySelector('input[name="lift_to"][value="Yes"]');if(lt)lt.checked=true;
+    form.querySelector('button[type=submit]').click();
+    var realOpened=opened.length>0&&opened[opened.length-1].indexOf('wa.me')>-1;
+    var realEmailed=fetched.filter(function(u){return u.indexOf('web3forms')>-1;}).length>0;
+    log('ctxBlockedOnContent='+ctxBody+' ctxAllowedInForm='+(!ctxInp)+' copyBlockedOnContent='+copyBody+' copyAllowedInForm='+(!copyInp)+' bodyNoSelect='+bodyNoSelect+' inputSelectable='+inpSelect+' realSubmitOpensWA='+realOpened+' realEmailed='+realEmailed);
+    // iframe 2: bot (honeypot filled) should NOT open WhatsApp
+    var f2=document.createElement('iframe');f2.style.width='1280px';f2.style.height='1500px';f2.src='/';document.body.appendChild(f2);
+    f2.addEventListener('load',function(){setTimeout(function(){
+      try{
+        var w2=f2.contentWindow,d2=f2.contentDocument;var op2=[];w2.open=function(u){op2.push(''+u);return null;};w2.fetch=function(){return Promise.resolve({ok:true,json:function(){return Promise.resolve({});}});};
+        var fm=d2.querySelector('form[data-quote-form]');var sv2=function(n,v){var e=fm.querySelector('[name="'+n+'"]');if(e)e.value=v;};
+        sv2('moving_from','A');sv2('moving_to','B');sv2('floor_from','1');sv2('floor_to','1');sv2('bhk','1 BHK');sv2('move_date','2026-08-01');sv2('big_items','x');sv2('boxes','1');
+        fm.querySelector('input[name="lift_from"][value="Yes"]').checked=true;fm.querySelector('input[name="lift_to"][value="Yes"]').checked=true;
+        fm.querySelector('[name="company"]').value='http://spam.example';// bot fills honeypot
+        fm.querySelector('button[type=submit]').click();
+        log('botBlocked='+(op2.length===0));
+        log('DONE');
+      }catch(e){log('ERR2 '+e.message);}
+    },1400);});
+  }catch(e){log('ERR1 '+e.message);}
+},1500);});
+</script></body></html>
