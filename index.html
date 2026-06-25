@@ -29,9 +29,9 @@
 <meta name="google-site-verification" content="zvnGzDSE6VdHQ4T1YWAtCKfi5Kt6mt5aYq_kZYmVov4">
 <meta name="msvalidate.01" content="2454E4922DB1EA84A9879346DF1FA23D">
 <meta name="p:domain_verify" content="252aeeecf2a0ec1c879bd69342052439">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png?v=mqted7l7">
-<link rel="icon" type="image/png" sizes="48x48" href="/assets/img/favicon-48.png?v=mqted7l7">
-<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png?v=mqted7l7">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png?v=mqtf5y4r">
+<link rel="icon" type="image/png" sizes="48x48" href="/assets/img/favicon-48.png?v=mqtf5y4r">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png?v=mqtf5y4r">
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#0a2540">
 <link rel="preconnect" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://www.google-analytics.com">
@@ -916,6 +916,17 @@ form.sent .form-success { display: block; }
 @media (max-width: 992px) { .cards--svc { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 600px) { .cards--svc { grid-template-columns: 1fr; } }
 
+/* "Explore all services" tile that completes the services grid (navy, no photo = no duplicate image) */
+.svc-card--cta { background: linear-gradient(150deg, var(--navy), var(--navy-2)); border: none; position: relative; overflow: hidden; }
+.svc-card--cta::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 85% 12%, rgba(238,115,34,.26), transparent 55%); pointer-events: none; }
+.svc-card--cta__in { padding: 30px 24px; display: flex; flex-direction: column; justify-content: center; height: 100%; position: relative; z-index: 1; }
+.svc-card--cta__ico { width: 52px; height: 52px; border-radius: 14px; background: linear-gradient(145deg, #ff9a4d, var(--gold)); color: #fff; display: grid; place-items: center; margin-bottom: 16px; box-shadow: 0 10px 22px rgba(238,115,34,.42); }
+.svc-card--cta__ico svg { width: 27px; height: 27px; }
+.svc-card--cta h3 { color: #fff; font-size: 1.22rem; margin-bottom: 8px; font-family: var(--ff-head); }
+.svc-card--cta p { color: #c5d3e6; font-size: .93rem; margin-bottom: 16px; }
+.svc-card__link--light { color: #ffd9b8 !important; }
+.svc-card--cta:hover .svc-card__link--light { gap: 12px; }
+
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"MovingCompany","@id":"https://harshapackersandmoversbangalore.com/#business","name":"Harsha Packers and Movers Bangalore","image":"https://harshapackersandmoversbangalore.com/assets/img/og-cover.jpg","logo":"https://harshapackersandmoversbangalore.com/assets/img/icon-512.png","url":"https://harshapackersandmoversbangalore.com/","telephone":"+919035291929","email":"harshapackersmovers@gmail.com","priceRange":"₹₹","currenciesAccepted":"INR","paymentAccepted":"Cash, UPI, Bank Transfer, Credit Card","availableLanguage":["English","Hindi","Kannada"],"slogan":"Bangalore's Trusted Packers & Movers Since 2005","foundingDate":"2005","address":{"@type":"PostalAddress","streetAddress":"No 61, Ground Floor, 1st Cross, BGS Layout, Jambusavari Dinne, Near BWSSB Water Tank","addressLocality":"Bengaluru","addressRegion":"Karnataka","postalCode":"560076","addressCountry":"IN"},"geo":{"@type":"GeoCoordinates","latitude":"12.8916","longitude":"77.5712"},"hasMap":"https://www.google.com/maps/dir/?api=1&destination=Harsha+Packers+and+Movers+Bangalore,+Jambusavari+Dinne,+Bengaluru,+Karnataka+560076","areaServed":[{"@type":"Place","name":"Bengaluru, Karnataka"},{"@type":"Place","name":"Hebbal, Bengaluru"},{"@type":"Place","name":"Jayanagar, Bengaluru"},{"@type":"Place","name":"HSR Layout, Bengaluru"},{"@type":"Place","name":"Whitefield, Bengaluru"},{"@type":"Place","name":"Indiranagar, Bengaluru"},{"@type":"Place","name":"JP Nagar, Bengaluru"},{"@type":"Place","name":"Koramangala, Bengaluru"},{"@type":"Place","name":"Vijayanagar, Bengaluru"},{"@type":"Place","name":"Banashankari, Bengaluru"},{"@type":"Place","name":"Marathahalli, Bengaluru"},{"@type":"Place","name":"Electronic City, Bengaluru"},{"@type":"Place","name":"Sarjapur Road, Bengaluru"},{"@type":"Place","name":"Bellandur, Bengaluru"},{"@type":"Place","name":"Yelahanka, Bengaluru"}],"openingHoursSpecification":{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"00:00","closes":"23:59"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","reviewCount":"122","bestRating":"5"},"review":[{"@type":"Review","datePublished":"2025-06-16","reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"author":{"@type":"Person","name":"Ashwini Krishnamurthy"},"reviewBody":"Service was good and we are very happy with the work. Furniture, TV and fridge — everything was handled with full care."},{"@type":"Review","datePublished":"2025-03-19","reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"author":{"@type":"Person","name":"Sur Dhara"},"reviewBody":"Excellent work. I am fully satisfied — 10 out of 10. Such packers are very few in India. I appreciate their hard work and honesty."},{"@type":"Review","datePublished":"2025-01-16","reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"author":{"@type":"Person","name":"Ganesh S"},"reviewBody":"Excellent service. Very professional and polite individuals. Highly recommend."},{"@type":"Review","datePublished":"2024-12-23","reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"author":{"@type":"Person","name":"Chandrakant Chandarkar"},"reviewBody":"Excellent service. Hardworking and sincere team with on-time delivery. Highly recommended organisation."},{"@type":"Review","datePublished":"2024-11-29","reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"author":{"@type":"Person","name":"Vishnu"},"reviewBody":"Used Harsha Packers and Movers to shift my household items from Bangalore to Kerala. Smooth, careful and professional service."}],"identifier":{"@type":"PropertyValue","propertyID":"Udyam Registration Number","value":"UDYAM-KR-03-0196744"},"sameAs":["https://www.facebook.com/harshapackers","https://twitter.com/HarshaPackers","https://www.instagram.com/harshapackersmoversbangalore/","https://www.linkedin.com/company/harsha-packers-and-movers-bangalore","https://www.youtube.com/@HarshaPackers"],"knowsAbout":["Packers and Movers in Bangalore","Movers and Packers in Bangalore","House Shifting","Household Goods Relocation","Office Relocation","Bike Transport","Car Transport","Intercity Relocation","Storage and Warehousing","Goods Transport","Packing and Unpacking"],"hasOfferCatalog":{"@type":"OfferCatalog","name":"Packers and Movers Services in Bangalore","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Local Shifting in Bangalore","url":"https://harshapackersandmoversbangalore.com/local-shifting-in-bangalore/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Household Shifting in Bangalore","url":"https://harshapackersandmoversbangalore.com/household-shifting-in-bangalore/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Office Shifting in Bangalore","url":"https://harshapackersandmoversbangalore.com/office-shifting-in-bangalore/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Bike Transport in Bangalore","url":"https://harshapackersandmoversbangalore.com/bike-transport-in-bangalore/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Car Transport in Bangalore","url":"https://harshapackersandmoversbangalore.com/car-transport-in-bangalore/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Storage & Warehousing in Bangalore","url":"https://harshapackersandmoversbangalore.com/storage-warehousing-in-bangalore/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Goods Transport in Bangalore","url":"https://harshapackersandmoversbangalore.com/goods-transport-services-in-bangalore/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Logistics Services in Bangalore","url":"https://harshapackersandmoversbangalore.com/logistic-services-in-bangalore/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Domestic Shifting from Bangalore","url":"https://harshapackersandmoversbangalore.com/domestic-shifting/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Pre-Move Survey in Bangalore","url":"https://harshapackersandmoversbangalore.com/pre-move-survey-in-bangalore/"}}]}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://harshapackersandmoversbangalore.com/#website","url":"https://harshapackersandmoversbangalore.com/","name":"Harsha Packers and Movers Bangalore","inLanguage":"en-IN","publisher":{"@id":"https://harshapackersandmoversbangalore.com/#business"}}</script>
@@ -944,7 +955,7 @@ form.sent .form-success { display: block; }
 <header class="header">
   <div class="container header__inner">
     <a class="brand" href="/" aria-label="Harsha Packers and Movers Bangalore home">
-      <img class="brand-logo-img" src="/assets/img/logo-original.jpg?v=mqted7l7" alt="Harsha Packers and Movers Bangalore" width="210" height="48" fetchpriority="high">
+      <img class="brand-logo-img" src="/assets/img/logo-original.jpg?v=mqtf5y4r" alt="Harsha Packers and Movers Bangalore" width="210" height="48" fetchpriority="high">
     </a>
     <nav class="nav" aria-label="Primary">
       <button class="nav-close" type="button" aria-label="Close menu">&times;</button>
@@ -1189,14 +1200,6 @@ form.sent .form-success { display: block; }
         <span class="svc-card__link">Learn more <svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </div>
     </a>
-    <a class="svc-card reveal" href="/household-shifting-in-bangalore/" aria-label="Household Shifting in Bangalore">
-      <div class="svc-card__img"><picture><source srcset="/assets/img/household.webp" type="image/webp"><img src="/assets/img/household.jpg" alt="Household goods shifting in Bangalore by Harsha Packers and Movers" width="480" height="300" loading="lazy" decoding="async"></picture><span class="svc-card__ico"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8l9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg></span></div>
-      <div class="svc-card__body">
-        <h3>Household Shifting in Bangalore</h3>
-        <p>From a single room to a full villa, our household shifting service covers complete packing, dismantling, loading, transport, unloading and reassembly.</p>
-        <span class="svc-card__link">Learn more <svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-      </div>
-    </a>
     <a class="svc-card reveal" href="/office-shifting-in-bangalore/" aria-label="Office Relocation in Bangalore">
       <div class="svc-card__img"><picture><source srcset="/assets/img/packing.webp" type="image/webp"><img src="/assets/img/packing.jpg" alt="Office relocation and packing in Bangalore by Harsha Packers and Movers" width="480" height="300" loading="lazy" decoding="async"></picture><span class="svc-card__ico"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="1"/><path d="M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01M10 22v-4h4v4"/></svg></span></div>
       <div class="svc-card__body">
@@ -1221,15 +1224,22 @@ form.sent .form-success { display: block; }
         <span class="svc-card__link">Learn more <svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </div>
     </a>
-    <a class="svc-card reveal" href="/storage-warehousing-in-bangalore/" aria-label="Storage &amp; Warehousing in Bangalore">
-      <div class="svc-card__img"><picture><source srcset="/assets/img/packing.webp" type="image/webp"><img src="/assets/img/packing.jpg" alt="Secure storage and warehousing in Bangalore by Harsha Packers and Movers" width="480" height="300" loading="lazy" decoding="async"></picture><span class="svc-card__ico"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 21V8l10-5 10 5v13"/><path d="M6 21v-7h12v7M6 17h12"/></svg></span></div>
+    <a class="svc-card reveal" href="/domestic-shifting/" aria-label="Domestic Shifting in Bangalore">
+      <div class="svc-card__img"><picture><source srcset="/assets/img/truck.webp" type="image/webp"><img src="/assets/img/truck.jpg" alt="Domestic intercity shifting from Bangalore by Harsha Packers and Movers" width="480" height="300" loading="lazy" decoding="async"></picture><span class="svc-card__ico"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span></div>
       <div class="svc-card__body">
-        <h3>Storage &amp; Warehousing in Bangalore</h3>
-        <p>Need to store your goods between moves? Our clean, secure warehouses offer short and long-term storage with 24/7 security, CCTV monitoring, proper racking and complete inventory management for both household and commercial goods.</p>
+        <h3>Domestic Shifting in Bangalore</h3>
+        <p>Relocating to another city? We handle intercity moves from Bangalore to anywhere in India with dedicated vehicles, careful packing and insured transport.</p>
         <span class="svc-card__link">Learn more <svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </div>
+    </a>
+    <a class="svc-card svc-card--cta reveal" href="/services/" aria-label="View all our services">
+      <div class="svc-card--cta__in">
+        <span class="svc-card--cta__ico"><svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8l9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg></span>
+        <h3>Explore All 10 Services</h3>
+        <p>Household &amp; storage, goods transport, logistics, free pre-move survey and more.</p>
+        <span class="svc-card__link svc-card__link--light">View all services <svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </div>
     </a></div>
-    <div class="text-center" style="margin-top:34px"><a class="btn btn--outline btn--lg" href="/services/">View All 10 Services <svg width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
   </div>
 </section>
 
@@ -1610,7 +1620,7 @@ form.sent .form-success { display: block; }
     <div class="footer__top">
       <div class="footer__brand">
         <a class="brand" href="/">
-          <img class="brand-logo-img brand-logo-img--footer" src="/assets/img/logo-original.jpg?v=mqted7l7" alt="Harsha Packers and Movers Bangalore" width="210" height="48">
+          <img class="brand-logo-img brand-logo-img--footer" src="/assets/img/logo-original.jpg?v=mqtf5y4r" alt="Harsha Packers and Movers Bangalore" width="210" height="48">
         </a>
         <p>Government registered, trusted packers and movers in Bangalore. Safe home shifting, office relocation, bike &amp; car transport and intercity moves across India.</p>
         <ul class="footer__contact">
