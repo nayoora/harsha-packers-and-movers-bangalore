@@ -886,3 +886,8 @@ form.sent .form-success { display: block; }
 .svc-card--cta p { color: #c5d3e6; font-size: .93rem; margin-bottom: 16px; }
 .svc-card__link--light { color: #ffd9b8 !important; }
 .svc-card--cta:hover .svc-card__link--light { gap: 12px; }
+
+/* WhatsApp-first quote form: green identity accent */
+.quote-card--wa { border-top: 4px solid var(--whatsapp); }
+.quote-card--wa .quote-card__tag { background: var(--whatsapp); color: #04331a; }
+.quote-card--wa .quote-card__tag svg { width: 15px; height: 15px; }
