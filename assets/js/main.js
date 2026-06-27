@@ -281,6 +281,24 @@
   var yr = document.querySelector('[data-year]');
   if (yr) yr.textContent = new Date().getFullYear();
 
+  /* ---------- PWA: register service worker (faster repeat visits + offline fallback) ---------- */
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('/sw.js').catch(function () {});
+    });
+  }
+
+  /* ---------- Per-page context for WhatsApp links (better lead quality) ---------- */
+  (function () {
+    var t = (document.title || '').split('|')[0].replace(/\s+/g, ' ').trim();
+    if (!t || /^harsha/i.test(t) || t.length < 4) return;
+    var msg = encodeURIComponent('Hi Harsha Packers, I am interested in ' + t + '. Please share a free moving quote.');
+    document.querySelectorAll('a[href*="wa.me"]').forEach(function (a) {
+      if (a.hasAttribute('data-wa-fallback')) return; // the quote form sets its own detailed message on submit
+      try { a.href = a.href.split('?')[0] + '?text=' + msg; } catch (e) {}
+    });
+  })();
+
   /* ---------- Content protection (deterrent only; cannot stop a determined copier or affect Google) ---------- */
   (function () {
     function inForm(el) { return el && el.closest && el.closest('input, textarea, select, [contenteditable="true"]'); }
