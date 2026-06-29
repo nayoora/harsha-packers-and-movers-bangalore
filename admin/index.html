@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Harsha Packers — Document Maker</title>
+<meta name="theme-color" content="#0a2540">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="HP Admin">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/assets/img/favicon-48.png">
 <style>
   :root{--navy:#0a2540;--orange:#ee7322;--line:#d9e1ec;--ink:#1a2b42;--muted:#5b6b80;--bg:#eef2f7}
   *{box-sizing:border-box}
@@ -74,6 +82,17 @@
   .modal__card{background:#fff;border-radius:12px;padding:22px;width:420px;max-width:94vw;max-height:88vh;overflow:auto}
   .modal__card h3{margin:0 0 12px;color:var(--navy)}
   .hist-row{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-bottom:7px;font-size:.84rem}
+  /* app shell: install button + mobile bottom action bar */
+  .app-actions{display:none}
+  @media(max-width:900px){
+    .topbar{overflow-x:auto;-webkit-overflow-scrolling:touch}
+    .app-actions{position:fixed;left:0;right:0;bottom:0;z-index:40;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);box-shadow:0 -3px 16px rgba(10,37,64,.2);padding-bottom:env(safe-area-inset-bottom)}
+    .app-actions button{background:#fff;border:none;padding:9px 4px 7px;font-size:.7rem;color:var(--navy);font-weight:600;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer}
+    .app-actions button span{font-size:1.2rem;line-height:1}
+    .app-actions button.primary{background:var(--orange);color:#fff}
+    .preview{padding-bottom:78px}
+    .form{padding-bottom:78px}
+  }
   @media print{
     .topbar,.form,.no-print,.modal{display:none!important}
     body,.preview,.wrap{background:#fff;display:block;padding:0;margin:0}
@@ -88,6 +107,7 @@
   <div style="font-size:1.3rem;font-weight:700">Harsha Packers — Document Maker</div>
   <div>Enter password</div>
   <input id="gpw" type="password" autofocus>
+  <label style="font-size:.85rem;display:flex;align-items:center;gap:7px;color:#cdd9ea"><input type="checkbox" id="gstay" style="width:auto;margin:0"> Keep me signed in on this device</label>
   <button class="btn" onclick="checkPw()">Open</button>
   <div id="gerr" style="color:#ffb4a0;font-size:.85rem;height:16px"></div>
 </div>
@@ -102,6 +122,7 @@
   <button class="btn btn--ghost btn--sm" onclick="openHistory()">History</button>
   <button class="btn btn--ghost btn--sm" onclick="openSettings()">Settings</button>
   <button class="btn" onclick="window.print()">Print / PDF</button>
+  <button class="btn btn--ghost btn--sm" id="installBtn" style="display:none" onclick="installApp()">⬇ Install App</button>
 </div>
 
 <div class="wrap">
@@ -185,6 +206,7 @@
     <div class="actions"><button class="btn btn--sm" onclick="saveSettings()">Save</button>
       <button class="btn btn--ghost btn--sm" style="color:#0a2540" onclick="backup()">⬇ Backup all data</button>
       <label class="btn btn--ghost btn--sm" style="color:#0a2540;cursor:pointer">⬆ Restore<input type="file" accept="application/json" style="display:none" onchange="restore(event)"></label>
+      <button class="btn btn--ghost btn--sm" style="color:#0a2540" onclick="signOut()">🔒 Lock app</button>
       <button class="btn btn--ghost btn--sm" style="color:#0a2540" onclick="closeSettings()">Close</button>
     </div>
     <div style="font-size:.72rem;color:#5b6b80;margin-top:10px">Logo/stamp/signature/history save only in this browser. Use "Backup all data" regularly. For full security, also enable "Password Protect Directories" for /admin in Hostinger.</div>
@@ -197,6 +219,13 @@
     <div id="histlist"></div>
     <div style="margin-top:10px"><button class="btn btn--ghost btn--sm" style="color:#0a2540" onclick="closeHistory()">Close</button></div>
   </div>
+</div>
+
+<div class="app-actions no-print">
+  <button class="primary" onclick="saveCurrent(true)"><span>💾</span>Save</button>
+  <button onclick="newDoc()"><span>＋</span>New</button>
+  <button onclick="whatsappShare()"><span>📲</span>WhatsApp</button>
+  <button onclick="window.print()"><span>🖨️</span>PDF</button>
 </div>
 
 <script>
@@ -335,13 +364,37 @@ function backup(){var keys=['hpmb_logo','hpmb_stamp','hpmb_sign','hpmb_qr','hpmb
 function restore(ev){var f=ev.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(){try{var o=JSON.parse(r.result);Object.keys(o).forEach(function(k){if(o[k]!=null)S(k,o[k]);});alert('Restored. Reloading.');location.reload();}catch(e){alert('Invalid backup file');}};r.readAsText(f);}
 
 /* ============ Gate / init ============ */
-function checkPw(){if(document.getElementById('gpw').value===L('hpmb_pw','harsha2026')){document.getElementById('gate').style.display='none';init();}else{document.getElementById('gerr').textContent='Wrong password';}}
+function checkPw(){if(document.getElementById('gpw').value===L('hpmb_pw','harsha2026')){var st=document.getElementById('gstay');if(st&&st.checked)S('hpmb_session','1');document.getElementById('gate').style.display='none';init();}else{document.getElementById('gerr').textContent='Wrong password';}}
 document.getElementById('gpw').addEventListener('keydown',function(e){if(e.key==='Enter')checkPw();});
 function init(){var d=new Date();document.getElementById('f_date').value=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
   document.getElementById('f_no').value=nextNumber();
   document.getElementById('form').addEventListener('input',render);
   document.getElementById('form').addEventListener('change',render);
   render();}
+</script>
+<script>
+/* ===== PWA: installable app + offline + stay signed in ===== */
+(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('admin-sw.js', { scope: './' }).catch(function () {});
+  }
+  var deferred = null, btn = document.getElementById('installBtn');
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); deferred = e; if (btn) btn.style.display = ''; });
+  window.installApp = function () {
+    if (!deferred) { alert('To install: open your browser menu (⋮) and tap "Add to Home screen" / "Install app".'); return; }
+    deferred.prompt();
+    deferred.userChoice.then(function () { deferred = null; if (btn) btn.style.display = 'none'; });
+  };
+  window.addEventListener('appinstalled', function () { if (btn) btn.style.display = 'none'; });
+  window.signOut = function () { try { localStorage.removeItem('hpmb_session'); } catch (e) {} location.reload(); };
+  /* auto-unlock if the user chose "keep me signed in" */
+  try {
+    if (localStorage.getItem('hpmb_session') === '1') {
+      var g = document.getElementById('gate'); if (g) g.style.display = 'none';
+      if (typeof init === 'function') init();
+    }
+  } catch (e) {}
+})();
 </script>
 </body>
 </html>
