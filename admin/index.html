@@ -126,6 +126,40 @@
     .doc-head__logo img{max-height:56px}
     .qr{width:104px;height:104px}
   }
+  /* ===================== PREMIUM MOBILE APP UI ===================== */
+  body{background:#eef2f7}
+  .topbar{background:linear-gradient(120deg,#0a2540,#14365b);padding:10px 12px;gap:8px;box-shadow:0 2px 12px rgba(10,37,64,.22)}
+  .topbar b{font-size:1.06rem}
+  .tab{background:rgba(255,255,255,.14);border-radius:999px;padding:8px 15px;font-size:.86rem;transition:background .15s,box-shadow .15s}
+  .tab.active{background:var(--orange);box-shadow:0 3px 10px rgba(238,115,34,.45)}
+  .btn{border-radius:10px}
+  .fld input,.fld select,.fld textarea{padding:12px;border-radius:10px;border:1.5px solid var(--line);font-size:16px;transition:border-color .15s,box-shadow .15s}
+  .fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px rgba(238,115,34,.15)}
+  .fld label{font-size:.82rem;font-weight:600;color:#42536b;margin-bottom:5px}
+  .form h3{margin:20px 0 10px}
+  .item-row input{padding:11px 9px;border-radius:8px}
+  /* LR-only fields hide unless building an LR */
+  body:not(.doc-lr) .sec--lr{display:none}
+  /* Mode toggle hidden on desktop (both panes show) */
+  .modebar{display:none}
+
+  @media(max-width:900px){
+    .topbar{position:static;flex-wrap:wrap}
+    .topbar b{width:100%;margin:0 0 4px}
+    .modebar{display:grid;grid-template-columns:1fr 1fr;position:sticky;top:0;z-index:25;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 2px 8px rgba(10,37,64,.06)}
+    .modebar .mode{background:#fff;border:none;padding:14px;font-size:.96rem;font-weight:700;color:var(--muted);border-bottom:3px solid transparent}
+    .modebar .mode.active{color:var(--navy);border-bottom-color:var(--orange)}
+    .wrap{display:block}
+    .form{min-height:auto;border:none;padding:14px 14px 92px;background:transparent}
+    .form .actions{display:none}
+    /* group each H3 + its fields into a clean card */
+    .form h3{background:#fff;margin:14px -14px 0;padding:14px 16px 4px;border-top:1px solid var(--line)}
+    .preview{display:none;padding:14px 8px 92px;background:#dde5ef}
+    body.show-preview .form{display:none}
+    body.show-preview .preview{display:block;text-align:center}
+    .a4{box-shadow:0 6px 22px rgba(10,37,64,.25);text-align:left}
+  }
+  @media print{ .a4{zoom:1 !important} .modebar{display:none!important} }
 </style>
 </head>
 <body>
@@ -152,6 +186,11 @@
   <button class="btn btn--ghost btn--sm" id="installBtn" style="display:none" onclick="installApp()">⬇ Install App</button>
 </div>
 
+<div class="modebar no-print">
+  <button class="mode active" data-mode="edit" onclick="setMode('edit')">✏️ Build</button>
+  <button class="mode" data-mode="preview" onclick="setMode('preview')">👁 Preview</button>
+</div>
+
 <div class="wrap">
   <div class="form no-print" id="form">
     <div class="actions">
@@ -170,10 +209,12 @@
     <div class="fld"><label>Phone</label><input id="f_cphone" placeholder="10-digit mobile"></div>
     <div class="fld"><label>Address</label><textarea id="f_caddr" placeholder="Customer address"></textarea></div>
 
+    <div class="sec--lr">
     <h3>Consignee (LR — optional)</h3>
     <div class="fld"><label>Name</label><input id="f_coname" placeholder="Blank = same as customer"></div>
     <div class="fld"><label>Phone</label><input id="f_cophone"></div>
     <div class="fld"><label>Address</label><textarea id="f_coaddr"></textarea></div>
+    </div>
 
     <h3>Move details</h3>
     <div class="row2">
@@ -205,9 +246,11 @@
     </div>
     <div class="fld"><label>Mode of Payment</label><select id="f_mode"><option>Cash</option><option>UPI</option><option>Bank Transfer</option><option>Online</option><option>Cheque</option></select></div>
 
+    <div class="sec--lr">
     <h3>LR copy</h3>
     <div class="fld"><label>Which LR copy to print</label>
       <select id="f_lrcopy"><option value="Consignor">Consignor Copy</option><option value="Office">Office Copy</option><option value="Lorry">Lorry Copy (no amount)</option><option value="All">All 3 copies</option></select>
+    </div>
     </div>
 
     <h3>Terms &amp; Conditions</h3>
@@ -457,6 +500,38 @@ function init(){var d=new Date();document.getElementById('f_date').value=d.getFu
       }, 1600);
     });
   }
+
+  /* ===== Mobile app UX: Build/Preview toggle + auto-fit document to screen ===== */
+  function fitDoc() {
+    var d = document.getElementById('doc'); if (!d) return;
+    var p = d.parentNode;
+    var w = (p && p.clientWidth) ? p.clientWidth : window.innerWidth;
+    var z = (w - 24) / 794; if (z > 1) z = 1;
+    if (z > 0 && isFinite(z)) d.style.zoom = z;
+  }
+  window.fitDoc = fitDoc;
+  window.setMode = function (m) {
+    var pv = (m === 'preview');
+    document.body.classList.toggle('show-preview', pv);
+    var btns = document.querySelectorAll('.modebar .mode');
+    for (var i = 0; i < btns.length; i++) btns[i].classList.toggle('active', btns[i].getAttribute('data-mode') === m);
+    if (pv) { try { if (typeof render === 'function') render(); } catch (e) {} setTimeout(fitDoc, 30); }
+  };
+  (function () {
+    var _sd = window.setDoc;
+    if (typeof _sd === 'function') {
+      window.setDoc = function (d) {
+        _sd(d);
+        document.body.classList.remove('doc-invoice', 'doc-lr', 'doc-quote', 'doc-receipt');
+        document.body.classList.add('doc-' + d);
+        setTimeout(fitDoc, 20);
+      };
+    }
+    document.body.classList.add('doc-invoice');
+  })();
+  window.addEventListener('resize', fitDoc);
+  window.addEventListener('orientationchange', function () { setTimeout(fitDoc, 200); });
+  setTimeout(fitDoc, 400);
 })();
 </script>
 </body>
