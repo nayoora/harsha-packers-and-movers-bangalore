@@ -99,6 +99,33 @@
     .a4{box-shadow:none;margin:0;width:auto;padding:0}
     @page{size:A4;margin:12mm}
   }
+  /* ===== Compact layout: fit each document neatly on ONE A4 page ===== */
+  .a4{padding:30px 38px;font-size:12.5px;line-height:1.42}
+  .doc-head{padding-bottom:9px;margin-bottom:4px;gap:12px}
+  .doc-head__logo{width:78px;flex:0 0 78px}
+  .doc-head__logo img{max-width:78px;max-height:64px}
+  .doc-head__co .nm{font-size:1.32rem}
+  .doc-head__co .tg{margin:1px 0 4px}
+  .doc-head__co .ln{font-size:.72rem;line-height:1.34}
+  .doc-title{font-size:1.25rem;margin:8px 0 4px}
+  .copy-label{margin-bottom:5px}
+  .meta{margin-bottom:7px}
+  table.t{margin:7px 0}
+  table.t th,table.t td{padding:5px 8px;font-size:.78rem}
+  .amt-words{margin:6px 0;font-size:.9rem}
+  .twocol{margin-top:9px;gap:13px}
+  .box{padding:7px 10px}
+  .box p{font-size:.76rem;margin:1px 0}
+  .box h4{font-size:.78rem;margin-bottom:4px}
+  .thanks{margin-top:9px;padding-top:7px}
+  .sign .stamp{max-height:66px}.sign .sig{max-height:40px}
+  @media print{
+    .a4{font-size:11.3px}
+    .doc-title{font-size:1.12rem}
+    table.t th,table.t td{padding:4px 7px;font-size:.73rem}
+    .doc-head__logo img{max-height:56px}
+    .qr{width:104px;height:104px}
+  }
 </style>
 </head>
 <body>
@@ -216,8 +243,9 @@
 <div class="modal" id="history">
   <div class="modal__card">
     <h3>Saved Documents</h3>
+    <input id="histsearch" placeholder="🔍 Search name, number, type…" style="width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:7px;margin-bottom:10px;font-size:.9rem;font-family:inherit" oninput="renderHist(this.value)">
     <div id="histlist"></div>
-    <div style="margin-top:10px"><button class="btn btn--ghost btn--sm" style="color:#0a2540" onclick="closeHistory()">Close</button></div>
+    <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><button class="btn btn--ghost btn--sm" style="color:#0a2540" onclick="exportCSV()">⬇ Export CSV</button><button class="btn btn--ghost btn--sm" style="color:#0a2540" onclick="closeHistory()">Close</button></div>
   </div>
 </div>
 
@@ -337,10 +365,18 @@ function newDoc(){saveCurrent(false);var c=parseInt(L('hpmb_counter','101'),10)|
   document.getElementById('items').innerHTML='';document.getElementById('f_ins').value='no';document.getElementById('f_status').value='Paid';
   document.getElementById('f_no').value=nextNumber();render();flash('New document — '+nextNumber());}
 function flash(m){var s=document.getElementById('status');s.textContent=m;setTimeout(function(){if(s.textContent===m)s.textContent='';},2500);}
-function openHistory(){var h=getHist();var el=document.getElementById('histlist');
-  if(!h.length){el.innerHTML='<p class="small">No saved documents yet. Click Save after filling a document.</p>';}
-  else{el.innerHTML=h.map(function(j,i){return '<div class="hist-row"><div><b>'+esc(j.no)+'</b> &middot; '+esc(j.type)+'<br><span class="small">'+esc(j.customer||'-')+' &middot; '+fmtDate(j.date)+' &middot; Rs.'+rs(j.total)+'</span></div><button class="btn btn--sm" onclick="loadHist('+i+')">Load</button><button class="item-x" style="width:30px" onclick="delHist('+i+')">✕</button></div>';}).join('');}
-  document.getElementById('history').classList.add('open');}
+function openHistory(){document.getElementById('history').classList.add('open');var s=document.getElementById('histsearch');if(s)s.value='';renderHist('');}
+function renderHist(q){q=(q||'').toLowerCase().trim();var h=getHist();var el=document.getElementById('histlist');
+  if(!h.length){el.innerHTML='<p class="small">No saved documents yet. Click Save after filling a document.</p>';return;}
+  var list=h.map(function(j,i){return {j:j,i:i};}).filter(function(o){if(!q)return true;var j=o.j;return ((j.no||'')+' '+(j.customer||'')+' '+(j.type||'')+' '+(j.date||'')).toLowerCase().indexOf(q)>=0;});
+  if(!list.length){el.innerHTML='<p class="small">No matches for "'+esc(q)+'".</p>';return;}
+  el.innerHTML=list.map(function(o){var j=o.j,i=o.i;return '<div class="hist-row"><div><b>'+esc(j.no)+'</b> &middot; '+esc(j.type)+'<br><span class="small">'+esc(j.customer||'-')+' &middot; '+fmtDate(j.date)+' &middot; Rs.'+rs(j.total)+'</span></div><div style="display:flex;gap:5px"><button class="btn btn--sm" onclick="loadHist('+i+')">Load</button><button class="btn btn--ghost btn--sm" style="color:#0a2540" onclick="dupHist('+i+')">Copy</button><button class="item-x" style="width:30px" onclick="delHist('+i+')">✕</button></div></div>';}).join('');}
+function dupHist(i){var h=getHist();if(!h[i])return;var c=(parseInt(L('hpmb_counter','101'),10)||101)+1;S('hpmb_counter',c);setDoc(h[i].type);loadJobObj(h[i]);document.getElementById('f_no').value=nextNumber();closeHistory();flash('Duplicated as '+nextNumber());}
+function exportCSV(){var h=getHist();if(!h.length){flash('Nothing to export');return;}
+  var rows=[['Doc No','Type','Date','Customer','Phone','From','To','Total','Status']];
+  h.forEach(function(j){var f=j.fields||{};rows.push([j.no,j.type,j.date,j.customer,f.f_cphone||'',f.f_from||'',f.f_to||'',j.total,f.f_status||'']);});
+  var csv=rows.map(function(r){return r.map(function(c){return '"'+String(c==null?'':c).replace(/"/g,'""')+'"';}).join(',');}).join('\r\n');
+  var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='harsha-documents.csv';a.click();flash('CSV exported');}
 function closeHistory(){document.getElementById('history').classList.remove('open');}
 function loadHist(i){var h=getHist();if(h[i]){setDoc(h[i].type);loadJobObj(h[i]);closeHistory();flash('Loaded '+h[i].no);}}
 function delHist(i){var h=getHist();h.splice(i,1);setHist(h);openHistory();}
@@ -394,6 +430,33 @@ function init(){var d=new Date();document.getElementById('f_date').value=d.getFu
       if (typeof init === 'function') init();
     }
   } catch (e) {}
+
+  /* Smart filename when saving as PDF (e.g. Invoice-HPMB-2026-27-101-Rahul) */
+  window.addEventListener('beforeprint', function () {
+    try {
+      window.__pt = document.title;
+      var m = { invoice: 'Invoice', lr: 'LorryReceipt', quote: 'Quotation', receipt: 'Receipt' };
+      var no = ((document.getElementById('f_no') || {}).value || '').replace(/[^\w-]+/g, '-');
+      var cu = ((document.getElementById('f_cname') || {}).value || '').replace(/[^\w ]+/g, '').trim().replace(/\s+/g, '-');
+      document.title = (m[window.activeDoc] || 'Document') + '-' + no + (cu ? '-' + cu : '');
+    } catch (e) {}
+  });
+  window.addEventListener('afterprint', function () { if (window.__pt) document.title = window.__pt; });
+
+  /* Auto-save: never lose a document (debounced, only when it has content) */
+  var asTimer, formEl = document.getElementById('form');
+  if (formEl) {
+    formEl.addEventListener('input', function () {
+      clearTimeout(asTimer);
+      asTimer = setTimeout(function () {
+        try {
+          var cn = (document.getElementById('f_cname').value || '').trim();
+          var am = (document.getElementById('f_amount').value || '').trim();
+          if ((cn || am) && typeof saveCurrent === 'function') saveCurrent(false);
+        } catch (e) {}
+      }, 1600);
+    });
+  }
 })();
 </script>
 </body>
