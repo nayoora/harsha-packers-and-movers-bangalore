@@ -156,7 +156,13 @@
     body.show-preview .preview{display:block;text-align:center}
     .a4{box-shadow:0 6px 22px rgba(10,37,64,.25);text-align:left}
   }
-  @media print{ .a4{zoom:1 !important} #doc{width:auto!important} .modebar{display:none!important} }
+  @media print{
+    .no-print,.topbar,.doctype,.modebar,.form,.app-actions,.modal,.gate{display:none!important}
+    .wrap{display:block!important}
+    .preview{display:block!important;padding:0!important;margin:0!important;background:#fff!important;overflow:visible!important}
+    .a4{zoom:1!important;box-shadow:none!important;margin:0 auto!important;width:auto!important}
+    #doc{width:auto!important}
+  }
 
   /* ===== Easy doc-type picker ===== */
   .hidden{display:none!important}
@@ -259,7 +265,7 @@
     </section>
 
     <section class="sec" data-docs="invoice quote lr bill">
-      <h3>Items <span data-docs="bill" style="text-transform:none;font-weight:400;color:var(--muted)">— type item + ₹ amount</span></h3>
+      <h3>Items <span data-docs="bill" style="text-transform:none;font-weight:400;opacity:.8">— type item + ₹ amount</span></h3>
       <div id="items"></div>
       <button class="btn btn--ghost btn--sm" style="color:#0a2540" onclick="addItem()">＋ Add item</button>
       <div class="fld" style="margin-top:8px" data-hide="bill"><label>Or description (if no item list)</label><textarea id="f_desc" placeholder="Old household items, Not for sale"></textarea></div>
