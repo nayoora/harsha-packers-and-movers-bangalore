@@ -56,40 +56,52 @@
   /* ---------- Preview (fixed A4) ---------- */
   .previewWrap{padding:22px;display:flex;justify-content:flex-start;overflow-x:auto}
   .page{width:794px;min-height:1123px;background:#fff;padding:46px 50px;box-shadow:0 10px 34px rgba(10,37,64,.20);
-    transform-origin:top left;color:#1f2c3d;font-size:13px;line-height:1.5}
+    transform-origin:top left;color:#1f2c3d;font-size:13px;line-height:1.5;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
 
-  /* ---------- Document styling ---------- */
-  .lh{display:flex;align-items:center;gap:16px;border-bottom:3px solid var(--orange);padding-bottom:14px;margin-bottom:14px}
-  .lh .logo{flex:0 0 92px;width:92px;text-align:center}
-  .lh .logo img{max-width:92px;max-height:78px}
-  .lh .co .nm{font-size:1.5rem;font-weight:800;color:var(--navy);line-height:1.05}
+  /* ---------- Document styling (premium) ---------- */
+  .lh{display:flex;align-items:center;gap:18px;border-bottom:3px solid var(--orange);padding-bottom:16px;margin-bottom:0}
+  .lh .logo{flex:0 0 96px;width:96px;text-align:center}
+  .lh .logo img{max-width:96px;max-height:82px}
+  .lh .co .nm{font-size:1.6rem;font-weight:800;color:var(--navy);line-height:1.04;letter-spacing:.3px}
   .lh .co .nm b{color:var(--orange)}
-  .lh .co .tag{color:var(--orange);font-style:italic;font-size:.84rem;margin:2px 0 5px}
-  .lh .co .ln{font-size:.78rem;color:#3a4a5e;line-height:1.45}
-  .lh .co .reg{font-size:.74rem;color:var(--navy);font-weight:700;margin-top:3px}
-  .dtitle{text-align:center;font-size:1.45rem;font-weight:800;color:var(--orange);letter-spacing:1.5px;margin:6px 0 10px}
-  .copylbl{text-align:center;font-weight:700;color:#b23120;letter-spacing:1px;margin:-4px 0 10px;font-size:.8rem}
-  .meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px;font-size:.86rem}
-  .meta .lbl{color:var(--muted)}
-  table.t{width:100%;border-collapse:collapse;margin:8px 0}
-  table.t th,table.t td{border:1px solid #c6d0dd;padding:8px 10px;text-align:left;font-size:.84rem;vertical-align:top}
-  table.t th{background:var(--navy);color:#fff;font-weight:600}
+  .lh .co .tag{color:var(--orange);font-style:italic;font-size:.85rem;margin:3px 0 6px}
+  .lh .co .ln{font-size:.78rem;color:#41526a;line-height:1.5}
+  .lh .co .reg{font-size:.74rem;color:var(--navy);font-weight:700;margin-top:4px}
+
+  .dtitle{background:linear-gradient(120deg,#0a2540,#1c4f80);color:#fff;text-align:center;font-size:1.3rem;font-weight:800;
+    letter-spacing:4px;padding:11px;border-radius:8px;margin:18px 0 14px;box-shadow:0 4px 14px rgba(10,37,64,.18)}
+  .copylbl{text-align:center;font-weight:700;color:#b23120;letter-spacing:1.5px;margin:-8px 0 12px;font-size:.78rem}
+
+  .meta{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;font-size:.86rem}
+  .meta>div{background:#f5f8fc;border:1px solid #e3eaf3;border-left:4px solid var(--orange);border-radius:8px;padding:10px 12px}
+  .meta>div.ar{border-left:none;border-right:4px solid var(--navy)}
+  .meta .lbl{color:var(--muted);font-size:.74rem;text-transform:uppercase;letter-spacing:.4px}
+
+  table.t{width:100%;border-collapse:collapse;margin:10px 0;border:1px solid #cdd7e3}
+  table.t th,table.t td{padding:9px 12px;text-align:left;font-size:.84rem;vertical-align:top;border-bottom:1px solid #e1e8f0}
+  table.t th{background:var(--navy);color:#fff;font-weight:600;letter-spacing:.3px}
+  table.t tr:nth-child(even) td{background:#f7fafd}
+  table.t tr.totrow td{background:#fff3ea!important;font-weight:800;color:var(--navy);border-top:2px solid var(--orange)}
+  table.t tr.balrow td{background:#0a2540!important;color:#fff!important;font-weight:800}
   .ar{text-align:right!important}
-  .words{margin:10px 0;font-weight:600;font-size:.86rem}
-  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
-  .box{border:1px solid #c6d0dd;border-radius:8px;padding:9px 12px}
-  .box h4{margin:0 0 6px;font-size:.8rem;color:var(--navy)}
-  .box p{margin:2px 0;font-size:.8rem}
-  .small{font-size:.76rem;color:#3a4a5e}
-  .thanks{text-align:center;color:var(--orange);font-weight:700;letter-spacing:1px;margin-top:18px;border-top:1px solid var(--line);padding-top:10px}
-  .sign{text-align:right;border:none}
-  .sign img.stamp{max-height:74px;display:inline-block}
-  .sign img.sig{max-height:46px;display:block;margin-left:auto}
-  .qr{width:118px;height:118px}
+
+  .words{margin:12px 0;font-weight:600;font-size:.86rem;background:#f5f8fc;border:1px dashed #c6d3e2;border-radius:8px;padding:9px 12px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+  .box{border:1px solid #d7e0ec;border-radius:10px;padding:11px 14px;background:#fbfcfe}
+  .box h4{margin:0 0 7px;font-size:.8rem;color:var(--navy);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid #e7edf5;padding-bottom:5px}
+  .box p{margin:3px 0;font-size:.8rem}
+  .small{font-size:.76rem;color:#41526a}
+  .thanks{text-align:center;color:#fff;font-weight:700;letter-spacing:2px;margin-top:20px;
+    background:linear-gradient(120deg,#ee7322,#f59247);padding:11px;border-radius:8px;font-size:.82rem}
+  .sign{text-align:right;border:none;background:transparent}
+  .sign img.stamp{max-height:76px;display:inline-block}
+  .sign img.sig{max-height:48px;display:block;margin-left:auto}
+  .qr{width:120px;height:120px;border:1px solid #e1e8f0;border-radius:8px;padding:4px;background:#fff}
   .chk{display:inline-block;width:13px;height:13px;border:1.5px solid #1f2c3d;text-align:center;line-height:12px;font-size:10px;margin-right:5px;vertical-align:middle}
   .pagebreak{page-break-before:always}
-  .tnc h4{color:var(--navy);margin:0 0 6px}
-  .tnc li{font-size:.72rem;margin-bottom:4px;line-height:1.4}
+  .tnc h4{color:var(--navy);margin:14px 0 6px}
+  .tnc li{font-size:.72rem;margin-bottom:5px;line-height:1.45}
 
   /* ---------- Gate / modal ---------- */
   .gate{position:fixed;inset:0;z-index:100;background:var(--navy);color:#fff;display:flex;flex-direction:column;
@@ -389,10 +401,10 @@ function totalsRows(c,colspan){
     out+='<tr><td class="ar" colspan="'+cs+'">CGST ('+(c.rate/2)+'%)</td><td class="ar">Rs. '+rs(c.cgst)+'</td></tr>';
     out+='<tr><td class="ar" colspan="'+cs+'">SGST ('+(c.rate/2)+'%)</td><td class="ar">Rs. '+rs(c.sgst)+'</td></tr>';
   }
-  out+='<tr><td class="ar" colspan="'+cs+'"><b>Total</b></td><td class="ar"><b>Rs. '+rs(c.total)+'</b></td></tr>';
+  out+='<tr class="totrow"><td class="ar" colspan="'+cs+'"><b>Total</b></td><td class="ar"><b>Rs. '+rs(c.total)+'</b></td></tr>';
   if(c.adv>0){
     out+='<tr><td class="ar" colspan="'+cs+'">Advance Paid</td><td class="ar">Rs. '+rs(c.adv)+'</td></tr>';
-    out+='<tr><td class="ar" colspan="'+cs+'"><b>Balance Due</b></td><td class="ar"><b>Rs. '+rs(c.bal)+'</b></td></tr>';
+    out+='<tr class="balrow"><td class="ar" colspan="'+cs+'"><b>Balance Due</b></td><td class="ar"><b>Rs. '+rs(c.bal)+'</b></td></tr>';
   }
   return out;
 }
