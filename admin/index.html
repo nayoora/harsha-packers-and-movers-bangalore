@@ -45,7 +45,7 @@
   .item-x{background:#f3d6cc;color:#b23;border:none;border-radius:6px;cursor:pointer;font-weight:700}
   /* preview */
   .preview{padding:22px;overflow:auto}
-  .a4{width:794px;max-width:100%;background:#fff;margin:0 auto 24px;box-shadow:0 6px 30px rgba(10,37,64,.16);padding:40px 44px;font-size:13.5px;line-height:1.5;color:#1a2b42}
+  .a4{width:794px;background:#fff;margin:0 auto 24px;box-shadow:0 6px 30px rgba(10,37,64,.16);padding:40px 44px;font-size:13.5px;line-height:1.5;color:#1a2b42}
   .doc-head{display:flex;align-items:center;gap:16px;border-bottom:3px solid var(--orange);padding-bottom:14px;margin-bottom:6px}
   .doc-head__logo{width:96px;flex:0 0 96px;text-align:center}
   .doc-head__logo img{max-width:96px;max-height:80px}
@@ -97,7 +97,6 @@
     .topbar,.form,.no-print,.modal{display:none!important}
     body,.preview,.wrap{background:#fff;display:block;padding:0;margin:0}
     .a4{box-shadow:none;margin:0;width:auto;padding:0}
-    @page{size:A4;margin:12mm}
   }
   /* ===== Compact layout: fit each document neatly on ONE A4 page ===== */
   .a4{padding:30px 38px;font-size:12.5px;line-height:1.42}
@@ -138,8 +137,6 @@
   .fld label{font-size:.82rem;font-weight:600;color:#42536b;margin-bottom:5px}
   .form h3{margin:20px 0 10px}
   .item-row input{padding:11px 9px;border-radius:8px}
-  /* LR-only fields hide unless building an LR */
-  body:not(.doc-lr) .sec--lr{display:none}
   /* Mode toggle hidden on desktop (both panes show) */
   .modebar{display:none}
 
@@ -159,8 +156,30 @@
     body.show-preview .preview{display:block;text-align:center}
     .a4{box-shadow:0 6px 22px rgba(10,37,64,.25);text-align:left}
   }
-  @media print{ .a4{zoom:1 !important} .modebar{display:none!important} }
+  @media print{ .a4{zoom:1 !important} #doc{width:auto!important} .modebar{display:none!important} }
+
+  /* ===== Easy doc-type picker ===== */
+  .hidden{display:none!important}
+  .doctype{display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:11px 12px;background:#fff;border-bottom:1px solid var(--line)}
+  .doctype::-webkit-scrollbar{height:0}
+  .doctype .dt{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:5px;min-width:86px;padding:11px 12px;border:1.5px solid var(--line);border-radius:14px;background:#fff;color:var(--muted);font-weight:700;font-size:.78rem;cursor:pointer;transition:border-color .15s,box-shadow .15s,background .15s}
+  .doctype .dt span{font-size:1.45rem;line-height:1}
+  .doctype .dt.active{border-color:var(--orange);color:var(--navy);background:#fff7f1;box-shadow:0 4px 12px rgba(238,115,34,.22)}
+  /* per-document page sizes on screen */
+  body.doc-lr #doc{width:1123px}
+  body.doc-receipt #doc{width:560px}
+  /* itemized-bill amount column (only shows for Bill) */
+  .item-row .it-amt{display:none}
+  body.doc-bill .item-row{grid-template-columns:1fr 54px 76px 30px}
+  body.doc-bill .item-row .it-amt{display:block;padding:7px 8px;border:1px solid var(--line);border-radius:6px;font-size:.86rem}
+  /* clean section cards on mobile */
+  @media(max-width:900px){
+    .form .sec{background:#fff;border:1px solid var(--line);border-radius:14px;margin:0 0 12px;padding:0 14px 12px;box-shadow:0 2px 10px rgba(10,37,64,.06);overflow:hidden}
+    .form .sec h3{background:linear-gradient(120deg,#0a2540,#14365b);color:#fff;margin:0 -14px 12px;padding:12px 16px;border:none;font-size:.78rem}
+    .form .sec h3 span{color:#ffd2b3}
+  }
 </style>
+<style id="pageStyle"></style>
 </head>
 <body>
 
@@ -174,16 +193,19 @@
 </div>
 
 <div class="topbar no-print">
-  <b>Document Maker</b>
-  <button class="tab active" data-doc="invoice" onclick="setDoc('invoice')">Invoice</button>
-  <button class="tab" data-doc="lr" onclick="setDoc('lr')">LR</button>
-  <button class="tab" data-doc="quote" onclick="setDoc('quote')">Quotation</button>
-  <button class="tab" data-doc="receipt" onclick="setDoc('receipt')">Receipt</button>
+  <b>Harsha Packers — Documents</b>
   <span class="spacer"></span>
-  <button class="btn btn--ghost btn--sm" onclick="openHistory()">History</button>
-  <button class="btn btn--ghost btn--sm" onclick="openSettings()">Settings</button>
-  <button class="btn" onclick="window.print()">Print / PDF</button>
+  <button class="btn btn--ghost btn--sm" onclick="openHistory()">📁 History</button>
+  <button class="btn btn--ghost btn--sm" onclick="openSettings()">⚙ Settings</button>
   <button class="btn btn--ghost btn--sm" id="installBtn" style="display:none" onclick="installApp()">⬇ Install App</button>
+</div>
+
+<div class="doctype no-print" id="doctype">
+  <button class="dt active" data-doc="quote" onclick="setDoc('quote')"><span>📝</span>Quotation</button>
+  <button class="dt" data-doc="invoice" onclick="setDoc('invoice')"><span>🧾</span>Invoice</button>
+  <button class="dt" data-doc="bill" onclick="setDoc('bill')"><span>📋</span>Itemized Bill</button>
+  <button class="dt" data-doc="lr" onclick="setDoc('lr')"><span>🚚</span>Lorry Receipt</button>
+  <button class="dt" data-doc="receipt" onclick="setDoc('receipt')"><span>💵</span>Money Receipt</button>
 </div>
 
 <div class="modebar no-print">
@@ -200,64 +222,79 @@
     </div>
     <div id="status"></div>
 
-    <h3>Document</h3>
-    <div class="fld"><label>Document No.</label><input id="f_no"></div>
-    <div class="fld"><label>Date</label><input id="f_date" type="date"></div>
+    <section class="sec" data-docs="invoice quote lr receipt bill">
+      <h3>Document</h3>
+      <div class="row2">
+        <div class="fld"><label>Document No.</label><input id="f_no"></div>
+        <div class="fld"><label>Date</label><input id="f_date" type="date"></div>
+      </div>
+    </section>
 
-    <h3>Customer (Consignor)</h3>
-    <div class="fld"><label>Name</label><input id="f_cname" placeholder="Customer full name"></div>
-    <div class="fld"><label>Phone</label><input id="f_cphone" placeholder="10-digit mobile"></div>
-    <div class="fld"><label>Address</label><textarea id="f_caddr" placeholder="Customer address"></textarea></div>
+    <section class="sec" data-docs="invoice quote lr receipt bill">
+      <h3>Customer</h3>
+      <div class="fld"><label>Name</label><input id="f_cname" placeholder="Customer full name"></div>
+      <div class="fld"><label>Phone</label><input id="f_cphone" placeholder="10-digit mobile"></div>
+      <div class="fld"><label>Address</label><textarea id="f_caddr" placeholder="Customer address"></textarea></div>
+    </section>
 
-    <div class="sec--lr">
-    <h3>Consignee (LR — optional)</h3>
-    <div class="fld"><label>Name</label><input id="f_coname" placeholder="Blank = same as customer"></div>
-    <div class="fld"><label>Phone</label><input id="f_cophone"></div>
-    <div class="fld"><label>Address</label><textarea id="f_coaddr"></textarea></div>
-    </div>
+    <section class="sec" data-docs="lr">
+      <h3>Consignee (deliver to)</h3>
+      <div class="fld"><label>Name</label><input id="f_coname" placeholder="Blank = same as customer"></div>
+      <div class="fld"><label>Phone</label><input id="f_cophone"></div>
+      <div class="fld"><label>Address</label><textarea id="f_coaddr"></textarea></div>
+    </section>
 
-    <h3>Move details</h3>
-    <div class="row2">
-      <div class="fld"><label>From</label><input id="f_from" placeholder="Bangalore"></div>
-      <div class="fld"><label>To</label><input id="f_to" placeholder="Kolar"></div>
-    </div>
-    <div class="fld"><label>Service / Particulars</label><input id="f_service" value="Packing and Moving Services"></div>
-    <div class="fld"><label>Vehicle / Unit</label><input id="f_vehicle" placeholder="e.g. 17 Feet Vehicle"></div>
-    <div class="row2">
-      <div class="fld"><label>No. of Packages</label><input id="f_pkgs" placeholder="As per list"></div>
-      <div class="fld"><label>Weight</label><input id="f_weight" placeholder="Fixed"></div>
-    </div>
+    <section class="sec" data-docs="invoice quote lr receipt">
+      <h3>Move details</h3>
+      <div class="row2">
+        <div class="fld"><label>From</label><input id="f_from" placeholder="Bangalore"></div>
+        <div class="fld"><label>To</label><input id="f_to" placeholder="Kolar"></div>
+      </div>
+      <div class="fld"><label>Service / Particulars</label><input id="f_service" value="Packing and Moving Services"></div>
+      <div class="fld"><label>Vehicle / Unit</label><input id="f_vehicle" placeholder="e.g. 17 Feet Vehicle"></div>
+      <div class="row2">
+        <div class="fld"><label>No. of Packages</label><input id="f_pkgs" placeholder="As per list"></div>
+        <div class="fld"><label>Weight</label><input id="f_weight" placeholder="Fixed"></div>
+      </div>
+    </section>
 
-    <h3>Items (optional)</h3>
-    <div id="items"></div>
-    <button class="btn btn--ghost btn--sm" style="color:#0a2540" onclick="addItem()">＋ Add item</button>
-    <div class="fld" style="margin-top:8px"><label>Or description (if no item list)</label><textarea id="f_desc" placeholder="Old household items, Not for sale"></textarea></div>
-    <div class="fld"><label>Value of Goods</label><input id="f_value" placeholder="As per list / Not for sale"></div>
+    <section class="sec" data-docs="invoice quote lr bill">
+      <h3>Items <span data-docs="bill" style="text-transform:none;font-weight:400;color:var(--muted)">— type item + ₹ amount</span></h3>
+      <div id="items"></div>
+      <button class="btn btn--ghost btn--sm" style="color:#0a2540" onclick="addItem()">＋ Add item</button>
+      <div class="fld" style="margin-top:8px" data-hide="bill"><label>Or description (if no item list)</label><textarea id="f_desc" placeholder="Old household items, Not for sale"></textarea></div>
+      <div class="fld" data-hide="bill"><label>Value of Goods</label><input id="f_value" placeholder="As per list / Not for sale"></div>
+    </section>
 
-    <h3>Amount</h3>
-    <div class="fld"><label>Base Amount (₹)</label><input id="f_amount" type="number" placeholder="25000"></div>
-    <div class="row2">
-      <div class="fld"><label>Insurance?</label><select id="f_ins"><option value="no">No (owner's risk)</option><option value="yes">Yes (3% auto)</option></select></div>
-      <div class="fld"><label>Insurance ₹ (blank=auto 3%)</label><input id="f_inscharge" type="number" placeholder="auto"></div>
-    </div>
-    <div class="row2">
-      <div class="fld"><label>Advance Paid (₹)</label><input id="f_advance" type="number" placeholder="0"></div>
-      <div class="fld"><label>Status</label><select id="f_status"><option>Paid</option><option>Partially Paid</option><option>To Pay</option></select></div>
-    </div>
-    <div class="fld"><label>Mode of Payment</label><select id="f_mode"><option>Cash</option><option>UPI</option><option>Bank Transfer</option><option>Online</option><option>Cheque</option></select></div>
+    <section class="sec" data-docs="invoice quote lr receipt bill">
+      <h3>Amount</h3>
+      <div class="fld" data-hide="bill"><label>Base Amount (₹)</label><input id="f_amount" type="number" placeholder="25000"></div>
+      <div class="row2" data-hide="bill receipt">
+        <div class="fld"><label>Insurance?</label><select id="f_ins"><option value="no">No (owner's risk)</option><option value="yes">Yes (3% auto)</option></select></div>
+        <div class="fld"><label>Insurance ₹ (blank=auto 3%)</label><input id="f_inscharge" type="number" placeholder="auto"></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>Advance Paid (₹)</label><input id="f_advance" type="number" placeholder="0"></div>
+        <div class="fld"><label>Status</label><select id="f_status"><option>Paid</option><option>Partially Paid</option><option>To Pay</option></select></div>
+      </div>
+      <div class="fld"><label>Mode of Payment</label><select id="f_mode"><option>Cash</option><option>UPI</option><option>Bank Transfer</option><option>Online</option><option>Cheque</option></select></div>
+    </section>
 
-    <div class="sec--lr">
-    <h3>LR copy</h3>
-    <div class="fld"><label>Which LR copy to print</label>
-      <select id="f_lrcopy"><option value="Consignor">Consignor Copy</option><option value="Office">Office Copy</option><option value="Lorry">Lorry Copy (no amount)</option><option value="All">All 3 copies</option></select>
-    </div>
-    </div>
+    <section class="sec" data-docs="lr">
+      <h3>LR copy</h3>
+      <div class="fld"><label>Which LR copy to print</label>
+        <select id="f_lrcopy"><option value="Consignor">Consignor Copy</option><option value="Office">Office Copy</option><option value="Lorry">Lorry Copy (no amount)</option><option value="All">All 3 copies</option></select>
+      </div>
+    </section>
 
-    <h3>Terms &amp; Conditions</h3>
-    <div class="fld"><label>T&amp;C set (printed on last page)</label>
-      <select id="f_tnc"><option value="">None</option><option value="local">Local Shifting</option><option value="outstation">Outstation Shifting</option><option value="storage">Storage</option></select>
-    </div>
-    <div style="margin-top:14px"><button class="btn" style="width:100%" onclick="window.print()">Print / Save as PDF</button></div>
+    <section class="sec" data-docs="invoice quote lr">
+      <h3>Terms &amp; Conditions</h3>
+      <div class="fld"><label>T&amp;C set (printed on last page)</label>
+        <select id="f_tnc"><option value="">None</option><option value="local">Local Shifting</option><option value="outstation">Outstation Shifting</option><option value="storage">Storage</option></select>
+      </div>
+    </section>
+
+    <div style="margin-top:14px"><button class="btn" style="width:100%" onclick="window.print()">🖨️ Print / Save as PDF</button></div>
   </div>
 
   <div class="preview"><div class="a4" id="doc"></div></div>
@@ -336,12 +373,12 @@ function totals(){var base=Number(val('f_amount'))||0;var ins=Number(val('f_insc
   var total=base+ins;var adv=Number(val('f_advance'))||0;return {base:base,ins:ins,total:total,adv:adv,bal:total-adv};}
 
 /* ============ Items ============ */
-function addItem(name,qty){var d=document.getElementById('items');var r=document.createElement('div');r.className='item-row';
-  r.innerHTML='<input class="it-name" placeholder="Item (e.g. Double Bed)"><input class="it-qty" type="number" min="1" placeholder="Qty">'+
+function addItem(name,qty,amt){var d=document.getElementById('items');var r=document.createElement('div');r.className='item-row';
+  r.innerHTML='<input class="it-name" placeholder="Item / Particular"><input class="it-qty" type="number" min="1" placeholder="Qty"><input class="it-amt" type="number" min="0" placeholder="\u20b9 Amt">'+
   '<button class="item-x" onclick="this.parentNode.remove();render()">✕</button>';
-  d.appendChild(r);if(name!=null)r.querySelector('.it-name').value=name;if(qty!=null)r.querySelector('.it-qty').value=qty;render();}
-function getItems(){var out=[];document.querySelectorAll('#items .item-row').forEach(function(r){var n=r.querySelector('.it-name').value.trim();var q=r.querySelector('.it-qty').value.trim();if(n)out.push({n:n,q:q});});return out;}
-function setItems(arr){document.getElementById('items').innerHTML='';(arr||[]).forEach(function(it){addItem(it.n,it.q);});}
+  d.appendChild(r);if(name!=null)r.querySelector('.it-name').value=name;if(qty!=null)r.querySelector('.it-qty').value=qty;if(amt!=null)r.querySelector('.it-amt').value=amt;render();}
+function getItems(){var out=[];document.querySelectorAll('#items .item-row').forEach(function(r){var n=r.querySelector('.it-name').value.trim();var q=r.querySelector('.it-qty').value.trim();var ae=r.querySelector('.it-amt');var a=ae?ae.value.trim():'';if(n)out.push({n:n,q:q,a:a});});return out;}
+function setItems(arr){document.getElementById('items').innerHTML='';(arr||[]).forEach(function(it){addItem(it.n,it.q,it.a);});}
 function goodsText(){var it=getItems();if(it.length)return it.map(function(x){return esc(x.n)+(x.q?' ('+esc(x.q)+')':'');}).join(', ');return esc(val('f_desc'));}
 
 /* ============ Letterhead / blocks ============ */
@@ -371,7 +408,7 @@ function renderReceipt(){var t=totals();
    '<p><b>Received with thanks from:</b> '+esc(val('f_cname'))+' &nbsp; <span class="small">GSTIN: N/A</span></p>'+
    '<table class="t"><tr><th>Description</th><th>Information</th></tr><tr><td>Service Type</td><td>'+esc(val('f_service'))+'</td></tr><tr><td>From</td><td>'+esc(val('f_from'))+'</td></tr><tr><td>To</td><td>'+esc(val('f_to'))+'</td></tr><tr><td>Mode of Payment</td><td>'+esc(val('f_mode'))+'</td></tr><tr><td>Payment Status</td><td>'+esc(val('f_status'))+'</td></tr></table>'+
    '<div class="amt-words">Amount Received: Rs. '+rs(t.adv||t.total)+'/- (Rupees '+num2words(t.adv||t.total)+' Only)</div>'+
-   '<div class="twocol">'+bankBox()+signBox()+'</div><div class="thanks">THANK YOU FOR DOING BUSINESS WITH US</div>'+tncPage();}
+   '<div class="twocol">'+bankBox()+signBox()+'</div><div class="thanks">THANK YOU FOR DOING BUSINESS WITH US</div>';}
 function renderQuotation(){var t=totals();
   var qr=IMG.qr?IMG.qr:'https://api.qrserver.com/v1/create-qr-code/?size=140x140&data='+encodeURIComponent('upi://pay?pa='+CO.upi+'&pn='+CO.name+'&cu=INR');
   return letterhead()+'<div class="doc-title">QUOTATION</div>'+
@@ -394,10 +431,25 @@ function lrCopy(label,hideAmount){var t=totals();var coname=val('f_coname')||val
 function renderLR(){var mode=val('f_lrcopy')||'Consignor';var copies;
   if(mode==='All')copies=[['Consignor Copy',false],['Office Copy',false],['Lorry Copy',true]];else copies=[[mode+' Copy',mode==='Lorry']];
   return copies.map(function(c,i){return (i>0?'<div class="pagebreak"></div>':'')+lrCopy(c[0],c[1]);}).join('')+tncPage();}
-var RENDER={invoice:renderInvoice,lr:renderLR,quote:renderQuotation,receipt:renderReceipt};
-var activeDoc='invoice';
+function renderBill(){var items=getItems();var rows='',sum=0;
+  items.forEach(function(it){var amt=Number(it.a)||0;sum+=amt;rows+='<tr><td>'+esc(it.n)+(it.q?' <span class="small">(Qty '+esc(it.q)+')</span>':'')+'</td><td style="text-align:right">Rs. '+rs(amt)+'</td></tr>';});
+  if(!items.length){var base=Number(val('f_amount'))||0;sum=base;rows='<tr><td>'+esc(val('f_service')||'Packing and Moving Services')+'</td><td style="text-align:right">Rs. '+rs(base)+'</td></tr>';}
+  var adv=Number(val('f_advance'))||0;
+  return letterhead()+'<div class="doc-title">BILL</div>'+
+   '<div class="meta"><div><span class="lbl">Bill To:</span> <b>'+esc(val('f_cname'))+'</b><br><span class="small">'+esc(val('f_cphone'))+'</span></div><div style="text-align:right"><div><span class="lbl">Bill No:</span> <b>'+esc(val('f_no'))+'</b></div><div><span class="lbl">Date:</span> <b>'+fmtDate(val('f_date'))+'</b></div></div></div>'+
+   '<table class="t"><tr><th>Particulars</th><th style="text-align:right;width:150px">Amount</th></tr>'+rows+
+   '<tr><td style="text-align:right"><b>Total</b></td><td style="text-align:right"><b>Rs. '+rs(sum)+'</b></td></tr>'+
+   (adv?'<tr><td style="text-align:right">Advance Paid</td><td style="text-align:right">Rs. '+rs(adv)+'</td></tr><tr><td style="text-align:right"><b>Balance Due</b></td><td style="text-align:right"><b>Rs. '+rs(sum-adv)+'</b></td></tr>':'')+
+   '</table>'+
+   '<div class="amt-words">Rupees '+num2words(sum)+' Only</div>'+
+   '<div class="small"><b>Payment Status:</b> '+esc(val('f_status'))+' &nbsp;|&nbsp; <b>Mode:</b> '+esc(val('f_mode'))+'</div>'+
+   '<div class="twocol">'+bankBox()+signBox()+'</div><div class="thanks">THANK YOU FOR DOING BUSINESS WITH US</div>';}
+var RENDER={invoice:renderInvoice,lr:renderLR,quote:renderQuotation,receipt:renderReceipt,bill:renderBill};
+var activeDoc='quote';
 function render(){document.getElementById('doc').innerHTML=RENDER[activeDoc]();}
-function setDoc(d){activeDoc=d;document.querySelectorAll('.tab').forEach(function(t){t.classList.toggle('active',t.getAttribute('data-doc')===d);});render();}
+function setDoc(d){activeDoc=d;document.querySelectorAll('.dt').forEach(function(t){t.classList.toggle('active',t.getAttribute('data-doc')===d);});applySections();setPageSize();render();}
+function applySections(){document.querySelectorAll('[data-docs]').forEach(function(s){s.classList.toggle('hidden',s.getAttribute('data-docs').split(/\s+/).indexOf(activeDoc)<0);});document.querySelectorAll('[data-hide]').forEach(function(s){s.classList.toggle('hidden',s.getAttribute('data-hide').split(/\s+/).indexOf(activeDoc)>=0);});}
+function setPageSize(){var s=document.getElementById('pageStyle');if(!s)return;var css;if(activeDoc==='lr')css='@page{size:A4 landscape;margin:10mm}';else if(activeDoc==='receipt')css='@page{size:A5;margin:10mm}';else css='@page{size:A4 portrait;margin:12mm}';s.textContent='@media print{'+css+'}';}
 
 /* ============ Save / History / New ============ */
 function collectJob(){var f={};FIELDS.forEach(function(id){f[id]=val(id);});return {no:val('f_no'),type:activeDoc,date:val('f_date'),customer:val('f_cname'),total:totals().total,fields:f,items:getItems(),savedAt:Date.now()};}
@@ -425,7 +477,7 @@ function loadHist(i){var h=getHist();if(h[i]){setDoc(h[i].type);loadJobObj(h[i])
 function delHist(i){var h=getHist();h.splice(i,1);setHist(h);openHistory();}
 
 /* ============ WhatsApp ============ */
-function whatsappShare(){var t=totals();var titleMap={invoice:'Invoice',lr:'Lorry Receipt',quote:'Quotation',receipt:'Money Receipt'};
+function whatsappShare(){var t=totals();var titleMap={invoice:'Invoice',lr:'Lorry Receipt',quote:'Quotation',receipt:'Money Receipt',bill:'Bill'};
   var msg='*Harsha Packers and Movers*\n'+titleMap[activeDoc]+' No: '+val('f_no')+'\nDate: '+fmtDate(val('f_date'))+'\n';
   if(val('f_cname'))msg+='Customer: '+val('f_cname')+'\n';
   if(val('f_from')||val('f_to'))msg+='From '+val('f_from')+' to '+val('f_to')+'\n';
@@ -449,7 +501,7 @@ function init(){var d=new Date();document.getElementById('f_date').value=d.getFu
   document.getElementById('f_no').value=nextNumber();
   document.getElementById('form').addEventListener('input',render);
   document.getElementById('form').addEventListener('change',render);
-  render();}
+  if(typeof window.setDoc==='function'){window.setDoc(activeDoc);}else{render();}}
 </script>
 <script>
 /* ===== PWA: installable app + offline + stay signed in ===== */
@@ -457,6 +509,8 @@ function init(){var d=new Date();document.getElementById('f_date').value=d.getFu
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('admin-sw.js', { scope: './' }).catch(function () {});
   }
+  /* Running inside the Android app (Capacitor) or local app shell => no password gate */
+  var IS_APP = !!(window.Capacitor || window.cordova) || location.protocol === 'capacitor:' || location.protocol === 'file:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
   var deferred = null, btn = document.getElementById('installBtn');
   window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); deferred = e; if (btn) btn.style.display = ''; });
   window.installApp = function () {
@@ -466,19 +520,12 @@ function init(){var d=new Date();document.getElementById('f_date').value=d.getFu
   };
   window.addEventListener('appinstalled', function () { if (btn) btn.style.display = 'none'; });
   window.signOut = function () { try { localStorage.removeItem('hpmb_session'); } catch (e) {} location.reload(); };
-  /* auto-unlock if the user chose "keep me signed in" */
-  try {
-    if (localStorage.getItem('hpmb_session') === '1') {
-      var g = document.getElementById('gate'); if (g) g.style.display = 'none';
-      if (typeof init === 'function') init();
-    }
-  } catch (e) {}
 
   /* Smart filename when saving as PDF (e.g. Invoice-HPMB-2026-27-101-Rahul) */
   window.addEventListener('beforeprint', function () {
     try {
       window.__pt = document.title;
-      var m = { invoice: 'Invoice', lr: 'LorryReceipt', quote: 'Quotation', receipt: 'Receipt' };
+      var m = { invoice: 'Invoice', lr: 'LorryReceipt', quote: 'Quotation', receipt: 'Receipt', bill: 'Bill' };
       var no = ((document.getElementById('f_no') || {}).value || '').replace(/[^\w-]+/g, '-');
       var cu = ((document.getElementById('f_cname') || {}).value || '').replace(/[^\w ]+/g, '').trim().replace(/\s+/g, '-');
       document.title = (m[window.activeDoc] || 'Document') + '-' + no + (cu ? '-' + cu : '');
@@ -504,9 +551,11 @@ function init(){var d=new Date();document.getElementById('f_date').value=d.getFu
   /* ===== Mobile app UX: Build/Preview toggle + auto-fit document to screen ===== */
   function fitDoc() {
     var d = document.getElementById('doc'); if (!d) return;
+    d.style.zoom = '';
+    var natural = d.offsetWidth || 794;
     var p = d.parentNode;
-    var w = (p && p.clientWidth) ? p.clientWidth : window.innerWidth;
-    var z = (w - 24) / 794; if (z > 1) z = 1;
+    var avail = ((p && p.clientWidth) ? p.clientWidth : window.innerWidth) - 24;
+    var z = avail / natural; if (z > 1) z = 1;
     if (z > 0 && isFinite(z)) d.style.zoom = z;
   }
   window.fitDoc = fitDoc;
@@ -522,16 +571,24 @@ function init(){var d=new Date();document.getElementById('f_date').value=d.getFu
     if (typeof _sd === 'function') {
       window.setDoc = function (d) {
         _sd(d);
-        document.body.classList.remove('doc-invoice', 'doc-lr', 'doc-quote', 'doc-receipt');
+        document.body.classList.remove('doc-invoice', 'doc-lr', 'doc-quote', 'doc-receipt', 'doc-bill');
         document.body.classList.add('doc-' + d);
         setTimeout(fitDoc, 20);
       };
     }
-    document.body.classList.add('doc-invoice');
+    document.body.classList.add('doc-quote');
   })();
   window.addEventListener('resize', fitDoc);
   window.addEventListener('orientationchange', function () { setTimeout(fitDoc, 200); });
   setTimeout(fitDoc, 400);
+
+  /* Open straight into the app (no password) when running as the installed app,
+     or on the website if the user chose "keep me signed in". */
+  var _stay = false; try { _stay = localStorage.getItem('hpmb_session') === '1'; } catch (e) {}
+  if (IS_APP || _stay) {
+    var _g = document.getElementById('gate'); if (_g) _g.style.display = 'none';
+    if (typeof init === 'function') { try { init(); } catch (e) {} }
+  }
 })();
 </script>
 </body>

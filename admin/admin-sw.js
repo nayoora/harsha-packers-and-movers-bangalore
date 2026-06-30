@@ -1,6 +1,6 @@
 /* Harsha Packers Admin — service worker (installable PWA + offline).
    Bump CACHE when the admin changes to refresh the cached shell. */
-var CACHE = 'hp-admin-v1';
+var CACHE = 'hp-admin-v2';
 var SHELL = ['./', './index.html', './manifest.webmanifest'];
 
 self.addEventListener('install', function (e) {
