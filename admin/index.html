@@ -58,6 +58,11 @@
   .page{width:794px;min-height:1123px;background:#fff;padding:46px 50px;box-shadow:0 10px 34px rgba(10,37,64,.20);
     transform-origin:top left;color:#1f2c3d;font-size:13px;line-height:1.5;
     -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .page.page--lr{width:1123px;min-height:794px}
+  .page.page--receipt{width:559px;min-height:794px}
+  .rcptamt{display:inline-block;background:linear-gradient(120deg,#0a2540,#1c4f80);color:#fff;font-size:1.6rem;font-weight:800;
+    padding:12px 30px;border-radius:10px;letter-spacing:1px;box-shadow:0 4px 14px rgba(10,37,64,.18);
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
 
   /* ---------- Document styling (premium) ---------- */
   .lh{display:flex;align-items:center;gap:18px;border-bottom:3px solid var(--orange);padding-bottom:16px;margin-bottom:0}
@@ -127,7 +132,6 @@
     .previewWrap{display:block!important;padding:0!important;margin:0!important;background:#fff!important;overflow:visible!important}
     .page{transform:none!important;zoom:1!important;box-shadow:none!important;margin:0 auto!important;
       width:auto!important;min-height:0!important;padding:0!important;font-size:12px!important}
-    @page{size:A4;margin:14mm}
   }
 </style>
 <style id="pageStyle"></style>
@@ -156,6 +160,7 @@
   </select>
   <span class="spacer"></span>
   <button class="btn ghost sm" onclick="openHistory()">📁 Saved</button>
+  <button class="btn ghost sm" onclick="saveNow()">💾 Save</button>
   <button class="btn ghost sm" onclick="openSettings()">⚙ Settings</button>
   <button class="btn" onclick="downloadPDF()">⬇ Download / Print</button>
 </div>
@@ -258,6 +263,7 @@
     </div>
 
     <button class="btn block" onclick="downloadPDF()">⬇ Download / Print PDF</button>
+    <button class="btn ghost block" style="color:var(--navy);background:#eef3f9" onclick="saveNow()">💾 Save / Update this document</button>
     <button class="btn ghost block" style="color:var(--navy);background:#eef3f9" onclick="whatsappShare()">📲 Send details on WhatsApp</button>
     <button class="btn ghost block" style="color:var(--navy);background:#eef3f9" onclick="newDoc()">＋ New document (next number)</button>
   </div>
@@ -444,14 +450,13 @@ function renderBill(){var c=calc();
 
 function renderReceipt(){var c=calc();var amt=c.adv>0?c.adv:c.total;
   return letterhead()+'<div class="dtitle">MONEY RECEIPT</div>'+
-    '<div class="meta"><div><span class="lbl">Receipt No:</span> <b>'+esc(val('f_no'))+'</b></div><div><span class="lbl">Date:</span> <b>'+fmtDate(val('f_date'))+'</b></div></div>'+
-    '<p>Received with thanks from <b>'+esc(val('f_cname'))+'</b>'+(val('f_cphone')?' (Ph: '+esc(val('f_cphone'))+')':'')+'</p>'+
-    routeLine()+
-    '<table class="t"><tr><th>Description</th><th>Details</th></tr>'+
-    '<tr><td>Service</td><td>'+esc(val('f_service')||'Packing and Moving Services')+'</td></tr>'+
-    '<tr><td>Payment Mode</td><td>'+esc(val('f_mode'))+'</td></tr>'+
-    '<tr><td>Status</td><td>'+esc(val('f_status'))+'</td></tr></table>'+
-    '<div class="words">Amount Received: Rs. '+rs(amt)+'/- (Rupees '+num2words(amt)+' Only)</div>'+
+    '<div class="meta"><div><span class="lbl">Receipt No</span><br><b>'+esc(val('f_no'))+'</b></div><div class="ar"><span class="lbl">Date</span><br><b>'+fmtDate(val('f_date'))+'</b></div></div>'+
+    '<p style="margin:14px 0 4px;font-size:.95rem">Received with thanks from <b>'+esc(val('f_cname')||'—')+'</b>'+(val('f_cphone')?' &nbsp;(Ph: '+esc(val('f_cphone'))+')':'')+'</p>'+
+    '<div style="text-align:center;margin:14px 0 10px"><div class="rcptamt">₹ '+rs(amt)+' /-</div><div class="small" style="margin-top:6px">Rupees '+num2words(amt)+' Only</div></div>'+
+    '<table class="t"><tr><th style="width:140px">Towards</th><td>'+esc(val('f_service')||'Packing and Moving Services')+'</td></tr>'+
+    ((val('f_from')||val('f_to'))?'<tr><th>Route</th><td>'+esc(val('f_from'))+' &rarr; '+esc(val('f_to'))+'</td></tr>':'')+
+    '<tr><th>Payment Mode</th><td>'+esc(val('f_mode'))+'</td></tr>'+
+    '<tr><th>Status</th><td>'+esc(val('f_status'))+'</td></tr></table>'+
     '<div class="two">'+bankBox()+signBox()+'</div><div class="thanks">THANK YOU</div>';}
 
 function lrCopy(label,hideAmount){var c=calc();
@@ -495,6 +500,7 @@ function setPageSize(){
 }
 function setDoc(d){
   activeDoc=d;var sel=el('docType');if(sel&&sel.value!==d)sel.value=d;
+  el('page').className='page'+(d==='lr'?' page--lr':'');
   applyVisibility();setPageSize();render();fitPage();
 }
 
@@ -502,8 +508,9 @@ function setDoc(d){
 function fitPage(){
   var p=el('page'),w=el('previewWrap');if(!p||!w)return;
   p.style.zoom='';
+  var natural=p.offsetWidth||794;
   var avail=w.clientWidth-(w.clientWidth>820?44:28);
-  var z=avail/794;if(z>1)z=1;
+  var z=avail/natural;if(z>1)z=1;
   if(z>0&&isFinite(z))p.style.zoom=z;
 }
 window.addEventListener('resize',fitPage);
@@ -523,6 +530,8 @@ function loadJob(j){setDoc(j.type);FIELDS.forEach(function(id){var e=el(id);if(e
 function autosave(){var c=val('f_cname'),it=getItems();if(!c&&!it.length)return;
   var h=getHist();var job=collectJob();var i=h.findIndex(function(x){return x.no===job.no&&x.type===job.type;});
   if(i>=0)h[i]=job;else h.unshift(job);setHist(h);}
+function saveNow(){var c=val('f_cname'),it=getItems();if(!c&&!it.length){flash('Add a customer name or a charge first');return;}
+  autosave();flash('Saved ✓  (open it later from “Saved” to edit)');}
 function newDoc(){autosave();var c=parseInt(L('hpmb_counter','101'),10)||101;c++;S('hpmb_counter',c);
   ['f_cname','f_cphone','f_gstin','f_caddr','f_coname','f_cophone','f_coaddr','f_from','f_to','f_vehicle','f_pkgs','f_weight','f_goods','f_advance'].forEach(function(id){if(el(id))el(id).value='';});
   el('f_gst').value='0';el('f_status').value='Paid';setItems([]);el('f_no').value=nextNumber();render();fitPage();flash('New document — '+nextNumber());}
@@ -536,8 +545,10 @@ function renderHist(q){q=(q||'').toLowerCase().trim();var h=getHist();var box=el
   if(!list.length){box.innerHTML='<p class="small">No matches.</p>';return;}
   box.innerHTML=list.map(function(o){var j=o.j,i=o.i;
     return '<div class="hrow"><div><b>'+esc(j.no)+'</b> · '+esc(j.type)+'<br><span class="small">'+esc(j.customer||'-')+' · '+fmtDate(j.date)+' · Rs.'+rs(j.total)+'</span></div>'+
-    '<div style="display:flex;gap:5px"><button class="btn sm" onclick="histLoad('+i+')">Open</button><button class="itx" style="width:32px" onclick="histDel('+i+')">✕</button></div></div>';}).join('');}
-function histLoad(i){var h=getHist();if(h[i]){loadJob(h[i]);closeHistory();flash('Opened '+h[i].no);}}
+    '<div style="display:flex;gap:5px"><button class="btn sm" onclick="histLoad('+i+')">Edit</button><button class="btn ghost sm" style="color:var(--navy);background:#eef3f9" onclick="histDup('+i+')">Copy</button><button class="itx" style="width:32px" onclick="histDel('+i+')">✕</button></div></div>';}).join('');}
+function histLoad(i){var h=getHist();if(h[i]){loadJob(h[i]);closeHistory();flash('Editing '+h[i].no+' — make changes, then Save');}}
+function histDup(i){var h=getHist();if(!h[i])return;var c=(parseInt(L('hpmb_counter','101'),10)||101)+1;S('hpmb_counter',c);
+  loadJob(h[i]);el('f_no').value=nextNumber();closeHistory();flash('Copied as new document '+nextNumber());}
 function histDel(i){var h=getHist();h.splice(i,1);setHist(h);renderHist(el('histq').value);}
 function exportCSV(){var h=getHist();if(!h.length){flash('Nothing to export');return;}
   var rows=[['No','Type','Date','Customer','Total']];h.forEach(function(j){rows.push([j.no,j.type,j.date,j.customer,j.total]);});
