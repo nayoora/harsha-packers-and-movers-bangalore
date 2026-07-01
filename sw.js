@@ -1,5 +1,5 @@
 /* Harsha Packers PWA service worker (auto-generated) */
-const CACHE = 'hpm-mr2b13my';
+const CACHE = 'hpm-mr2c799p';
 const OFFLINE = '/offline.html';
 self.addEventListener('install', (e) => { e.waitUntil(caches.open(CACHE).then((c) => c.add(OFFLINE)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', (e) => { e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim())); });
